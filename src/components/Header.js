@@ -8,39 +8,54 @@ import {
 } from "./styles/headerStyled";
 import { Box } from "./styles/boxStyled.js";
 import {
-  BiDumbbell as Workouts,
-  BiMenu as Menu,
-  BiUser as Account,
-  BiSpreadsheet as Programs,
+  BiDumbbell as WorkoutsIcon,
+  BiMenu as MenuIcon,
+  BiUser as AccountIcon,
+  BiSpreadsheet as ProgramsIcon,
+  BiStats as AnalitycsIcon,
+  BiInfoCircle as AboutIcon,
 } from "react-icons/bi";
 
 export default function Header() {
-  const navRef = useRef();
-  const [openCategories, setOpenCategories] = useState(false);
+  const headerRef = useRef();
+  const titlesRef = useRef();
+  const [showFullMenu, setShowFullMenu] = useState(false);
   const showNavbar = () => {
-    navRef.current.classList.toggle("responsive-nav");
+    headerRef.current.classList.toggle("open");
+    setShowFullMenu((current) => !current);
   };
 
   return (
     <HeaderStyled>
       <HeaderLogo className="reponsive-logo">asdas</HeaderLogo>
       <Box onClick={showNavbar}>
-        <Menu className="responsive-menu" />
+        <MenuIcon className="menu-button" />
       </Box>
-      <NavbarStyled ref={navRef}>
-        <WorkoutNavSection>
-          <Box>
-            <Programs />
-            <span>PROGRAMS</span>
-          </Box>
-          <Box>
-            <Workouts />
-            <span>WORKOUT</span>
-          </Box>
-        </WorkoutNavSection>
+      <NavbarStyled ref={headerRef}>
+        <Box>
+          <ProgramsIcon />
+          <span>PROGRAMS</span>
+        </Box>
+        <Box>
+          <WorkoutsIcon />
+          <span>WORKOUT</span>
+        </Box>
+
+        {showFullMenu === true && (
+          <>
+            <Box>
+              <AnalitycsIcon />
+              <span>ANALITYCS</span>
+            </Box>
+            <Box>
+              <AboutIcon />
+              <span>ABOUT</span>
+            </Box>
+          </>
+        )}
       </NavbarStyled>
       <Box>
-        <Account />
+        <AccountIcon className="account-button" />
       </Box>
     </HeaderStyled>
   );
