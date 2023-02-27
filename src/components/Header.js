@@ -18,11 +18,8 @@ import {
 
 export default function Header() {
   const headerRef = useRef();
-  const titlesRef = useRef();
-  const [showFullMenu, setShowFullMenu] = useState(false);
   const showNavbar = () => {
     headerRef.current.classList.toggle("open");
-    setShowFullMenu((current) => !current);
   };
 
   return (
@@ -40,19 +37,14 @@ export default function Header() {
           <WorkoutsIcon />
           <span>WORKOUT</span>
         </Box>
-
-        {showFullMenu === true && (
-          <>
-            <Box>
-              <AnalitycsIcon />
-              <span>ANALITYCS</span>
-            </Box>
-            <Box>
-              <AboutIcon />
-              <span>ABOUT</span>
-            </Box>
-          </>
-        )}
+        <Box>
+          <AnalitycsIcon />
+          <span>ANALITYCS</span>
+        </Box>
+        <Box>
+          <AboutIcon />
+          <span>ABOUT</span>
+        </Box>
       </NavbarStyled>
       <Box>
         <AccountIcon className="account-button" />

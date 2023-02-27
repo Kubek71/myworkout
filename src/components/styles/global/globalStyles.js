@@ -17,6 +17,11 @@ body {
     font-size: 16px;
     font-family: 'Comfortaa', serif;
     background: ${({ theme }) => theme.colors.dark};
+
+    svg {
+    color: ${({ theme }) => theme.colors.light};
+    font-size: 22px;
+  }
 }
 
 `;

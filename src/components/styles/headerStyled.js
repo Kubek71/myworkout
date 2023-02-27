@@ -11,6 +11,8 @@ export const HeaderStyled = styled.header`
   background: ${({ theme }) => theme.colors.dark};
   border-bottom: 1px solid ${({ theme }) => theme.colors.light};
   position: relative;
+
+  // hides logo, nav spans on mobile
   @media (max-width: 1024px) {
     .reponsive-logo,
     span {
@@ -18,18 +20,17 @@ export const HeaderStyled = styled.header`
     }
   }
 
+  // changes nav flex behaviour on dekstop
   @media (min-width: 1024px) {
     nav {
       justify-content: end;
       margin-right: 6rem;
     }
+
+    // hides menu button on dekstop
     .menu-button {
       display: none;
     }
-  }
-  svg {
-    color: ${({ theme }) => theme.colors.light};
-    font-size: 22px;
   }
 
   .menu-button {
@@ -53,8 +54,16 @@ export const HeaderStyled = styled.header`
     flex-direction: column;
     z-index: 0;
 
+    // displays spans whenever menu is open
     span {
       display: inherit;
+    }
+
+    // displays rest of nav elements whenever menu is open
+    > * {
+      &:nth-child(n + 3) {
+        display: inherit;
+      }
     }
   }
 `;
@@ -75,4 +84,13 @@ export const NavbarStyled = styled.nav`
   color: ${({ theme }) => theme.colors.primaryRed};
   padding: 2rem;
   gap: 2rem;
+
+  // hides rest of menu on mobile, when menu is closed
+  @media (max-width: 1024px) {
+    > * {
+      &:nth-child(n + 3) {
+        display: none;
+      }
+    }
+  } ;
 `;
