@@ -5,5 +5,10 @@ export const theme = {
     light: "rgba(242, 222, 215, 1)",
     dark: "rgba(38, 38, 38, 1)",
   },
-  fontWeight: {},
+  fontWeight: {
+    thin: 300,
+    regular: 400,
+    bold: 600,
+    xBold: 700,
+  },
 };
