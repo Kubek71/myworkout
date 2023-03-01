@@ -32,12 +32,16 @@ export const ProgramTitle = styled.h3`
 `;
 export const ProgramBox = styled.div`
   width: 100%;
-  padding: 0.5rem;
+  padding: 1.5rem 0.5rem;
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.light};
   position: relative;
   text-align: left;
   max-width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
 
   svg {
     font-size: 1.2rem;
@@ -62,14 +66,14 @@ export const ProgramBox = styled.div`
     transform: translateX(0.6rem);
   }
 `;
-
 export const ProgramList = styled.ul`
-  padding-bottom: 1rem;
   li {
     list-style-type: none;
+    color: ${({ theme }) => theme.colors.dark};
     font-weight: ${({ theme }) => theme.fontWeight.xBold};
     padding: 0.25rem;
     strong {
+      color: ${({ theme }) => theme.colors.primaryRed};
       padding-right: 0.75rem;
     }
   }
