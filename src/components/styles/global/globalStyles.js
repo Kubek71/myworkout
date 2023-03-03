@@ -24,4 +24,12 @@ body {
   }
 }
 
+.active {
+    color: ${({ theme }) => theme.colors.light};
+}
+
+a { 
+     text-decoration: none;
+     color: inherit;
+}
 `;
