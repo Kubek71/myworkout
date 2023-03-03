@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
-export const WorkoutPageStyled = styled.main`
+export const ProgramPageStyled = styled.main`
   width: 100%;
   display: flex;
   flex-direction: column;
   padding: 2rem;
   gap: 1.5rem;
+  align-items: center;
 `;
 
 export const Heading = styled.h2`
@@ -21,6 +22,7 @@ export const ProgramSection = styled.section`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%;
 `;
 
 export const ProgramTitle = styled.h3`
@@ -77,4 +79,11 @@ export const ProgramList = styled.ul`
       padding-right: 0.75rem;
     }
   }
+`;
+export const AddNewProgramButton = styled.button`
+  background: none;
+  border: none;
+  padding: none;
+  cursor: pointer;
+  width: fit-content;
 `;

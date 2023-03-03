@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { useRef, useState } from "react";
 import {
   HeaderStyled,
@@ -29,10 +30,13 @@ export default function Header() {
         <MenuIcon className="menu-button" />
       </Box>
       <NavbarStyled ref={headerRef}>
-        <Box>
-          <ProgramsIcon />
-          <span>PROGRAMS</span>
-        </Box>
+        <NavLink to="/workoutprograms">
+          <Box>
+            <ProgramsIcon />
+            <span>PROGRAMS</span>
+          </Box>
+        </NavLink>
+
         <Box>
           <WorkoutsIcon />
           <span>WORKOUT</span>
