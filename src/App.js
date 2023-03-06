@@ -3,6 +3,7 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "./components/styles/global/theme";
 import { GlobalStyles } from "./components/styles/global/globalStyles";
 import Header from "./components/Header";
+import NewProgramPage from "./components/NewProgramPage";
 import ProgramPage from "./components/ProgramPage";
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
               <Route path="/" />
               <Route path="/workoutprograms" element={<ProgramPage />} />
             </Routes>
+            <NewProgramPage />
           </div>
         </BrowserRouter>
       </>
