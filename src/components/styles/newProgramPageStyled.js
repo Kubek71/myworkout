@@ -25,23 +25,6 @@ export const NewProgramForm = styled.form`
   }
 `;
 
-export const NewProgramTable = styled.table`
-  width: 100%;
-  text-align: left;
-  tr,
-  td {
-    font-weight: ${({ theme }) => theme.fontWeight.bold};
-    color: ${({ theme }) => theme.colors.dark};
-  }
-  thead {
-    border-radius: 5px;
-    padding: 1rem;
-    display: block;
-    min-width: 100%;
-    background: ${({ theme }) => theme.colors.light};
-  }
-`;
-
 export const Heading = styled.h2`
   font-size: 1rem;
   color: ${({ theme }) => theme.colors.light};
@@ -66,4 +49,14 @@ export const Input = styled.input`
   background: none;
   border-bottom: 1px solid ${({ theme }) => theme.colors.primaryRed};
   color: ${({ theme }) => theme.colors.light};
+`;
+
+export const SaveProgramButton = styled.button`
+  color: ${({ theme }) => theme.colors.light};
+  font-weight: ${({ theme }) => theme.fontWeight.xBold};
+  background: ${({ theme }) => theme.colors.primaryRed};
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 `;
