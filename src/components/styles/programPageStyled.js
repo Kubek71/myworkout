@@ -74,6 +74,7 @@ export const ProgramList = styled.ul`
     color: ${({ theme }) => theme.colors.dark};
     font-weight: ${({ theme }) => theme.fontWeight.xBold};
     padding: 0.25rem;
+    text-transform: uppercase;
     strong {
       color: ${({ theme }) => theme.colors.primaryRed};
       padding-right: 0.75rem;

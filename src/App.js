@@ -16,8 +16,8 @@ function App() {
             <Routes>
               <Route path="/" />
               <Route path="/workoutprograms" element={<ProgramPage />} />
+              <Route path="newprogram" element={<NewProgramPage />} />
             </Routes>
-            <NewProgramPage />
           </div>
         </BrowserRouter>
       </>
