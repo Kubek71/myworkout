@@ -4,13 +4,13 @@ export const GlobalStyles = createGlobalStyle`
 
 * {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
-body, html, .App {
-    min-height: 100%;
-    min-width: 100%;
-    margin: 0;
-    padding: 0;
+html, body, #root, .App {
+    height: 100vh;
+    width: 100vw;
 }
 
 body {
@@ -24,4 +24,12 @@ body {
   }
 }
 
+.active {
+    color: ${({ theme }) => theme.colors.light};
+}
+
+a { 
+     text-decoration: none;
+     color: inherit;
+}
 `;
