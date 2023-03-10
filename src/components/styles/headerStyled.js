@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const HeaderStyled = styled.header`
-  position: fixed;
+  position: sticky;
+  z-index: 1;
   top: 0;
   left: 0;
   width: 100%;
@@ -53,6 +54,7 @@ export const HeaderStyled = styled.header`
     height: 100vh;
     flex-direction: column;
     z-index: 0;
+    background: ${({ theme }) => theme.colors.dark};
 
     // displays spans whenever menu is open
     span {
