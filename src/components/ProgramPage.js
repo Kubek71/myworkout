@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { BiPlusMedical as NewProgramIcon } from "react-icons/bi";
 import {
   ProgramPageStyled,
@@ -22,6 +23,7 @@ const NewProgramBox = styled(Box)`
 `;
 
 export default function ProgramPage() {
+  const navigateToNewProgramPage = useNavigate();
   const [isOpenProgramBox, setIsOpenProgramBox] = useState(false);
   const openProgramHandler = () => {
     setIsOpenProgramBox((current) => !current);
@@ -37,7 +39,11 @@ export default function ProgramPage() {
       </ProgramSection>
 
       <AddNewProgramButton>
-        <NewProgramBox>
+        <NewProgramBox
+          onClick={() => {
+            navigateToNewProgramPage("/newprogram");
+          }}
+        >
           <span>NEW</span>
           <NewProgramIcon />
         </NewProgramBox>
