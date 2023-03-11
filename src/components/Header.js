@@ -37,10 +37,13 @@ export default function Header() {
           </Box>
         </NavLink>
 
-        <Box>
-          <WorkoutsIcon />
-          <span>WORKOUT</span>
-        </Box>
+        <NavLink to="/workouts">
+          <Box>
+            <WorkoutsIcon />
+            <span>WORKOUT</span>
+          </Box>
+        </NavLink>
+
         <Box>
           <AnalitycsIcon />
           <span>ANALITYCS</span>
