@@ -7,6 +7,7 @@ import NewProgramPage from "./components/NewProgramPage";
 import ProgramPage from "./components/ProgramPage";
 import WorkoutPage from "./components/WorkoutPage";
 import RegisterPage from "./components/RegisterPage/RegisterPage";
+import LoginPage from "./components/LoginPage/LoginPage";
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -21,6 +22,7 @@ function App() {
               <Route path="newprogram" element={<NewProgramPage />} />
               <Route path="workouts" element={<WorkoutPage />} />
               <Route path="register" element={<RegisterPage />} />
+              <Route path="login" element={<LoginPage />} />
             </Routes>
           </div>
         </BrowserRouter>
