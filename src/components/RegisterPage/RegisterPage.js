@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useForm, FormProvider } from "react-hook-form";
+import { Link } from "react-router-dom";
 import {
   RegisterPageStyled,
   RegisterH1,
@@ -34,8 +35,9 @@ export default function RegisterPage() {
           <NextButton type="submit">Next</NextButton>
         </RegisterForm>
       </FormProvider>
-
-      <LoginPageSpan>Already have an account? Login here</LoginPageSpan>
+      <Link to="/login">
+        <LoginPageSpan>Already have an account? Login here</LoginPageSpan>
+      </Link>
     </RegisterPageStyled>
   );
 }
