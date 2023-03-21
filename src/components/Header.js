@@ -8,6 +8,7 @@ import {
   WorkoutNavSection,
 } from "./styles/headerStyled";
 import { Box } from "./styles/boxStyled.js";
+import styled from "styled-components";
 import {
   BiDumbbell as WorkoutsIcon,
   BiMenu as MenuIcon,
@@ -16,6 +17,12 @@ import {
   BiStats as AnalitycsIcon,
   BiInfoCircle as AboutIcon,
 } from "react-icons/bi";
+import { RegisterH1 } from "./RegisterPage/RegisterPageStyled";
+
+const RegisterHeading = styled(RegisterH1)`
+  padding: 2rem;
+  color: ${({ theme }) => theme.colors.light};
+`;
 
 export default function Header() {
   const headerRef = useRef();
@@ -25,7 +32,8 @@ export default function Header() {
 
   return (
     <HeaderStyled>
-      <HeaderLogo className="reponsive-logo">asdas</HeaderLogo>
+      <RegisterHeading>Sign In</RegisterHeading>
+      {/* <HeaderLogo className="reponsive-logo">asdas</HeaderLogo>
       <Box onClick={showNavbar}>
         <MenuIcon className="menu-button" />
       </Box>
@@ -55,7 +63,7 @@ export default function Header() {
       </NavbarStyled>
       <Box>
         <AccountIcon className="account-button" />
-      </Box>
+      </Box> */}
     </HeaderStyled>
   );
 }
