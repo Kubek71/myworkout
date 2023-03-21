@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useForm, FormProvider } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
   RegisterPageStyled,
@@ -12,6 +13,8 @@ import {
 import RegisterFormContext from "./RegisterFormContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schema } from "./FormSchema";
+import { auth } from "../../helpers/firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const RegisterH2 = styled(RegisterH1)`
   font-size: 0.85rem;
@@ -19,10 +22,21 @@ const RegisterH2 = styled(RegisterH1)`
   color: ${({ theme }) => theme.colors.light};
 `;
 export default function RegisterPage() {
+  const navigateToHomePage = useNavigate();
   const useFormMethods = useForm({ resolver: zodResolver(schema) });
 
   const registerNewUser = (inputData) => {
-    console.log(inputData);
+    createUserWithEmailAndPassword(auth, inputData.email, inputData.password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        useFormMethods.reset();
+        navigateToHomePage("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(error);
+      });
   };
 
   return (
@@ -41,12 +55,3 @@ export default function RegisterPage() {
     </RegisterPageStyled>
   );
 }
-
-//   const registerUser = (data) => {
-//   createUserWithEmailAndPassword(auth, data.email, data.password).then(
-//     (userCredentials) => {
-//       const user = userCredentials.user;
-//       window.location.replace("/");
-//     }
-//   );
-// };
