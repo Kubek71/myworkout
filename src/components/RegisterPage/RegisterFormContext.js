@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TextInput, InputContainer } from "./RegisterPageStyled";
 import { ErrorMessage } from "../styles/global/errorMessage";
 import { BiUser as NameIcon, BiLockAlt as PasswordIcon } from "react-icons/bi";
 import { FiMail as EmailIcon } from "react-icons/fi";
 import { useFormContext } from "react-hook-form";
 
-export default function RegisterFormContext() {
+export default function RegisterFormContext({ registerError }) {
+  useEffect(() => {
+    registerErrorMessage();
+  }, [registerError]);
+
+  const registerErrorMessage = () => {
+    if (registerError === "auth/email-already-in-use")
+      return "this email is already in use";
+    else return registerError.slice(5).replaceAll("-", " ");
+  };
   const {
     register,
     formState: { errors },
@@ -28,12 +37,14 @@ export default function RegisterFormContext() {
           {...register("lastName")}
         />
         <NameIcon />
-        <ErrorMessage>{errors.lastName?.message}</ErrorMessage>
+        <ErrorMessage>{errors.lastName?.message || ""}</ErrorMessage>
       </InputContainer>
       <InputContainer className="input-container">
         <TextInput type="email" placeholder="Email" {...register("email")} />
         <EmailIcon />
-        <ErrorMessage>{errors.email?.message}</ErrorMessage>
+        <ErrorMessage>
+          {errors.email?.message || registerErrorMessage()}
+        </ErrorMessage>
       </InputContainer>
       <InputContainer className="input-container">
         <TextInput
@@ -42,7 +53,7 @@ export default function RegisterFormContext() {
           {...register("password")}
         />
         <PasswordIcon />
-        <ErrorMessage>{errors.password?.message}</ErrorMessage>
+        <ErrorMessage>{errors.password?.message || ""}</ErrorMessage>
       </InputContainer>
       <InputContainer className="input-container">
         <TextInput
@@ -51,7 +62,7 @@ export default function RegisterFormContext() {
           {...register("confirm")}
         />
         <PasswordIcon />
-        <ErrorMessage>{errors.confirm?.message}</ErrorMessage>
+        <ErrorMessage>{errors.confirm?.message || ""}</ErrorMessage>
       </InputContainer>
     </>
   );

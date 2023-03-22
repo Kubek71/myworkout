@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useForm, FormProvider } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +22,7 @@ const RegisterH2 = styled(RegisterH1)`
   color: ${({ theme }) => theme.colors.light};
 `;
 export default function RegisterPage() {
+  const [registerError, setRegisterError] = useState("");
   const navigateToHomePage = useNavigate();
   const useFormMethods = useForm({ resolver: zodResolver(schema) });
 
@@ -35,6 +36,7 @@ export default function RegisterPage() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        setRegisterError(errorCode);
         console.log(error);
       });
   };
@@ -45,7 +47,7 @@ export default function RegisterPage() {
       <RegisterH2>Improve your workout now!</RegisterH2>
       <FormProvider {...useFormMethods}>
         <RegisterForm onSubmit={useFormMethods.handleSubmit(registerNewUser)}>
-          <RegisterFormContext />
+          <RegisterFormContext registerError={registerError} />
           <NextButton type="submit">Next</NextButton>
         </RegisterForm>
       </FormProvider>
