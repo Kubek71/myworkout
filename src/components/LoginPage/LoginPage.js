@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { schema } from "./FormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../Logo/Logo";
 import { LoginPageStyled, LogoBox } from "../styles/loginPageStyled";
 import {
@@ -12,27 +12,24 @@ import {
   LoginPageSpan as RegisterPageSpan,
 } from "../RegisterPage/RegisterPageStyled";
 import LoginPageContext from "./LoginPageContext";
-import { auth } from "../../helpers/firebaseConfig";
+import { auth } from "../../utils/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function LoginPage() {
   // declaring useForm hook with zod resolver
   const useFormMethods = useForm({ resolver: zodResolver(schema) });
   const [loginError, setLoginError] = useState("");
+  const navigateToHomePage = useNavigate();
 
   const loginUser = (inputData) => {
     signInWithEmailAndPassword(auth, inputData.email, inputData.password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        // ...
+      .then(() => {
+        useFormMethods.reset();
+        navigateToHomePage("/");
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
         setLoginError(errorCode);
-        console.log(error.code);
       });
   };
 
@@ -47,7 +44,7 @@ export default function LoginPage() {
           <NextButton>LOG IN</NextButton>
         </LoginForm>
       </FormProvider>
-      <Link to="/register">
+      <Link to="/signup">
         <RegisterPageSpan>
           Dont have an account ? Register here
         </RegisterPageSpan>
