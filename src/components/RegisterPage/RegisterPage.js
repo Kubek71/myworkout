@@ -13,7 +13,7 @@ import {
 import RegisterFormContext from "./RegisterFormContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schema } from "./FormSchema";
-import { auth } from "../../helpers/firebaseConfig";
+import { auth } from "../../utils/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const RegisterH2 = styled(RegisterH1)`
@@ -28,16 +28,13 @@ export default function RegisterPage() {
 
   const registerNewUser = (inputData) => {
     createUserWithEmailAndPassword(auth, inputData.email, inputData.password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
+      .then(() => {
         useFormMethods.reset();
         navigateToHomePage("/");
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
         setRegisterError(errorCode);
-        console.log(error);
       });
   };
 
