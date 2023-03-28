@@ -1,16 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Heading } from "./styles/newProgramPageStyled";
+import { Heading } from "../styles/newProgramPageStyled";
 import {
   WorkoutPageStyled,
   LastWorkoutsSection,
   WorkoutDate,
   WorkoutContainer,
   WorkoutName,
-} from "./styles/workoutPageStyled";
-import { ProgramBox } from "./styles/programPageStyled";
-import { Box } from "./styles/boxStyled.js";
+} from "../styles/workoutPageStyled";
+import { ProgramBox } from "../styles/programPageStyled";
+import { Box } from "../styles/boxStyled.js.js";
 import {
   BiCaretLeft as PreviousIcon,
   BiCaretRight as NextIcon,

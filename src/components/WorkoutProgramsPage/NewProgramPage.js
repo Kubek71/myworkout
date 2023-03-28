@@ -9,10 +9,10 @@ import {
   NextStepButton,
   Input,
   SaveProgramButton,
-} from "./styles/newProgramPageStyled";
-import { ProgramBox, ProgramList } from "./styles/programPageStyled";
-import { ErrorMessage } from "./styles/global/errorMessage";
-import { Box } from "./styles/boxStyled.js";
+} from "../styles/newProgramPageStyled";
+import { ProgramBox, ProgramList } from "../styles/programPageStyled";
+import { ErrorMessage } from "../styles/global/errorMessage";
+import { Box } from "../styles/boxStyled.js.js";
 import { BiPlusMedical as NewProgramIcon } from "react-icons/bi";
 
 const NameProgramForm = styled(NewProgramForm)`
