@@ -16,8 +16,10 @@ import {
   BiSpreadsheet as ProgramsIcon,
   BiStats as AnalitycsIcon,
   BiInfoCircle as AboutIcon,
+  BiLogOut as LogoutIcon,
 } from "react-icons/bi";
 import { RegisterH1 } from "./RegisterPage/RegisterPageStyled";
+import { useAuth } from "../utils/authContext";
 
 const RegisterHeading = styled(RegisterH1)`
   padding: 2rem;
@@ -25,6 +27,7 @@ const RegisterHeading = styled(RegisterH1)`
 `;
 
 export default function Header() {
+  const { currentUser, logoutUser } = useAuth();
   const headerRef = useRef();
   const showNavbar = () => {
     headerRef.current.classList.toggle("open");
@@ -32,8 +35,8 @@ export default function Header() {
 
   return (
     <HeaderStyled>
-      <RegisterHeading>Sign In</RegisterHeading>
-      {/* <HeaderLogo className="reponsive-logo">asdas</HeaderLogo>
+      {/* <RegisterHeading>Sign In</RegisterHeading> */}
+      <HeaderLogo className="reponsive-logo">asdas</HeaderLogo>
       <Box onClick={showNavbar}>
         <MenuIcon className="menu-button" />
       </Box>
@@ -60,10 +63,14 @@ export default function Header() {
           <AboutIcon />
           <span>ABOUT</span>
         </Box>
+        <Box onClick={logoutUser}>
+          <LogoutIcon />
+          <span>LOGOUT</span>
+        </Box>
       </NavbarStyled>
       <Box>
         <AccountIcon className="account-button" />
-      </Box> */}
+      </Box>
     </HeaderStyled>
   );
 }

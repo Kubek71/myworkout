@@ -1,8 +1,9 @@
 import React from "react";
+import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { schema } from "./FormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../Logo/Logo";
 import { LoginPageStyled, LogoBox } from "../styles/loginPageStyled";
 import {
@@ -11,12 +12,25 @@ import {
   LoginPageSpan as RegisterPageSpan,
 } from "../RegisterPage/RegisterPageStyled";
 import LoginPageContext from "./LoginPageContext";
+import { auth } from "../../utils/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 export default function LoginPage() {
   // declaring useForm hook with zod resolver
   const useFormMethods = useForm({ resolver: zodResolver(schema) });
+  const [loginError, setLoginError] = useState("");
+  const navigateToHomePage = useNavigate();
 
   const loginUser = (inputData) => {
-    console.log(inputData);
+    signInWithEmailAndPassword(auth, inputData.email, inputData.password)
+      .then(() => {
+        useFormMethods.reset();
+        navigateToHomePage("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        setLoginError(errorCode);
+      });
   };
 
   return (
@@ -26,11 +40,11 @@ export default function LoginPage() {
       </LogoBox>
       <FormProvider {...useFormMethods}>
         <LoginForm onSubmit={useFormMethods.handleSubmit(loginUser)}>
-          <LoginPageContext />
+          <LoginPageContext loginError={loginError} />
           <NextButton>LOG IN</NextButton>
         </LoginForm>
       </FormProvider>
-      <Link to="/register">
+      <Link to="/signup">
         <RegisterPageSpan>
           Dont have an account ? Register here
         </RegisterPageSpan>
