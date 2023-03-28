@@ -8,10 +8,10 @@ import {
   ProgramSection,
   ProgramTitle,
   AddNewProgramButton,
-} from "./styles/programPageStyled";
-import WorkoutProgram from "./WorkoutProgram";
+} from "../styles/programPageStyled";
+import WorkoutProgram from "../WorkoutPage/WorkoutProgram";
 import styled from "styled-components";
-import { Box } from "./styles/boxStyled.js.js";
+import { Box } from "../styles/boxStyled.js.js";
 
 const NewProgramBox = styled(Box)`
   gap: 0.5rem;
