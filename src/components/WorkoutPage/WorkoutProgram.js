@@ -7,8 +7,8 @@ import {
   BiDumbbell as DumbellIcon,
   BiTimeFive as TimeIcon,
 } from "react-icons/bi";
-import { Box } from "./styles/boxStyled.js";
-import { ProgramBox, ProgramList } from "./styles/programPageStyled";
+import { Box } from "../styles/boxStyled.js.js";
+import { ProgramBox, ProgramList } from "../styles/programPageStyled";
 
 const ItemBox = styled(Box)`
   gap: 0.25rem;

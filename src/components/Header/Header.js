@@ -6,8 +6,8 @@ import {
   HeaderLogo,
   NavbarStyled,
   WorkoutNavSection,
-} from "./styles/headerStyled";
-import { Box } from "./styles/boxStyled.js";
+} from "../styles/headerStyled";
+import { Box } from "../styles/boxStyled.js.js";
 import styled from "styled-components";
 import {
   BiDumbbell as WorkoutsIcon,
@@ -18,8 +18,9 @@ import {
   BiInfoCircle as AboutIcon,
   BiLogOut as LogoutIcon,
 } from "react-icons/bi";
-import { RegisterH1 } from "./RegisterPage/RegisterPageStyled";
-import { useAuth } from "../utils/authContext";
+import { RegisterH1 } from "../RegisterPage/RegisterPageStyled";
+import { useAuth } from "../../utils/authContext";
+import { useEffect } from "react";
 
 const RegisterHeading = styled(RegisterH1)`
   padding: 2rem;
@@ -41,25 +42,25 @@ export default function Header() {
         <MenuIcon className="menu-button" />
       </Box>
       <NavbarStyled ref={headerRef}>
-        <NavLink to="/workoutprograms">
+        <NavLink to="/workoutprograms" onClick={showNavbar}>
           <Box>
             <ProgramsIcon />
             <span>PROGRAMS</span>
           </Box>
         </NavLink>
 
-        <NavLink to="/workouts">
+        <NavLink to="/workouts" onClick={showNavbar}>
           <Box>
             <WorkoutsIcon />
             <span>WORKOUT</span>
           </Box>
         </NavLink>
 
-        <Box>
+        <Box onClick={showNavbar}>
           <AnalitycsIcon />
           <span>ANALITYCS</span>
         </Box>
-        <Box>
+        <Box onClick={showNavbar}>
           <AboutIcon />
           <span>ABOUT</span>
         </Box>
@@ -68,7 +69,7 @@ export default function Header() {
           <span>LOGOUT</span>
         </Box>
       </NavbarStyled>
-      <Box>
+      <Box onClick={showNavbar}>
         <AccountIcon className="account-button" />
       </Box>
     </HeaderStyled>
