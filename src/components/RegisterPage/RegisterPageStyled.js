@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
 export const RegisterPageStyled = styled.main`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
   padding: 2rem;
   background: ${({ theme }) => theme.colors.dark};
   display: flex;

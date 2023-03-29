@@ -8,7 +8,7 @@ import ProgramPage from "./components/WorkoutProgramsPage/ProgramPage";
 import WorkoutPage from "./components/WorkoutPage/WorkoutPage";
 import RegisterPage from "./components/RegisterPage/RegisterPage";
 import LoginPage from "./components/LoginPage/LoginPage";
-
+import UserIsNotLoggedInRoutes from "./utils/useIsNotLoggedRoutes";
 import { useEffect, useState } from "react";
 import { useAuth } from "./utils/authContext";
 import PrivateRoutes from "./utils/privateRoutes";
@@ -24,7 +24,7 @@ function App() {
       <GlobalStyles />
       <Router>
         <div className="App">
-          {currentUser && <Header />}
+          <Header />
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<WorkoutPage />} exact />
@@ -32,8 +32,10 @@ function App() {
               <Route path="/newprogram" element={<NewProgramPage />} />
               <Route path="/workouts" element={<WorkoutPage />} />
             </Route>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<RegisterPage />} />
+            <Route element={<UserIsNotLoggedInRoutes />}>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<RegisterPage />} />
+            </Route>
           </Routes>
         </div>
       </Router>
