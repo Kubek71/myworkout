@@ -33,6 +33,9 @@ export default function Header() {
   const showNavbar = () => {
     headerRef.current.classList.toggle("open");
   };
+  const closeNavbar = () => {
+    headerRef.current.classList.remove("open");
+  };
 
   return (
     <HeaderStyled>
@@ -42,34 +45,39 @@ export default function Header() {
         <MenuIcon className="menu-button" />
       </Box>
       <NavbarStyled ref={headerRef}>
-        <NavLink to="/workoutprograms" onClick={showNavbar}>
+        <NavLink to="/workoutprograms" onClick={closeNavbar}>
           <Box>
             <ProgramsIcon />
             <span>PROGRAMS</span>
           </Box>
         </NavLink>
 
-        <NavLink to="/workouts" onClick={showNavbar}>
+        <NavLink to="/workouts" onClick={closeNavbar}>
           <Box>
             <WorkoutsIcon />
             <span>WORKOUT</span>
           </Box>
         </NavLink>
 
-        <Box onClick={showNavbar}>
+        <Box onClick={closeNavbar}>
           <AnalitycsIcon />
           <span>ANALITYCS</span>
         </Box>
-        <Box onClick={showNavbar}>
+        <Box onClick={closeNavbar}>
           <AboutIcon />
           <span>ABOUT</span>
         </Box>
-        <Box onClick={logoutUser}>
+        <Box
+          onClick={() => {
+            logoutUser();
+            closeNavbar();
+          }}
+        >
           <LogoutIcon />
           <span>LOGOUT</span>
         </Box>
       </NavbarStyled>
-      <Box onClick={showNavbar}>
+      <Box onClick={closeNavbar}>
         <AccountIcon className="account-button" />
       </Box>
     </HeaderStyled>
