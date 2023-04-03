@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { AuthProvider } from "./utils/authContext";
+import UserDataProvider from "./utils/userDataContext";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./components/styles/global/theme";
 
@@ -10,7 +11,9 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <AuthProvider>
-        <App />
+        <UserDataProvider>
+          <App />
+        </UserDataProvider>
       </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>

@@ -21,6 +21,7 @@ body {
     svg {
     color: ${({ theme }) => theme.colors.light};
     font-size: 22px;
+    cursor: pointer;
   }
 }
 
