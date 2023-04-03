@@ -9,7 +9,7 @@ import {
   ProgramTitle,
   AddNewProgramButton,
 } from "../styles/programPageStyled";
-import WorkoutProgram from "../WorkoutPage/WorkoutProgram";
+import WorkoutProgram from "./WorkoutProgram";
 import styled from "styled-components";
 import { Box } from "../styles/boxStyled.js.js";
 

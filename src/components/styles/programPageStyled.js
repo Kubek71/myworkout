@@ -69,12 +69,28 @@ export const ProgramBox = styled.div`
   }
 `;
 export const ProgramList = styled.ul`
+  width: 100%;
+  input {
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
   li {
     list-style-type: none;
     color: ${({ theme }) => theme.colors.dark};
     font-weight: ${({ theme }) => theme.fontWeight.xBold};
     padding: 0.25rem;
+    width: 100%;
     text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    svg {
+      color: ${({ theme }) => theme.colors.primaryRed};
+      flex-shrink: 0;
+    }
     strong {
       color: ${({ theme }) => theme.colors.primaryRed};
       padding-right: 0.75rem;

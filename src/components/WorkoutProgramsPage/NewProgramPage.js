@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import {
   NewProgramPageStyled,
   NewProgramForm,
@@ -13,7 +13,11 @@ import {
 import { ProgramBox, ProgramList } from "../styles/programPageStyled";
 import { ErrorMessage } from "../styles/global/errorMessage";
 import { Box } from "../styles/boxStyled.js.js";
-import { BiPlusMedical as NewProgramIcon } from "react-icons/bi";
+import {
+  BiPlusMedical as NewProgramIcon,
+  BiTrash as RemoveIcon,
+} from "react-icons/bi";
+import { useUserData } from "../../utils/userDataContext";
 
 const NameProgramForm = styled(NewProgramForm)`
   background: none;
@@ -33,6 +37,12 @@ export default function NewProgramPage() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [workoutName, setWorkoutName] = useState(undefined);
   const [exerciseTable, setExerciseTable] = useState([]);
+  const [exerciseStringIsEmptyError, setExerciseStringIsEmptyError] =
+    useState();
+  const { addWorkoutPlan } = useUserData();
+  useEffect(() => {
+    console.log(exerciseTable);
+  }, [exerciseStringIsEmptyError]);
 
   const submitWorkoutName = (data) => {
     setIsFormSubmitted((current) => !current);
@@ -42,6 +52,36 @@ export default function NewProgramPage() {
   const submitExercise = (data) => {
     setExerciseTable((currentTable) => [...currentTable, data.exercise]);
     resetField("exercise");
+  };
+
+  // saving the workoutprogram in firestore if workout name is given, exercise table is not empty
+
+  const saveWorkoutProgram = () => {
+    if (workoutName !== undefined && exerciseTable.length > 0) {
+      if (!exerciseTable.includes("")) {
+        addWorkoutPlan(workoutName, "20min", exerciseTable)
+          .then(() => {
+            console.log("udalo sie");
+          })
+          .catch((error) => console.log(error));
+      } else setExerciseStringIsEmptyError("Every exercise has to have a name");
+    }
+    return;
+  };
+
+  const removeExerciseFromArray = (exerciseIndex) => {
+    setExerciseTable((currentTable) =>
+      currentTable.filter((items, index) => index !== exerciseIndex)
+    );
+  };
+
+  // updating exercise name in array onChange from input
+  const changeExerciseNameInArray = (newExerciseName, exerciseIndex) => {
+    setExerciseTable((currentTable) =>
+      currentTable.map((exercise, i) =>
+        i === exerciseIndex ? newExerciseName : exercise
+      )
+    );
   };
   return (
     <NewProgramPageStyled>
@@ -87,13 +127,29 @@ export default function NewProgramPage() {
               {exerciseTable.map((exercise, i) => {
                 return (
                   <li>
-                    <strong>{i + 1}.</strong> {exercise}
+                    <Box>
+                      <strong>{i + 1}.</strong>{" "}
+                      <input
+                        requiered
+                        onChange={(e) =>
+                          changeExerciseNameInArray(e.currentTarget.value, i)
+                        }
+                        value={exercise}
+                      />
+                    </Box>
+
+                    <RemoveIcon onClick={() => removeExerciseFromArray(i)} />
                   </li>
                 );
               })}
             </ProgramList>
+            {exerciseStringIsEmptyError && (
+              <ErrorMessage>{exerciseStringIsEmptyError}</ErrorMessage>
+            )}
           </ProgramBox>
-          <SaveProgramButton>SAVE PROGRAM</SaveProgramButton>
+          <SaveProgramButton onClick={() => saveWorkoutProgram()}>
+            SAVE PROGRAM
+          </SaveProgramButton>
         </>
       )}
     </NewProgramPageStyled>
