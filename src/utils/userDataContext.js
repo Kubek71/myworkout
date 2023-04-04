@@ -1,7 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import { database } from "./firebaseConfig";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useAuth } from "./authContext";
 const UserDataContext = React.createContext();
 export function useUserData() {
@@ -22,6 +22,14 @@ export default function UserDataProvider({ children }) {
       duration: workoutDuration,
       exercises: exercisesArray,
     });
+  };
+  const getWorkoutPlans = () => {
+    const WorkoutPlansRef = doc(
+      database,
+      `users/${currentUser.uid}/workoutplans`
+    );
+
+    return getDoc(WorkoutPlansRef);
   };
 
   const value = {

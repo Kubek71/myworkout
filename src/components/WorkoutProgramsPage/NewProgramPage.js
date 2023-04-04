@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { set, useForm } from "react-hook-form";
+import { set, useForm, FormProvider } from "react-hook-form";
 import {
   NewProgramPageStyled,
   NewProgramForm,
@@ -32,10 +32,13 @@ export default function NewProgramPage() {
     register,
     handleSubmit,
     resetField,
+    trigger,
     formState: { errors },
   } = useForm();
+  const [isWorkoutProgramNamed, setIsWorkoutProgramNamed] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [workoutName, setWorkoutName] = useState(undefined);
+  const [workoutDuration, setWorkoutDuration] = useState(undefined);
   const [exerciseTable, setExerciseTable] = useState([]);
   const [exerciseStringIsEmptyError, setExerciseStringIsEmptyError] =
     useState();
@@ -47,7 +50,9 @@ export default function NewProgramPage() {
   const submitWorkoutName = (data) => {
     setIsFormSubmitted((current) => !current);
     setWorkoutName(data.workoutName);
+    setWorkoutDuration(data.workoutDuration);
     resetField("workoutName");
+    resetField("workoutDuration");
   };
   const submitExercise = (data) => {
     setExerciseTable((currentTable) => [...currentTable, data.exercise]);
@@ -59,7 +64,7 @@ export default function NewProgramPage() {
   const saveWorkoutProgram = () => {
     if (workoutName !== undefined && exerciseTable.length > 0) {
       if (!exerciseTable.includes("")) {
-        addWorkoutPlan(workoutName, "20min", exerciseTable)
+        addWorkoutPlan(workoutName, workoutDuration, exerciseTable)
           .then(() => {
             console.log("udalo sie");
           })
@@ -86,37 +91,68 @@ export default function NewProgramPage() {
   return (
     <NewProgramPageStyled>
       {isFormSubmitted === true && workoutName !== undefined ? (
-        <NewProgramForm onSubmit={handleSubmit(submitExercise)}>
-          <Heading>ADD EXERCISE</Heading>
-          <Box>
-            <Input
-              type="Text"
-              {...register("exercise", {
-                maxLength: {
-                  value: 20,
-                  message: "maximum amount of characters is 20",
-                },
-                required: "name your exercise",
-              })}
-            ></Input>
-            <button type="submit" className="add-exercise-button">
-              <NewProgramIcon></NewProgramIcon>
-            </button>
-          </Box>
-          <ErrorMessage>{errors.exercise?.message}</ErrorMessage>
-        </NewProgramForm>
+        <FormProvider>
+          <NewProgramForm onSubmit={handleSubmit(submitExercise)}>
+            <Heading>ADD EXERCISE</Heading>
+            <Box>
+              <Input
+                type="Text"
+                {...register("exercise", {
+                  maxLength: {
+                    value: 20,
+                    message: "maximum amount of characters is 20",
+                  },
+                  required: "name your exercise",
+                })}
+              ></Input>
+              <button type="submit" className="add-exercise-button">
+                <NewProgramIcon></NewProgramIcon>
+              </button>
+            </Box>
+            <ErrorMessage>{errors.exercise?.message}</ErrorMessage>
+          </NewProgramForm>
+        </FormProvider>
       ) : (
         <NameProgramForm onSubmit={handleSubmit(submitWorkoutName)}>
-          <Heading>NAME YOUR WORKOUT</Heading>
-          <Input
-            type="text"
-            {...register("workoutName", {
-              minLength: 2,
-              maxLength: 12,
-              required: true,
-            })}
-          ></Input>
-          <NextStepButton type="submit">NEXT</NextStepButton>
+          {!isWorkoutProgramNamed ? (
+            <>
+              <Heading>NAME YOUR WORKOUT</Heading>
+              <Input
+                type="text"
+                {...register("workoutName", {
+                  pattern: {
+                    value: /^[a-zA-Z]{2,12}$/,
+                    message: "Workout name must contain 2-12 characters",
+                  },
+                  required: true,
+                })}
+              ></Input>
+              <ErrorMessage>{errors.workoutName?.message}</ErrorMessage>
+              <NextStepButton
+                onClick={async () => {
+                  const isNamed = await trigger("workoutName");
+                  if (isNamed) {
+                    setIsWorkoutProgramNamed((current) => !current);
+                  }
+                }}
+              >
+                NEXT
+              </NextStepButton>
+            </>
+          ) : (
+            <>
+              <Heading>DEFINE WORKOUT TIME</Heading>
+              <Input
+                type="number"
+                {...register("workoutDuration", {
+                  minLength: 2,
+                  required: true,
+                })}
+                placeholder="60min"
+              />
+              <NextStepButton type="submit">SAVE</NextStepButton>
+            </>
+          )}
         </NameProgramForm>
       )}
       {workoutName !== undefined && exerciseTable.length > 0 && (
