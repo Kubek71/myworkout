@@ -1,8 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { Heading, NextStepButton, Input } from "../styles/newProgramPageStyled";
-import { ErrorMessage } from "../styles/global/errorMessage";
+import {
+  Heading,
+  NextStepButton,
+  Input,
+} from "../../styles/newProgramPageStyled";
+import { ErrorMessage } from "../../styles/global/errorMessage";
 export default function WorkoutNameAndTimeSection() {
   const [isWorkoutProgramNamed, setIsWorkoutProgramNamed] = useState(false);
   const {

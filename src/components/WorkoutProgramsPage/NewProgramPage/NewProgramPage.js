@@ -9,15 +9,15 @@ import {
   NewProgramForm,
   Heading,
   SaveProgramButton,
-} from "../styles/newProgramPageStyled";
-import { ProgramBox, ProgramList } from "../styles/programPageStyled";
-import { ErrorMessage } from "../styles/global/errorMessage";
-import { Box } from "../styles/boxStyled.js.js";
+} from "../../styles/newProgramPageStyled";
+import { ProgramBox, ProgramList } from "../../styles/programPageStyled";
+import { ErrorMessage } from "../../styles/global/errorMessage";
+import { Box } from "../../styles/boxStyled.js.js";
 import {
   BiPlusMedical as NewProgramIcon,
   BiTrash as RemoveIcon,
 } from "react-icons/bi";
-import { useUserData } from "../../utils/userDataContext";
+import { useUserData } from "../../../utils/userDataContext";
 
 const NameProgramForm = styled(NewProgramForm)`
   background: none;

@@ -85,7 +85,8 @@ export const ProgramList = styled.ul`
     text-transform: uppercase;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: ${({ justifyItemsLeft }) =>
+      justifyItemsLeft ? "initial" : "space-between"};
     gap: 1rem;
     svg {
       color: ${({ theme }) => theme.colors.primaryRed};

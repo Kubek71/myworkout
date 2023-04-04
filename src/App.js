@@ -3,7 +3,7 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "./components/styles/global/theme";
 import { GlobalStyles } from "./components/styles/global/globalStyles";
 import Header from "./components/Header/Header";
-import NewProgramPage from "./components/WorkoutProgramsPage/NewProgramPage";
+import NewProgramPage from "./components/WorkoutProgramsPage/NewProgramPage/NewProgramPage";
 import ProgramPage from "./components/WorkoutProgramsPage/ProgramPage";
 import WorkoutPage from "./components/WorkoutPage/WorkoutPage";
 import RegisterPage from "./components/RegisterPage/RegisterPage";

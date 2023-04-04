@@ -2,6 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { database } from "./firebaseConfig";
 import { doc, setDoc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { useAuth } from "./authContext";
 const UserDataContext = React.createContext();
 export function useUserData() {
@@ -24,16 +25,17 @@ export default function UserDataProvider({ children }) {
     });
   };
   const getWorkoutPlans = () => {
-    const WorkoutPlansRef = doc(
-      database,
-      `users/${currentUser.uid}/workoutplans`
+    const WorkoutPlansRef = doc(database, `users/${currentUser.uid}`);
+    const q = query(
+      collection(database, `users/${currentUser.uid}/workoutplans`)
     );
 
-    return getDoc(WorkoutPlansRef);
+    return getDocs(q);
   };
 
   const value = {
     addWorkoutPlan,
+    getWorkoutPlans,
   };
 
   return (
