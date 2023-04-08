@@ -1,3 +1,11 @@
+This is react.js workout application for tracking your workout progress.
+You can save your workout programs and use them to save your training sessions.
+The app provides users with an overview of their personal records in the exercises they perform.
+
+This project is currently in build.
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
