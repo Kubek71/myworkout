@@ -4,6 +4,9 @@ The app provides users with an overview of their personal records in the exercis
 
 This project is currently in build.
 
+Tech stack used in this app:
+React.js, React router v6, React hook form with zod, Firebase auth, Firebase firestore, StyledComponents.
+
 
 
 # Getting Started with Create React App
