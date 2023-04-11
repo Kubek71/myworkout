@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
 import WorkoutNameAndTimeSection from "./AddNameAndTimeFormContent";
 import AddExerciseFormContent from "./AddExerciseFormContent";
@@ -30,7 +31,7 @@ const WorkoutTitle = styled(Heading)`
 export default function NewProgramPage() {
   // pulling all the use form methods
   const useFormMethods = useForm();
-
+  const [isLoading, setIsLoading] = useState(true);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [workoutName, setWorkoutName] = useState(undefined);
   const [workoutDuration, setWorkoutDuration] = useState(undefined);
@@ -38,6 +39,27 @@ export default function NewProgramPage() {
   const [exerciseStringIsEmptyError, setExerciseStringIsEmptyError] =
     useState();
   const { addWorkoutPlan } = useUserData();
+
+  // pulling a route state (passing workoutplan to a route state when user clicks on workoutedit button in program page)
+  const { state } = useLocation();
+
+  // on component first render checks if there is some workout plan passed in from edit workout plan button and if it is sets passed workout to a state
+  useEffect(() => {
+    if (state) {
+      setIsFormSubmitted(true);
+      setWorkoutName(state.workoutToEditName);
+      setWorkoutDuration(state.workoutToEditDuration);
+      setExerciseTable(state.workoutToEditExercises);
+      console.log(state);
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(isLoading);
+  }, [isLoading]);
 
   const submitWorkoutName = (data) => {
     setIsFormSubmitted((current) => !current);
@@ -83,64 +105,72 @@ export default function NewProgramPage() {
       )
     );
   };
-  return (
-    <NewProgramPageStyled>
-      {
-        // displays add exercise form if workout was named and workout time was defined, if its not displays workout name and time form
-        isFormSubmitted === true && workoutName !== undefined ? (
-          <NewProgramForm
-            onSubmit={useFormMethods.handleSubmit(submitExercise)}
-          >
-            <FormProvider {...useFormMethods}>
-              <AddExerciseFormContent />
-            </FormProvider>
-          </NewProgramForm>
-        ) : (
-          <NameProgramForm
-            onSubmit={useFormMethods.handleSubmit(submitWorkoutName)}
-          >
-            <FormProvider {...useFormMethods}>
-              <WorkoutNameAndTimeSection />
-            </FormProvider>
-          </NameProgramForm>
-        )
-      }
-      {
-        // displays exercise list if workout was named and the first exercise was entered
-        workoutName !== undefined && exerciseTable.length > 0 && (
-          <>
-            <ProgramBox>
-              <WorkoutTitle>{workoutName}</WorkoutTitle>
-              <ProgramList>
-                {exerciseTable.map((exercise, i) => {
-                  return (
-                    <li>
-                      <Box>
-                        <strong>{i + 1}.</strong>{" "}
-                        <input
-                          requiered
-                          onChange={(e) =>
-                            changeExerciseNameInArray(e.currentTarget.value, i)
-                          }
-                          value={exercise}
-                        />
-                      </Box>
 
-                      <RemoveIcon onClick={() => removeExerciseFromArray(i)} />
-                    </li>
-                  );
-                })}
-              </ProgramList>
-              {exerciseStringIsEmptyError && (
-                <ErrorMessage>{exerciseStringIsEmptyError}</ErrorMessage>
-              )}
-            </ProgramBox>
-            <SaveProgramButton onClick={() => saveWorkoutProgram()}>
-              SAVE PROGRAM
-            </SaveProgramButton>
-          </>
-        )
-      }
-    </NewProgramPageStyled>
+  return (
+    !isLoading && (
+      <NewProgramPageStyled>
+        {
+          // displays add exercise form if workout was named and workout time was defined, if its not displays workout name and time form
+          isFormSubmitted === true && workoutName !== undefined ? (
+            <NewProgramForm
+              onSubmit={useFormMethods.handleSubmit(submitExercise)}
+            >
+              <FormProvider {...useFormMethods}>
+                <AddExerciseFormContent />
+              </FormProvider>
+            </NewProgramForm>
+          ) : (
+            <NameProgramForm
+              onSubmit={useFormMethods.handleSubmit(submitWorkoutName)}
+            >
+              <FormProvider {...useFormMethods}>
+                <WorkoutNameAndTimeSection />
+              </FormProvider>
+            </NameProgramForm>
+          )
+        }
+        {
+          // displays exercise list if workout was named and the first exercise was entered
+          workoutName !== undefined && exerciseTable.length > 0 && (
+            <>
+              <ProgramBox>
+                <WorkoutTitle>{workoutName}</WorkoutTitle>
+                <ProgramList>
+                  {exerciseTable.map((exercise, i) => {
+                    return (
+                      <li>
+                        <Box>
+                          <strong>{i + 1}.</strong>{" "}
+                          <input
+                            requiered
+                            onChange={(e) =>
+                              changeExerciseNameInArray(
+                                e.currentTarget.value,
+                                i
+                              )
+                            }
+                            value={exercise}
+                          />
+                        </Box>
+
+                        <RemoveIcon
+                          onClick={() => removeExerciseFromArray(i)}
+                        />
+                      </li>
+                    );
+                  })}
+                </ProgramList>
+                {exerciseStringIsEmptyError && (
+                  <ErrorMessage>{exerciseStringIsEmptyError}</ErrorMessage>
+                )}
+              </ProgramBox>
+              <SaveProgramButton onClick={() => saveWorkoutProgram()}>
+                SAVE PROGRAM
+              </SaveProgramButton>
+            </>
+          )
+        }
+      </NewProgramPageStyled>
+    )
   );
 }

@@ -29,8 +29,16 @@ export default function WorkoutProgram({
   exercises,
 }) {
   const navigate = useNavigate();
-  const { deleteWorkoutPlan } = useUserData();
-  const handleDeleteData = () => {
+  const editWorkoutPlanHandler = () => {
+    navigate("/newprogram", {
+      state: {
+        workoutToEditName: name,
+        workoutToEditDuration: duration,
+        workoutToEditExercises: exercises,
+      },
+    });
+  };
+  const deleteWorkoutPlanHandler = () => {
     navigate("/deleteProgram", { state: name });
   };
   return (
@@ -59,8 +67,8 @@ export default function WorkoutProgram({
         </ProgramList>
       )}
 
-      <EditIcon className="edit-icon" />
-      <RemoveIcon className="remove-icon" onClick={handleDeleteData} />
+      <EditIcon className="edit-icon" onClick={editWorkoutPlanHandler} />
+      <RemoveIcon className="remove-icon" onClick={deleteWorkoutPlanHandler} />
       <SlideIcon className="slide-icon" />
     </ProgramBox>
   );
