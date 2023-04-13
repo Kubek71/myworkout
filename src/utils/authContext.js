@@ -13,13 +13,13 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        setCurrentUser(undefined);
-      } else {
-        setCurrentUser(user);
-      }
+      setCurrentUser(user);
+      console.log(user);
     });
-    return unsubscribe;
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const logoutUser = () => {
