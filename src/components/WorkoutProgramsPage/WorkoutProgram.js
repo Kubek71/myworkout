@@ -19,31 +19,35 @@ const ItemBox = styled(Box)`
   }
 `;
 
-export default function WorkoutProgram({ isOpenProgramBox }) {
+export default function WorkoutProgram({
+  isOpenProgramBox,
+  duration,
+  name,
+  exercises,
+}) {
   return (
     <ProgramBox>
       {isOpenProgramBox === false ? (
         <>
           <ItemBox>
             <DumbellIcon />
-            <span>6 exercises</span>
+            <span>{exercises.length} exercises</span>
           </ItemBox>
           <ItemBox>
             <TimeIcon />
-            <span>60 min</span>
+            <span>{duration} min</span>
           </ItemBox>
         </>
       ) : (
-        <ProgramList>
-          <li>
-            <strong>1.</strong>BENCH PRESS
-          </li>
-          <li>
-            <strong>2.</strong>OVER HEAD PRESS
-          </li>
-          <li>
-            <strong>3.</strong>TRICEPS DIPS
-          </li>
+        <ProgramList justifyItemsLeft>
+          {exercises.map((exercise, i) => {
+            return (
+              <li>
+                <strong>{i + 1}.</strong>
+                {exercise}
+              </li>
+            );
+          })}
         </ProgramList>
       )}
 
