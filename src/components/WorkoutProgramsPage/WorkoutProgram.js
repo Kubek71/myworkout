@@ -9,6 +9,9 @@ import {
 } from "react-icons/bi";
 import { Box } from "../styles/boxStyled.js.js";
 import { ProgramBox, ProgramList } from "../styles/programPageStyled";
+import { useUserData } from "../../utils/userDataContext.js";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ItemBox = styled(Box)`
   gap: 0.25rem;
@@ -25,6 +28,11 @@ export default function WorkoutProgram({
   name,
   exercises,
 }) {
+  const navigate = useNavigate();
+  const { deleteWorkoutPlan } = useUserData();
+  const handleDeleteData = () => {
+    navigate("/deleteProgram", { state: name });
+  };
   return (
     <ProgramBox>
       {isOpenProgramBox === false ? (
@@ -52,7 +60,7 @@ export default function WorkoutProgram({
       )}
 
       <EditIcon className="edit-icon" />
-      <RemoveIcon className="remove-icon" />
+      <RemoveIcon className="remove-icon" onClick={handleDeleteData} />
       <SlideIcon className="slide-icon" />
     </ProgramBox>
   );

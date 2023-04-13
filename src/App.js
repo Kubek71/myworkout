@@ -1,6 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ThemeProvider } from "styled-components";
-import { theme } from "./components/styles/global/theme";
 import { GlobalStyles } from "./components/styles/global/globalStyles";
 import Header from "./components/Header/Header";
 import NewProgramPage from "./components/WorkoutProgramsPage/NewProgramPage/NewProgramPage";
@@ -9,16 +7,14 @@ import WorkoutPage from "./components/WorkoutPage/WorkoutPage";
 import RegisterPage from "./components/RegisterPage/RegisterPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import UserIsNotLoggedInRoutes from "./utils/useIsNotLoggedRoutes";
-import { useEffect, useState } from "react";
-import { useAuth } from "./utils/authContext";
 import PrivateRoutes from "./utils/privateRoutes";
+import DeleteWorkoutPlan from "./components/WorkoutProgramsPage/NewProgramPage/DeleteWorkoutPlan";
+
+const Testroute = () => {
+  return <h1>testowyroute</h1>;
+};
+
 function App() {
-  const { currentUser } = useAuth();
-  // useEffect(() => {
-  //   if (currentUser !== undefined) {
-  //     console.log(currentUser);
-  //   }
-  // }, [currentUser]);
   return (
     <>
       <GlobalStyles />
@@ -28,9 +24,10 @@ function App() {
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<WorkoutPage />} exact />
-              <Route path="/workoutprograms" element={<ProgramPage />} />
-              <Route path="/newprogram" element={<NewProgramPage />} />
-              <Route path="/workouts" element={<WorkoutPage />} />
+              <Route path="workoutprograms" element={<ProgramPage />} />
+              <Route path="deleteProgram" element={<DeleteWorkoutPlan />} />
+              <Route path="newprogram" element={<NewProgramPage />} />
+              <Route path="workouts" element={<WorkoutPage />} />
             </Route>
             <Route element={<UserIsNotLoggedInRoutes />}>
               <Route path="/login" element={<LoginPage />} />
