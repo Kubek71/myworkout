@@ -1,7 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import { database } from "./firebaseConfig";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, deleteDoc } from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { useAuth } from "./authContext";
 const UserDataContext = React.createContext();
@@ -33,9 +33,19 @@ export default function UserDataProvider({ children }) {
     return getDocs(q);
   };
 
+  const deleteWorkoutPlan = (workoutPlanName) => {
+    const WorkoutPlanRef = doc(
+      database,
+      `users/${currentUser.uid}/workoutplans/${workoutPlanName}`
+    );
+
+    return deleteDoc(WorkoutPlanRef);
+  };
+
   const value = {
     addWorkoutPlan,
     getWorkoutPlans,
+    deleteWorkoutPlan,
   };
 
   return (

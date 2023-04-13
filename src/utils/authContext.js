@@ -11,10 +11,11 @@ export function useAuth() {
 }
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      console.log(user);
+      setIsAuthLoading(false);
     });
 
     return () => {
@@ -36,7 +37,15 @@ export function AuthProvider({ children }) {
   };
   const value = {
     currentUser,
+    isAuthLoading,
     logoutUser,
   };
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {
+        // renders all the children if userState is set
+        !isAuthLoading && children
+      }
+    </AuthContext.Provider>
+  );
 }
