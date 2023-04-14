@@ -34,3 +34,22 @@ export const WorkoutName = styled.span`
   padding-bottom: 0.5rem;
   width: 100%;
 `;
+
+export const StartWorkoutButton = styled.button`
+  background: ${({ theme }) => theme.colors.primaryRed};
+  color: ${({ theme }) => theme.colors.dark};
+  font-weight: ${({ theme }) => theme.fontWeight.xBold};
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: none;
+  width: 25%;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    border-radius: 0;
+    padding: 1rem;
+  }
+`;
