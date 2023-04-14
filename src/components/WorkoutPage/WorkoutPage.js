@@ -1,13 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Heading } from "../styles/newProgramPageStyled";
+import { Heading, NextStepButton } from "../styles/newProgramPageStyled";
 import {
   WorkoutPageStyled,
   LastWorkoutsSection,
   WorkoutDate,
   WorkoutContainer,
   WorkoutName,
+  StartWorkoutButton,
 } from "../styles/workoutPageStyled";
 import { ProgramBox } from "../styles/programPageStyled";
 import { Box } from "../styles/boxStyled.js.js";
@@ -56,6 +57,7 @@ export default function WorkoutPage() {
           </ItemBox>
         </ProgramBox>
       </LastWorkoutsSection>
+      <StartWorkoutButton>START A WORKOUT</StartWorkoutButton>
     </WorkoutPageStyled>
   );
 }
