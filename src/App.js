@@ -11,6 +11,7 @@ import PrivateRoutes from "./utils/privateRoutes";
 import DeleteWorkoutPlan from "./components/WorkoutProgramsPage/NewProgramPage/DeleteWorkoutPlan";
 import EditWorkoutPlan from "./components/WorkoutProgramsPage/NewProgramPage/EditWorkoutPlan";
 import NewWorkoutPage from "./components/WorkoutPage/NewWorkoutPage";
+import ChooseExercise from "./components/WorkoutPage/ChooseExercise";
 
 const Testroute = () => {
   return <h1>testowyroute</h1>;
