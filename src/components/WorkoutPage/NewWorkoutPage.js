@@ -1,9 +1,12 @@
 import React from "react";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
 import { WorkoutPageStyled as Main } from "../styles/workoutPageStyled";
 import { Box } from "../styles/boxStyled.js";
-import styled from "styled-components";
 import { BiPlusMedical as NewWorkoutIcon } from "react-icons/bi";
 import { Heading } from "../styles/newProgramPageStyled";
+import { useUserData } from "../../utils/userDataContext";
+import StartWorkoutForm from "./StartWorkoutForm";
 
 const ProgramsContainer = styled(Box)`
   justify-content: space-evenly;
@@ -31,20 +34,41 @@ const ProgramBox = styled(Box)`
   }
 `;
 export default function NewWorkoutPage() {
+  const [choosedWorkoutTable, setChoosedWorkoutTable] = useState();
+  const { getWorkoutProgram } = useUserData();
+  const getWorkoutPlansHandler = (e) => {
+    const workoutPlanName = e.target.firstChild.innerText;
+    getWorkoutProgram(workoutPlanName)
+      .then((workoutProgram) => {
+        setChoosedWorkoutTable(workoutProgram.data());
+      })
+      .catch((e) => console.log(e));
+  };
+
+  useEffect(() => {
+    console.log(choosedWorkoutTable);
+  }, [choosedWorkoutTable]);
+
   return (
     <Main>
-      <Heading>Choose your workout program</Heading>
-      <ProgramsContainer>
-        <ProgramBox>
-          <span>PUSH</span>
-        </ProgramBox>
-        <ProgramBox>
-          <span>123456789111</span>
-        </ProgramBox>
-        <ProgramBox>
-          <NewWorkoutIcon />
-        </ProgramBox>
-      </ProgramsContainer>
+      {!choosedWorkoutTable ? (
+        <>
+          <Heading>Choose your workout program</Heading>
+          <ProgramsContainer>
+            <ProgramBox onClick={getWorkoutPlansHandler}>
+              <span>PUSH</span>
+            </ProgramBox>
+            <ProgramBox>
+              <span>123456789111</span>
+            </ProgramBox>
+            <ProgramBox>
+              <NewWorkoutIcon />
+            </ProgramBox>
+          </ProgramsContainer>
+        </>
+      ) : (
+        <StartWorkoutForm choosedWorkoutTable={choosedWorkoutTable} />
+      )}
     </Main>
   );
 }
