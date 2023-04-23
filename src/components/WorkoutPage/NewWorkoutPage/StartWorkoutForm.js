@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, useFieldArray } from "react-hook-form";
 import styled from "styled-components";
 import {
   StartWorkoutFormStyled,
   WorkoutTable,
-} from "../styles/startWorkoutForm";
-import { Heading, NextStepButton } from "../styles/newProgramPageStyled";
-import { Box } from "../styles/boxStyled.js";
+} from "../../styles/startWorkoutForm";
+import { Heading, NextStepButton } from "../../styles/newProgramPageStyled";
+import { Box } from "../../styles/boxStyled.js.js";
 import AddNewSet from "./AddNewSet";
 
 const ExercisesContainer = styled(Box)`
@@ -26,27 +26,29 @@ const ExerciseBox = styled(Box)`
 `;
 
 export default function StartWorkoutForm({ choosedWorkoutTable }) {
-  const [newRows, setNewRows] = useState([]);
   const [openExerciseForm, setOpenExerciseForm] = useState(false);
-  const [newWorkoutTable, setNewWorkoutTable] = useState([]);
-  const [exerciseSets, setExerciseSets] = useState([]);
-  const choosedExercise = choosedWorkoutTable.exercise;
-  const useFormMethods = useForm();
+  const [choosedExercise, setChoosedExercise] = useState();
+  const useFormMethods = useForm({
+    defaultValues: {
+      exerciseSets: [{}],
+    },
+  });
+  const control = useFormMethods.control;
+
+  // importing fields array, append, remove fn from useFieldArray ( reactHookform)
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "exerciseSets",
+  });
 
   // getting single exercise on click from exercise table
   const getChoosedExerciseHandler = (event) => {
     const exercise = event.target.innerText;
-    setNewRows((currentTable) => [...currentTable, exercise]);
+    setChoosedExercise(exercise);
   };
 
-  const saveWorkout = () => {
-    // setNewWorkoutTable((current) => [
-    //   ...current,
-    //   {
-    //     exercise: choosedExercise,
-    //     sets: exerciseSets,
-    //   },
-    // ]);
+  const saveWorkout = (registeredData) => {
+    console.log(registeredData.exerciseSets);
   };
 
   // useEffect(() => {
@@ -54,8 +56,13 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
   // }, [newWorkoutTable]);
   return (
     <StartWorkoutFormStyled onSubmit={useFormMethods.handleSubmit(saveWorkout)}>
-      <FormProvider {...useFormMethods}>
-        {openExerciseForm && newRows.length > 0 ? (
+      <FormProvider
+        {...useFormMethods}
+        fields={fields}
+        append={append}
+        remove={remove}
+      >
+        {openExerciseForm ? (
           <>
             <WorkoutTable>
               <thead>
@@ -68,17 +75,7 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
                 </tr>
               </thead>
               <tbody>
-                {newRows.map((set, index) => {
-                  return (
-                    <AddNewSet
-                      setNewRows={setNewRows}
-                      newRows={newRows}
-                      set={set}
-                      setIndex={index}
-                      setExerciseSets={setExerciseSets}
-                    />
-                  );
-                })}
+                <AddNewSet choosedExercise={choosedExercise} />
               </tbody>
             </WorkoutTable>
             <SaveExerciseButton type="submit">Save Exercise</SaveExerciseButton>
@@ -89,14 +86,15 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
             <ExercisesContainer>
               {choosedWorkoutTable.exercises.map((exercise, i) => {
                 return (
-                  <ExerciseBox
+                  <button
+                    key={i}
                     onClick={(event) => {
                       setOpenExerciseForm((current) => !current);
                       getChoosedExerciseHandler(event);
                     }}
                   >
-                    {exercise}
-                  </ExerciseBox>
+                    <ExerciseBox>{exercise}</ExerciseBox>
+                  </button>
                 );
               })}
             </ExercisesContainer>
