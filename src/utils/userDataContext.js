@@ -32,6 +32,14 @@ export default function UserDataProvider({ children }) {
 
     return getDocs(q);
   };
+  const getWorkoutProgram = (workoutPlanName) => {
+    const WorkoutPlanRef = doc(
+      database,
+      `users/${currentUser.uid}/workoutplans/${workoutPlanName}`
+    );
+
+    return getDoc(WorkoutPlanRef);
+  };
 
   const deleteWorkoutPlan = (workoutPlanName) => {
     const WorkoutPlanRef = doc(
@@ -46,6 +54,7 @@ export default function UserDataProvider({ children }) {
     addWorkoutPlan,
     getWorkoutPlans,
     deleteWorkoutPlan,
+    getWorkoutProgram,
   };
 
   return (
