@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { Link } from "react-router-dom";
 export const WorkoutPageStyled = styled.main`
   width: 100%;
   display: flex;
@@ -35,14 +35,14 @@ export const WorkoutName = styled.span`
   width: 100%;
 `;
 
-export const StartWorkoutButton = styled.button`
+export const StartWorkoutLink = styled(Link)`
   background: ${({ theme }) => theme.colors.primaryRed};
-  color: ${({ theme }) => theme.colors.dark};
+  color: ${({ theme }) => theme.colors.light};
   font-weight: ${({ theme }) => theme.fontWeight.xBold};
   padding: 0.5rem;
   border-radius: 5px;
-  border: none;
   width: 25%;
+  text-align: center;
 
   @media (max-width: 768px) {
     position: fixed;
