@@ -33,4 +33,19 @@ a {
      text-decoration: none;
      color: inherit;
 }
+
+button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: none;
+    color: inherit;
+    font: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
 `;

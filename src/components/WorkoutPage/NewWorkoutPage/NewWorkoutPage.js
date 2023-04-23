@@ -1,11 +1,11 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import { WorkoutPageStyled as Main } from "../styles/workoutPageStyled";
-import { Box } from "../styles/boxStyled.js";
+import { WorkoutPageStyled as Main } from "../../styles/workoutPageStyled";
+import { Box } from "../../styles/boxStyled.js.js";
 import { BiPlusMedical as NewWorkoutIcon } from "react-icons/bi";
-import { Heading } from "../styles/newProgramPageStyled";
-import { useUserData } from "../../utils/userDataContext";
+import { Heading } from "../../styles/newProgramPageStyled";
+import { useUserData } from "../../../utils/userDataContext";
 import StartWorkoutForm from "./StartWorkoutForm";
 
 const ProgramsContainer = styled(Box)`
@@ -13,7 +13,7 @@ const ProgramsContainer = styled(Box)`
   flex-wrap: wrap;
   width: 100%;
 `;
-const ProgramBox = styled(Box)`
+const ProgramButton = styled.button`
   aspect-ratio: 1/1;
   flex-shrink: 1;
   width: clamp(4rem, 30%, 150px);
@@ -45,25 +45,21 @@ export default function NewWorkoutPage() {
       .catch((e) => console.log(e));
   };
 
-  useEffect(() => {
-    console.log(choosedWorkoutTable);
-  }, [choosedWorkoutTable]);
-
   return (
     <Main>
       {!choosedWorkoutTable ? (
         <>
           <Heading>Choose your workout program</Heading>
           <ProgramsContainer>
-            <ProgramBox onClick={getWorkoutPlansHandler}>
+            <ProgramButton onClick={getWorkoutPlansHandler}>
               <span>PUSH</span>
-            </ProgramBox>
-            <ProgramBox>
+            </ProgramButton>
+            <ProgramButton>
               <span>123456789111</span>
-            </ProgramBox>
-            <ProgramBox>
+            </ProgramButton>
+            <ProgramButton>
               <NewWorkoutIcon />
-            </ProgramBox>
+            </ProgramButton>
           </ProgramsContainer>
         </>
       ) : (
