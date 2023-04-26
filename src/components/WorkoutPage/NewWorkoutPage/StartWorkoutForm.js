@@ -9,12 +9,24 @@ import {
 import { Heading, NextStepButton } from "../../styles/newProgramPageStyled";
 import { Box } from "../../styles/boxStyled.js.js";
 import AddNewSet from "./AddNewSet";
+import { WorkoutSection } from "../../styles/startWorkoutForm";
+import { BiDumbbell as SetsIcon, BiTrash as RemoveIcon } from "react-icons/bi";
 
 const ExercisesContainer = styled(Box)`
   flex-wrap: wrap;
+
+  /* changing color of a exercise box whenever exercise button is disabled(when exercise is already in workoutArray) */
+  button:disabled {
+    div {
+      background: none;
+      color: ${({ theme }) => theme.colors.light};
+    }
+  }
 `;
-const SaveExerciseButton = styled(NextStepButton)`
+const SaveButton = styled(NextStepButton)`
   width: 100%;
+  max-width: 600px;
+  color: ${({ theme }) => theme.colors.light};
 `;
 const ExerciseBox = styled(Box)`
   background: ${({ theme }) => theme.colors.light};
@@ -27,7 +39,10 @@ const ExerciseBox = styled(Box)`
 
 export default function StartWorkoutForm({ choosedWorkoutTable }) {
   const [openExerciseForm, setOpenExerciseForm] = useState(false);
+  const [isAddNewSetComponentRendered, setIsAddNewSetComponentRendered] =
+    useState(false);
   const [choosedExercise, setChoosedExercise] = useState();
+  const [workoutArray, setWorkoutArray] = useState([]);
   const useFormMethods = useForm({
     defaultValues: {
       exerciseSets: [{}],
@@ -48,59 +63,113 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
   };
 
   const saveWorkout = (registeredData) => {
-    console.log(registeredData.exerciseSets);
+    setOpenExerciseForm((current) => !current);
+    const registeredExercise = {
+      name: choosedExercise,
+      sets: registeredData.exerciseSets,
+    };
+    setWorkoutArray((currentArray) => [...currentArray, registeredExercise]);
+    useFormMethods.reset();
   };
 
-  // useEffect(() => {
-  //   console.log(newWorkoutTable);
-  // }, [newWorkoutTable]);
+  useEffect(() => {
+    console.log(workoutArray);
+  }, [workoutArray]);
+
+  // removing exercise from array whenever user clicks a remove icon
+  const removeExerciseFromWorkoutArray = (exerciseIndex) => {
+    setWorkoutArray(
+      workoutArray.filter((exercise, index) => !(index === exerciseIndex))
+    );
+  };
+
   return (
-    <StartWorkoutFormStyled onSubmit={useFormMethods.handleSubmit(saveWorkout)}>
-      <FormProvider
-        {...useFormMethods}
-        fields={fields}
-        append={append}
-        remove={remove}
+    <>
+      <StartWorkoutFormStyled
+        onSubmit={useFormMethods.handleSubmit(saveWorkout)}
       >
-        {openExerciseForm ? (
-          <>
-            <WorkoutTable>
-              <thead>
-                <tr>
-                  <th>Exercise</th>
-                  <th>Set</th>
-                  <th>Rep</th>
-                  <th>Kg</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <AddNewSet choosedExercise={choosedExercise} />
-              </tbody>
-            </WorkoutTable>
-            <SaveExerciseButton type="submit">Save Exercise</SaveExerciseButton>
-          </>
-        ) : (
-          <>
-            <Heading>Choose Exercise</Heading>
-            <ExercisesContainer>
-              {choosedWorkoutTable.exercises.map((exercise, i) => {
-                return (
-                  <button
-                    key={i}
-                    onClick={(event) => {
-                      setOpenExerciseForm((current) => !current);
-                      getChoosedExerciseHandler(event);
-                    }}
-                  >
-                    <ExerciseBox>{exercise}</ExerciseBox>
-                  </button>
-                );
-              })}
-            </ExercisesContainer>
-          </>
-        )}
-      </FormProvider>
-    </StartWorkoutFormStyled>
+        <FormProvider
+          {...useFormMethods}
+          fields={fields}
+          append={append}
+          remove={remove}
+        >
+          {openExerciseForm ? (
+            <>
+              <WorkoutTable>
+                <thead>
+                  <tr>
+                    <th>Exercise</th>
+                    <th>Set</th>
+                    <th>Rep</th>
+                    <th>Kg</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <AddNewSet
+                    choosedExercise={choosedExercise}
+                    setIsAddNewSetComponentRendered={
+                      setIsAddNewSetComponentRendered
+                    }
+                  />
+                </tbody>
+              </WorkoutTable>
+              <SaveButton type="submit">Save Exercise</SaveButton>
+            </>
+          ) : (
+            <>
+              <Heading>Choose Exercise</Heading>
+              <ExercisesContainer>
+                {choosedWorkoutTable.exercises.map((exercise, i) => {
+                  return (
+                    <button
+                      key={i}
+                      disabled={workoutArray.some(
+                        (e) => e.name.toLowerCase() === exercise
+                      )}
+                      onClick={(event) => {
+                        setOpenExerciseForm((current) => !current);
+                        getChoosedExerciseHandler(event);
+                      }}
+                    >
+                      <ExerciseBox>{exercise}</ExerciseBox>
+                    </button>
+                  );
+                })}
+              </ExercisesContainer>
+            </>
+          )}
+        </FormProvider>
+      </StartWorkoutFormStyled>
+      {workoutArray.length > 0 && isAddNewSetComponentRendered === false && (
+        <>
+          <WorkoutSection>
+            {workoutArray.map((exercise, exerciseIndex) => {
+              return (
+                <>
+                  <Box className="container">
+                    <button
+                      onClick={() =>
+                        removeExerciseFromWorkoutArray(exerciseIndex)
+                      }
+                    >
+                      <RemoveIcon className="remove-icon" />
+                    </button>
+                    <h2>{exercise.name}</h2>
+
+                    <Box>
+                      <SetsIcon className="set-icon" />
+                      <span>{exercise.sets.length}</span>
+                    </Box>
+                  </Box>
+                </>
+              );
+            })}
+          </WorkoutSection>
+          <SaveButton>Save Workout</SaveButton>
+        </>
+      )}
+    </>
   );
 }

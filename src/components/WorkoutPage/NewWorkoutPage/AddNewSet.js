@@ -1,18 +1,26 @@
 import React from "react";
+import { useEffect } from "react";
 import { BiPlusMedical as AddSetIcon } from "react-icons/bi";
-import { useFormContext, useFieldArray } from "react-hook-form";
-export default function AddNewSet({ choosedExercise }) {
+import { useFormContext } from "react-hook-form";
+export default function AddNewSet({
+  choosedExercise,
+  setIsAddNewSetComponentRendered,
+}) {
   const {
     register,
     formState: { errors },
     trigger,
-    resetField,
-    getValues,
     setFocus,
     fields,
     append,
   } = useFormContext(); // retrieve all hook methods, destructuring errors from formState object
 
+  useEffect(() => {
+    // setting a state for conditional rendering workout section in WorkoutPage.js
+    const unsubscribe = () =>
+      setIsAddNewSetComponentRendered((current) => !current);
+    return unsubscribe;
+  }, []);
   return (
     <>
       {fields.map((field, index) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { WorkoutPageStyled as Main } from "../../styles/workoutPageStyled";
 import { Box } from "../../styles/boxStyled.js.js";
@@ -7,6 +7,7 @@ import { BiPlusMedical as NewWorkoutIcon } from "react-icons/bi";
 import { Heading } from "../../styles/newProgramPageStyled";
 import { useUserData } from "../../../utils/userDataContext";
 import StartWorkoutForm from "./StartWorkoutForm";
+import { useNavigate } from "react-router-dom";
 
 const ProgramsContainer = styled(Box)`
   justify-content: space-evenly;
@@ -35,15 +36,36 @@ const ProgramButton = styled.button`
 `;
 export default function NewWorkoutPage() {
   const [choosedWorkoutTable, setChoosedWorkoutTable] = useState();
-  const { getWorkoutProgram } = useUserData();
+  const { getWorkoutPlans } = useUserData();
+  const [userWorkoutPlans, setUserWorkoutPlans] = useState([]);
+
+  useEffect(() => {
+    if (userWorkoutPlans.length === 0) {
+      // getting all docs from the workoutplans collections for current user
+      getWorkoutPlans()
+        .then((result) => {
+          const plans = result.docs.map((doc) => doc.data());
+          setUserWorkoutPlans(plans);
+          console.log(plans);
+        })
+        .catch((error) => console.log(error));
+    }
+    return;
+  }, []);
+  useEffect(() => {
+    console.log(choosedWorkoutTable);
+  }, [choosedWorkoutTable]);
+
   const getWorkoutPlansHandler = (e) => {
     const workoutPlanName = e.target.firstChild.innerText;
-    getWorkoutProgram(workoutPlanName)
-      .then((workoutProgram) => {
-        setChoosedWorkoutTable(workoutProgram.data());
-      })
-      .catch((e) => console.log(e));
+    // reducing user workout plans table to a single workout plan that was clicked
+    setChoosedWorkoutTable(
+      ...userWorkoutPlans.filter(
+        (workoutPlan) => workoutPlan.name === workoutPlanName
+      )
+    );
   };
+  const navigate = useNavigate();
 
   return (
     <Main>
@@ -51,13 +73,14 @@ export default function NewWorkoutPage() {
         <>
           <Heading>Choose your workout program</Heading>
           <ProgramsContainer>
-            <ProgramButton onClick={getWorkoutPlansHandler}>
-              <span>PUSH</span>
-            </ProgramButton>
-            <ProgramButton>
-              <span>123456789111</span>
-            </ProgramButton>
-            <ProgramButton>
+            {userWorkoutPlans.map((workoutPlan) => {
+              return (
+                <ProgramButton onClick={getWorkoutPlansHandler}>
+                  <span>{workoutPlan.name}</span>
+                </ProgramButton>
+              );
+            })}
+            <ProgramButton onClick={() => navigate("/newprogram")}>
               <NewWorkoutIcon />
             </ProgramButton>
           </ProgramsContainer>
