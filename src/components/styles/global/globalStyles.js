@@ -47,5 +47,11 @@ button {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+
+}
+
+main { 
+    margin: 0 auto;
+    max-width: 1200px;
 }
 `;
