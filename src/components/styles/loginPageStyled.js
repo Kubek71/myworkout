@@ -18,6 +18,7 @@ export const LoginPageStyled = styled.main`
 export const LogoBox = styled.div`
   width: 100%;
   padding-inline: 4rem;
+  max-width: 400px;
   svg {
     fill: ${({ theme }) => theme.colors.primaryRed};
   }
