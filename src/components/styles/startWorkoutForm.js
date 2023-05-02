@@ -4,9 +4,20 @@ export const StartWorkoutFormStyled = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 2rem;
   gap: 1.5rem;
   align-items: center;
+
+  @media (min-width: 768px) {
+    h2 {
+      width: unset;
+    }
+  }
+
+  h2 {
+    color: ${({ theme }) => theme.colors.primaryRed};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.light};
+    padding-bottom: 0.5rem;
+  }
 `;
 
 export const WorkoutTable = styled.table`
@@ -35,7 +46,7 @@ export const WorkoutTable = styled.table`
   }
 
   input {
-    width: 1rem;
+    width: 2rem;
     border: none;
     border-bottom: 1px solid ${({ theme }) => theme.colors.light};
     background: none;
@@ -46,5 +57,40 @@ export const WorkoutTable = styled.table`
       outline: none;
       box-shadow: 0px 0px 2px ${({ theme }) => theme.colors.light};
     }
+  }
+`;
+
+export const WorkoutSection = styled.section`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem 2.5rem;
+  align-items: center;
+  background: ${({ theme }) => theme.colors.light};
+  margin-top: 4rem;
+  border-radius: 5px;
+  max-width: 600px;
+
+  .container {
+    width: 100%;
+  }
+
+  .remove-icon {
+    color: ${({ theme }) => theme.colors.primaryRed};
+    width: 2rem;
+  }
+  .set-icon {
+    color: ${({ theme }) => theme.colors.dark};
+    transform: rotate(45deg);
+  }
+
+  h2 {
+    font-size: 1rem;
+    color: ${({ theme }) => theme.colors.dark};
+    font-weight: ${({ theme }) => theme.fontWeight.xBold};
+    display: block;
+    width: 100%;
+    text-align: left;
   }
 `;
