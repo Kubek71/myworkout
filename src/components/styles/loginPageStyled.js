@@ -6,6 +6,7 @@ export const LoginPageStyled = styled.main`
   left: 0;
   width: 100vw;
   height: 100vh;
+  max-width: unset;
   z-index: 1;
   padding: 2rem;
   background: ${({ theme }) => theme.colors.dark};
