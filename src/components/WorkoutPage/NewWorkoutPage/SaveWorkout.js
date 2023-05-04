@@ -3,76 +3,37 @@ import { Heading } from "../../styles/newProgramPageStyled";
 import { BiNote as NoteIcon } from "react-icons/bi";
 import { WorkoutPageStyled as Main } from "../../styles/workoutPageStyled";
 import { Box } from "../../styles/boxStyled.js";
-import styled from "styled-components";
+import {
+  NoteForm,
+  NoteBox,
+  Button,
+  NoteSection,
+  NoteSpan,
+} from "../../styles/saveWorkoutStyled";
 import { useState } from "react";
 import { SaveButton } from "./StartWorkoutForm";
 import { useUserData } from "../../../utils/userDataContext";
+import { getTodaysDate } from "../../../utils/getDate";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const NoteBox = styled(Box)`
-  svg {
-    color: ${({ theme }) => theme.colors.primaryRed};
-  }
-`;
-
-const NoteForm = styled.form`
-  width: 100%;
-  max-width: 600px;
-  textarea,
-  input {
-    color: ${({ theme }) => theme.colors.dark};
-    background: none;
-    font-size: 1rem;
-    width: 100%;
-    display: block;
-    border: none;
-  }
-  input {
-    background: ${({ theme }) => theme.colors.light};
-    border-radius: 5px;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    width: clamp(8rem, 25vw, 150px);
-  }
-`;
-
-const Button = styled.button`
-  padding: 0.5rem;
-  color: ${({ theme }) => theme.colors.light};
-  font-weight: ${({ theme }) => theme.fontWeight.xBold};
-  border-radius: 5px;
-  background: ${({ theme, positive }) =>
-    positive ? theme.colors.primaryRed : theme.colors.dark};
-`;
-
-const NoteSection = styled.div`
-  background: ${({ theme }) => theme.colors.light};
-  border-radius: 5px;
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 2rem;
-`;
-
-const NoteSpan = styled.span`
-  color: ${({ theme }) => theme.colors.light};
-  svg {
-    color: ${({ theme }) => theme.colors.primaryRed};
-    font-size: 1rem;
-    margin-inline: 0.5rem;
-  }
-`;
 export default function SaveWorkout() {
   const [isNoteRendered, setIsNoteRendered] = useState(false);
   const [note, setNote] = useState();
   const [weight, setWeight] = useState();
-  const { workoutArray, setWorkoutArray } = useUserData();
+  const { workoutArray, addWorkout } = useUserData();
+  const { state } = useLocation();
+  const navigate = useNavigate();
+
+  // saving workout to a database with imported firestore method from userDataContext.js
   const saveWorkoutToFirestore = (e) => {
     e.preventDefault();
-
-    console.log({
-      Exercises: workoutArray,
-      userWeight: weight ? weight : "",
-      note: note ? note : "",
-    });
+    const date = getTodaysDate;
+    const programName = state.planName;
+    addWorkout(date, note ? note : "", weight ? weight : "", programName)
+      .then(() => {
+        navigate("/workouts");
+      })
+      .catch((e) => console.log(e));
   };
 
   const handleNoteOnChange = (e) => {
@@ -82,12 +43,13 @@ export default function SaveWorkout() {
     setWeight(e.target.value);
   };
 
+  // if workoutArray is empty, navigate to the startworkout page (prevents from pushing an empty workout to the firestore database)
   useEffect(() => {
-    console.log(workoutArray);
+    if (workoutArray.length === 0) navigate("/startworkout");
   }, [workoutArray]);
   return (
     <Main>
-      {!isNoteRendered ? (
+      {isNoteRendered ? (
         <>
           <NoteSpan>
             Pin a <NoteIcon /> for your workout!
