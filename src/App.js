@@ -10,7 +10,7 @@ import UserIsNotLoggedInRoutes from "./utils/useIsNotLoggedRoutes";
 import PrivateRoutes from "./utils/privateRoutes";
 import DeleteWorkoutPlan from "./components/WorkoutProgramsPage/NewProgramPage/DeleteWorkoutPlan";
 import NewWorkoutPage from "./components/WorkoutPage/NewWorkoutPage/NewWorkoutPage";
-
+import SaveWorkout from "./components/WorkoutPage/NewWorkoutPage/SaveWorkout";
 const Testroute = () => {
   return <h1>testowyroute</h1>;
 };
@@ -30,6 +30,7 @@ function App() {
               <Route path="newprogram" element={<NewProgramPage />} />
               <Route path="workouts" element={<WorkoutPage />} />
               <Route path="startworkout" element={<NewWorkoutPage />} />
+              <Route path="save" element={<SaveWorkout />} />
             </Route>
             <Route element={<UserIsNotLoggedInRoutes />}>
               <Route path="/login" element={<LoginPage />} />
