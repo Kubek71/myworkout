@@ -66,6 +66,7 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
     setChoosedExercise(exercise);
   };
 
+  // pushing registered exercise with exercise name, registered sets to the workoutArray(from userDataContext.js)
   const saveWorkout = (registeredData) => {
     setOpenExerciseForm((current) => !current);
     const registeredExercise = {
@@ -75,10 +76,6 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
     setWorkoutArray((currentArray) => [...currentArray, registeredExercise]);
     useFormMethods.reset();
   };
-
-  useEffect(() => {
-    console.log(workoutArray);
-  }, [workoutArray]);
 
   // removing exercise from array whenever user clicks a remove icon
   const removeExerciseFromWorkoutArray = (exerciseIndex) => {
@@ -152,7 +149,7 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
             {workoutArray.map((exercise, exerciseIndex) => {
               return (
                 <>
-                  <Box className="container">
+                  <Box className="container" key={exerciseIndex}>
                     <button
                       onClick={() =>
                         removeExerciseFromWorkoutArray(exerciseIndex)
@@ -171,7 +168,12 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
               );
             })}
           </WorkoutSection>
-          <SaveWorkoutLink to="/save">Save Workout</SaveWorkoutLink>
+          <SaveWorkoutLink
+            to="/save"
+            state={{ planName: choosedWorkoutTable.name }}
+          >
+            Save Workout
+          </SaveWorkoutLink>
         </>
       )}
     </>

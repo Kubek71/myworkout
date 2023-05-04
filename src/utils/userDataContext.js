@@ -26,6 +26,20 @@ export default function UserDataProvider({ children }) {
       exercises: exercisesArray,
     });
   };
+
+  const addWorkout = (workoutDate, note, weight, program) => {
+    const WorkoutRef = doc(
+      database,
+      `users/${currentUser.uid}/workouts/${workoutDate}`
+    );
+
+    return setDoc(WorkoutRef, {
+      exercises: workoutArray,
+      userWeight: weight,
+      workoutNote: note,
+      programName: program,
+    });
+  };
   const getWorkoutPlans = () => {
     const WorkoutPlansRef = doc(database, `users/${currentUser.uid}`);
     const q = query(
@@ -59,6 +73,7 @@ export default function UserDataProvider({ children }) {
     getWorkoutProgram,
     workoutArray,
     setWorkoutArray,
+    addWorkout,
   };
 
   return (
