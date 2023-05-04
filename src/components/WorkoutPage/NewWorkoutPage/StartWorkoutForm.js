@@ -7,10 +7,12 @@ import {
   WorkoutTable,
 } from "../../styles/startWorkoutForm";
 import { Heading, NextStepButton } from "../../styles/newProgramPageStyled";
+import { SaveWorkoutLink } from "../../styles/startWorkoutForm";
 import { Box } from "../../styles/boxStyled.js.js";
 import AddNewSet from "./AddNewSet";
 import { WorkoutSection } from "../../styles/startWorkoutForm";
 import { BiDumbbell as SetsIcon, BiTrash as RemoveIcon } from "react-icons/bi";
+import { useUserData } from "../../../utils/userDataContext";
 
 const ExercisesContainer = styled(Box)`
   flex-wrap: wrap;
@@ -23,11 +25,13 @@ const ExercisesContainer = styled(Box)`
     }
   }
 `;
-const SaveButton = styled(NextStepButton)`
+
+export const SaveButton = styled(NextStepButton)`
   width: 100%;
   max-width: 600px;
   color: ${({ theme }) => theme.colors.light};
 `;
+
 const ExerciseBox = styled(Box)`
   background: ${({ theme }) => theme.colors.light};
   font-weight: ${({ theme }) => theme.fontWeight.xBold};
@@ -41,8 +45,8 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
   const [openExerciseForm, setOpenExerciseForm] = useState(false);
   const [isAddNewSetComponentRendered, setIsAddNewSetComponentRendered] =
     useState(false);
+  const { workoutArray, setWorkoutArray } = useUserData();
   const [choosedExercise, setChoosedExercise] = useState();
-  const [workoutArray, setWorkoutArray] = useState([]);
   const useFormMethods = useForm({
     defaultValues: {
       exerciseSets: [{}],
@@ -62,6 +66,7 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
     setChoosedExercise(exercise);
   };
 
+  // pushing registered exercise with exercise name, registered sets to the workoutArray(from userDataContext.js)
   const saveWorkout = (registeredData) => {
     setOpenExerciseForm((current) => !current);
     const registeredExercise = {
@@ -71,10 +76,6 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
     setWorkoutArray((currentArray) => [...currentArray, registeredExercise]);
     useFormMethods.reset();
   };
-
-  useEffect(() => {
-    console.log(workoutArray);
-  }, [workoutArray]);
 
   // removing exercise from array whenever user clicks a remove icon
   const removeExerciseFromWorkoutArray = (exerciseIndex) => {
@@ -148,7 +149,7 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
             {workoutArray.map((exercise, exerciseIndex) => {
               return (
                 <>
-                  <Box className="container">
+                  <Box className="container" key={exerciseIndex}>
                     <button
                       onClick={() =>
                         removeExerciseFromWorkoutArray(exerciseIndex)
@@ -167,7 +168,12 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
               );
             })}
           </WorkoutSection>
-          <SaveButton>Save Workout</SaveButton>
+          <SaveWorkoutLink
+            to="/save"
+            state={{ planName: choosedWorkoutTable.name }}
+          >
+            Save Workout
+          </SaveWorkoutLink>
         </>
       )}
     </>
