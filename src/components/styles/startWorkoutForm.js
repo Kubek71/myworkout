@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const StartWorkoutFormStyled = styled.form`
   width: 100%;
@@ -59,7 +60,15 @@ export const WorkoutTable = styled.table`
     }
   }
 `;
-
+export const SaveWorkoutLink = styled(Link)`
+  background: ${({ theme }) => theme.colors.primaryRed};
+  color: ${({ theme }) => theme.colors.light};
+  font-weight: ${({ theme }) => theme.fontWeight.xBold};
+  padding: 0.5rem;
+  border-radius: 5px;
+  width: 100%;
+  text-align: center;
+`;
 export const WorkoutSection = styled.section`
   width: 100%;
   display: flex;

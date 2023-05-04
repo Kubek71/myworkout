@@ -46,15 +46,11 @@ export default function NewWorkoutPage() {
         .then((result) => {
           const plans = result.docs.map((doc) => doc.data());
           setUserWorkoutPlans(plans);
-          console.log(plans);
         })
         .catch((error) => console.log(error));
     }
     return;
   }, []);
-  useEffect(() => {
-    console.log(choosedWorkoutTable);
-  }, [choosedWorkoutTable]);
 
   const getWorkoutPlansHandler = (e) => {
     const workoutPlanName = e.target.firstChild.innerText;
@@ -73,9 +69,9 @@ export default function NewWorkoutPage() {
         <>
           <Heading>Choose your workout program</Heading>
           <ProgramsContainer>
-            {userWorkoutPlans.map((workoutPlan) => {
+            {userWorkoutPlans.map((workoutPlan, i) => {
               return (
-                <ProgramButton onClick={getWorkoutPlansHandler}>
+                <ProgramButton onClick={getWorkoutPlansHandler} key={i}>
                   <span>{workoutPlan.name}</span>
                 </ProgramButton>
               );
