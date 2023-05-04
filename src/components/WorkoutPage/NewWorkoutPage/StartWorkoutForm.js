@@ -169,7 +169,7 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
             })}
           </WorkoutSection>
           <SaveWorkoutLink
-            to="/save"
+            to="save"
             state={{ planName: choosedWorkoutTable.name }}
           >
             Save Workout

@@ -17,7 +17,7 @@ const Button = styled.button`
   text-transform: uppercase;
 `;
 
-export default function DeleteWorkoutPlan({ workoutPlanName }) {
+export default function DeleteWorkoutPlan() {
   //getting state which is a workout name that we passed in with useNavigate at WorkoutProgram.js
   const { state } = useLocation();
 
@@ -26,13 +26,15 @@ export default function DeleteWorkoutPlan({ workoutPlanName }) {
   const navigate = useNavigate();
   const deleteWorkoutPlanHandler = () => {
     // removing workout plan from firestore collection then going back to the previous page
-    deleteWorkoutPlan(state).then(() => {
+    deleteWorkoutPlan(state.name).then(() => {
       navigate(-1);
     });
   };
   return (
     <DeleteWorkoutPlanContainer>
-      <Heading>Are u sure you want to remove {state.toLowerCase()}</Heading>
+      <Heading>
+        Are u sure you want to remove {state.name.toLowerCase()}
+      </Heading>
       <Box>
         <Button onClick={deleteWorkoutPlanHandler}>Yes</Button>
         <Button not onClick={() => navigate(-1)}>
