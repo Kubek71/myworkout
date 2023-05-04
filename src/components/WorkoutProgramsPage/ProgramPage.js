@@ -14,6 +14,7 @@ import styled from "styled-components";
 import { Box } from "../styles/boxStyled.js.js";
 import { useUserData } from "../../utils/userDataContext";
 import { useAuth } from "../../utils/authContext";
+import { Link } from "react-router-dom";
 const NewProgramBox = styled(Box)`
   gap: 0.5rem;
   font-size: 1rem;
@@ -68,16 +69,12 @@ export default function ProgramPage() {
           })}
       </ProgramSection>
 
-      <AddNewProgramButton>
-        <NewProgramBox
-          onClick={() => {
-            navigateToNewProgramPage("/newprogram");
-          }}
-        >
+      <Link to="newprogram">
+        <NewProgramBox>
           <span>NEW</span>
           <NewProgramIcon />
         </NewProgramBox>
-      </AddNewProgramButton>
+      </Link>
     </ProgramPageStyled>
   );
 }
