@@ -36,10 +36,11 @@ const ProgramButton = styled.button`
 `;
 export default function NewWorkoutPage() {
   const [choosedWorkoutTable, setChoosedWorkoutTable] = useState();
-  const { getWorkoutPlans } = useUserData();
+  const { getWorkoutPlans, setWorkoutArray } = useUserData();
   const [userWorkoutPlans, setUserWorkoutPlans] = useState([]);
 
   useEffect(() => {
+    setWorkoutArray([]);
     if (userWorkoutPlans.length === 0) {
       // getting all docs from the workoutplans collections for current user
       getWorkoutPlans()

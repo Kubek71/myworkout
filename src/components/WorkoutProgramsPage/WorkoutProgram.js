@@ -9,9 +9,8 @@ import {
 } from "react-icons/bi";
 import { Box } from "../styles/boxStyled.js.js";
 import { ProgramBox, ProgramList } from "../styles/programPageStyled";
-import { useUserData } from "../../utils/userDataContext.js";
-import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
+import { Link } from "react-router-dom";
 
 const ItemBox = styled(Box)`
   gap: 0.25rem;
@@ -28,19 +27,6 @@ export default function WorkoutProgram({
   name,
   exercises,
 }) {
-  const navigate = useNavigate();
-  const editWorkoutPlanHandler = () => {
-    navigate("/newprogram", {
-      state: {
-        workoutToEditName: name,
-        workoutToEditDuration: duration,
-        workoutToEditExercises: exercises,
-      },
-    });
-  };
-  const deleteWorkoutPlanHandler = () => {
-    navigate("/deleteProgram", { state: name });
-  };
   return (
     <ProgramBox>
       {isOpenProgramBox === false ? (
@@ -66,9 +52,20 @@ export default function WorkoutProgram({
           })}
         </ProgramList>
       )}
+      <Link
+        to="newprogram"
+        state={{
+          workoutToEditName: name,
+          workoutToEditDuration: duration,
+          workoutToEditExercises: exercises,
+        }}
+      >
+        <EditIcon className="edit-icon" />
+      </Link>
+      <Link to="deleteProgram" state={{ name: name }}>
+        <RemoveIcon className="remove-icon" />
+      </Link>
 
-      <EditIcon className="edit-icon" onClick={editWorkoutPlanHandler} />
-      <RemoveIcon className="remove-icon" onClick={deleteWorkoutPlanHandler} />
       <SlideIcon className="slide-icon" />
     </ProgramBox>
   );

@@ -25,12 +25,17 @@ function App() {
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<WorkoutPage />} exact />
-              <Route path="workoutprograms" element={<ProgramPage />} />
-              <Route path="deleteProgram" element={<DeleteWorkoutPlan />} />
-              <Route path="newprogram" element={<NewProgramPage />} />
-              <Route path="workouts" element={<WorkoutPage />} />
-              <Route path="startworkout" element={<NewWorkoutPage />} />
-              <Route path="save" element={<SaveWorkout />} />
+              <Route path="workoutprograms">
+                <Route index element={<ProgramPage />} />
+                <Route path="newprogram" element={<NewProgramPage />} />
+                <Route path="deleteProgram" element={<DeleteWorkoutPlan />} />
+              </Route>
+
+              <Route path="workouts">
+                <Route index element={<WorkoutPage />} />
+                <Route path="startworkout" element={<NewWorkoutPage />} />
+                <Route path="startworkout/save" element={<SaveWorkout />} />
+              </Route>
             </Route>
             <Route element={<UserIsNotLoggedInRoutes />}>
               <Route path="/login" element={<LoginPage />} />
