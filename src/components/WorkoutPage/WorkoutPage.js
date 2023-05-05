@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { Heading } from "../styles/newProgramPageStyled";
+import { Outlet } from "react-router-dom";
 import {
   WorkoutPageStyled,
   LastWorkoutsSection,
