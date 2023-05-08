@@ -33,6 +33,7 @@ export const ProgramTitle = styled.h3`
   width: 100%;
 `;
 export const ProgramBox = styled.div`
+  cursor: pointer;
   width: 100%;
   padding: 1.5rem 0.5rem;
   border-radius: 5px;

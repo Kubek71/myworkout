@@ -1,8 +1,15 @@
 import React from "react";
 import { useContext } from "react";
 import { database } from "./firebaseConfig";
-import { doc, setDoc, getDoc, deleteDoc } from "firebase/firestore";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { doc, setDoc, getDoc, deleteDoc, addDoc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  limit,
+  orderBy,
+} from "firebase/firestore";
 import { useAuth } from "./authContext";
 import { useState } from "react";
 const UserDataContext = React.createContext();
@@ -27,27 +34,38 @@ export default function UserDataProvider({ children }) {
     });
   };
 
-  const addWorkout = (workoutDate, note, weight, program) => {
-    const WorkoutRef = doc(
+  const addWorkout = (workoutTimestamp, note, weight, program) => {
+    const WorkoutRef = collection(
       database,
-      `users/${currentUser.uid}/workouts/${workoutDate}`
+      `users/${currentUser.uid}/workouts/`
     );
-
-    return setDoc(WorkoutRef, {
+    return addDoc(WorkoutRef, {
       exercises: workoutArray,
       userWeight: weight,
       workoutNote: note,
       programName: program,
+      timestamp: workoutTimestamp,
     });
   };
   const getWorkoutPlans = () => {
-    const WorkoutPlansRef = doc(database, `users/${currentUser.uid}`);
     const q = query(
       collection(database, `users/${currentUser.uid}/workoutplans`)
     );
 
     return getDocs(q);
   };
+  const getWorkouts = (onlyLast) => {
+    const q = onlyLast
+      ? query(
+          collection(database, `users/${currentUser.uid}/workouts`),
+          orderBy("timestamp", "desc"),
+          limit(10)
+        )
+      : query(collection(database, `users/${currentUser.uid}/workouts`));
+
+    return getDocs(q);
+  };
+
   const getWorkoutProgram = (workoutPlanName) => {
     const WorkoutPlanRef = doc(
       database,
@@ -74,6 +92,7 @@ export default function UserDataProvider({ children }) {
     workoutArray,
     setWorkoutArray,
     addWorkout,
+    getWorkouts,
   };
 
   return (
