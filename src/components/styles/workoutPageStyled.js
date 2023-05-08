@@ -53,3 +53,40 @@ export const StartWorkoutLink = styled(Link)`
     padding: 1rem;
   }
 `;
+
+export const WorkoutTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  div {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem;
+  }
+
+  td,
+  th {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: clamp(10px, 2vw, 1rem);
+  }
+
+  th {
+    color: ${({ theme }) => theme.colors.primaryRed};
+    text-align: center;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.light};
+  }
+
+  td {
+    color: ${({ theme }) => theme.colors.dark};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.dark};
+    text-align: left;
+  }
+
+  .sets-table-data {
+    border: none;
+  }
+  .first-row {
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
+    color: ${({ theme }) => theme.colors.primaryRed};
+  }
+`;
