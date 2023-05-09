@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import { SaveButton } from "./StartWorkoutForm";
 import { useUserData } from "../../../utils/userDataContext";
-import { getTodaysDate } from "../../../utils/getDate";
+import { getTodaysDate, getTimestamp } from "../../../utils/getDate";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function SaveWorkout() {
@@ -27,9 +27,9 @@ export default function SaveWorkout() {
   // saving workout to a database with imported firestore method from userDataContext.js
   const saveWorkoutToFirestore = (e) => {
     e.preventDefault();
-    const date = getTodaysDate;
+    const timestamp = getTimestamp;
     const programName = state.planName;
-    addWorkout(date, note ? note : "", weight ? weight : "", programName)
+    addWorkout(timestamp, note ? note : "", weight ? weight : "", programName)
       .then(() => {
         navigate("/workouts");
       })
