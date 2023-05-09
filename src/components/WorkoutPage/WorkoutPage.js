@@ -11,6 +11,7 @@ import {
   WorkoutDate,
   WorkoutName,
   StartWorkoutButton,
+  WorkoutBox,
   StartWorkoutLink,
   WorkoutTable,
 } from "../styles/workoutPageStyled";
@@ -87,7 +88,7 @@ export default function WorkoutPage() {
             <NextIcon onClick={() => changeCurrentWorkoutHandler(false)} />
           </Box>
 
-          <ProgramBox onClick={() => setIsWorkoutOpened((current) => !current)}>
+          <WorkoutBox onClick={() => setIsWorkoutOpened((current) => !current)}>
             {isWorkoutOpened ? (
               <WorkoutTable>
                 {currentWorkout.exercises.map((exercise) => {
@@ -136,7 +137,7 @@ export default function WorkoutPage() {
                 </ItemBox>
               </>
             )}
-          </ProgramBox>
+          </WorkoutBox>
         </LastWorkoutsSection>
       )}
       <StartWorkoutLink to="startworkout">START A WORKOUT</StartWorkoutLink>

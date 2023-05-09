@@ -14,6 +14,7 @@ export const LastWorkoutsSection = styled.section`
   flex-direction: column;
   gap: 0.5rem;
   align-items: center;
+  position: relative;
 `;
 export const WorkoutDate = styled.h3`
   font-size: 1.15rem;
@@ -33,6 +34,31 @@ export const WorkoutName = styled.span`
   display: block;
   padding-bottom: 0.5rem;
   width: 100%;
+`;
+export const WorkoutBox = styled.div`
+  cursor: pointer;
+  width: 100%;
+  padding: 1.5rem 0.5rem;
+  border-radius: 5px;
+  background: ${({ theme }) => theme.colors.light};
+  text-align: left;
+  max-width: 600px;
+  max-height: 45vh;
+  overflow-y: scroll;
+
+  &::after {
+    position: absolute;
+    content: "";
+    height: 10%;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(
+      0deg,
+      rgba(242, 222, 215, 1) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
 `;
 
 export const StartWorkoutLink = styled(Link)`
@@ -57,6 +83,7 @@ export const StartWorkoutLink = styled(Link)`
 export const WorkoutTable = styled.table`
   width: 100%;
   border-collapse: collapse;
+
   div {
     width: 100%;
     margin-bottom: 1.5rem;
