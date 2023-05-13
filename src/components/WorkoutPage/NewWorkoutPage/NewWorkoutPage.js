@@ -40,7 +40,11 @@ export default function NewWorkoutPage() {
   const [userWorkoutPlans, setUserWorkoutPlans] = useState([]);
 
   useEffect(() => {
-    setWorkoutArray([]);
+    const choosedPlanFromLocalStorage =
+      window.localStorage.getItem("choosedWorkoutPlan");
+    choosedPlanFromLocalStorage !== null
+      ? setChoosedWorkoutTable(JSON.parse(choosedPlanFromLocalStorage))
+      : setWorkoutArray([]);
     if (userWorkoutPlans.length === 0) {
       // getting all docs from the workoutplans collections for current user
       getWorkoutPlans()
@@ -53,9 +57,19 @@ export default function NewWorkoutPage() {
     return;
   }, []);
 
+  useEffect(() => {
+    if (choosedWorkoutTable) {
+      window.localStorage.setItem(
+        "choosedWorkoutPlan",
+        JSON.stringify(choosedWorkoutTable)
+      );
+    }
+  }, [choosedWorkoutTable]);
+
   const getWorkoutPlansHandler = (e) => {
     const workoutPlanName = e.target.firstChild.innerText;
     // reducing user workout plans table to a single workout plan that was clicked
+
     setChoosedWorkoutTable(
       ...userWorkoutPlans.filter(
         (workoutPlan) => workoutPlan.name === workoutPlanName

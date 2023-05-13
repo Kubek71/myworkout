@@ -11,7 +11,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { useAuth } from "./authContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const UserDataContext = React.createContext();
 export function useUserData() {
   return useContext(UserDataContext);
@@ -20,6 +20,12 @@ export function useUserData() {
 export default function UserDataProvider({ children }) {
   const { currentUser } = useAuth();
   const [workoutArray, setWorkoutArray] = useState([]);
+
+  useEffect(() => {
+    if (workoutArray.length > 0) {
+      window.localStorage.setItem("workout", JSON.stringify(workoutArray));
+    }
+  }, [workoutArray]);
 
   const addWorkoutPlan = (workoutPlanName, workoutDuration, exercisesArray) => {
     const WorkoutPlanRef = doc(

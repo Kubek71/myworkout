@@ -4,14 +4,12 @@ import { useUserData } from "../../utils/userDataContext";
 import styled from "styled-components";
 import { Heading } from "../styles/newProgramPageStyled";
 import { date } from "../../utils/getDate";
-import { fromUnixTime, format } from "date-fns";
-import { Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   WorkoutPageStyled,
   LastWorkoutsSection,
   WorkoutDate,
   WorkoutName,
-  StartWorkoutButton,
   WorkoutBox,
   StartWorkoutLink,
   NoteBox,
@@ -19,7 +17,6 @@ import {
 } from "../styles/workoutPageStyled";
 import { BiNote as NoteIcon } from "react-icons/bi";
 import { MdOutlineMonitorWeight as WeightIcon } from "react-icons/md";
-import { ProgramBox } from "../styles/programPageStyled";
 import { Box } from "../styles/boxStyled.js.js";
 import {
   BiCaretLeft as PreviousIcon,
@@ -47,26 +44,30 @@ const LastWorkoutsHeading = styled(Heading)`
 `;
 
 export default function WorkoutPage() {
-  const { getWorkouts } = useUserData();
+  const { getWorkouts, workoutArray } = useUserData();
   const [workouts, setWorkouts] = useState([]);
   const [currentWorkoutIndex, setCurrentWorkoutIndex] = useState(0);
   const [isWorkoutOpened, setIsWorkoutOpened] = useState(false);
   const [renderNote, setRenderNote] = useState(false);
   const [currentWorkout, setCurrentWorkout] = useState();
+  const navigate = useNavigate();
   useEffect(() => {
-    // getting 3 last workouts from firestore for current user on component's render
-    getWorkouts(true)
-      .then((result) => {
-        const userWorkouts = result.docs.map((doc) => doc.data());
-        setWorkouts(userWorkouts);
-        setCurrentWorkout(userWorkouts[0]);
-        console.log(userWorkouts);
-        const date = Math.round(userWorkouts[0].timestamp / 1000);
-        console.log(fromUnixTime(date));
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (workoutArray.length > 0) {
+      navigate("/workouts/startworkout");
+    } else {
+      // getting 3 last workouts from firestore for current user on component's render
+      getWorkouts(true)
+        .then((result) => {
+          console.log("lol");
+          const userWorkouts = result.docs.map((doc) => doc.data());
+          console.log(userWorkouts);
+          setWorkouts(userWorkouts);
+          setCurrentWorkout(userWorkouts[0]);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   }, []);
 
   useEffect(() => {
@@ -74,6 +75,12 @@ export default function WorkoutPage() {
       ? setRenderNote(true)
       : setRenderNote(false);
   }, [currentWorkout]);
+  useEffect(() => {
+    // setting current workout state to a single element from workout array
+    if (workouts.length > 0) {
+      setCurrentWorkout(workouts[currentWorkoutIndex]);
+    }
+  }, [currentWorkoutIndex]);
   const changeCurrentWorkoutHandler = (previous) => {
     // choosing an index of workout in array to display on buttons click < , >
     previous
@@ -87,12 +94,6 @@ export default function WorkoutPage() {
     setIsWorkoutOpened(false);
   };
 
-  useEffect(() => {
-    // setting current workout state to a single element from workout array
-    if (workouts.length > 0) {
-      setCurrentWorkout(workouts[currentWorkoutIndex]);
-    }
-  }, [currentWorkoutIndex]);
   return (
     <WorkoutPageStyled>
       <LastWorkoutsHeading>YOUR LAST WORKOUTS</LastWorkoutsHeading>
