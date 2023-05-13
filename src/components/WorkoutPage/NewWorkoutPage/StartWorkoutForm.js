@@ -84,6 +84,13 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
     );
   };
 
+  useEffect(() => {
+    const workout = JSON.parse(window.localStorage.getItem("workout"));
+    if (workout) {
+      setWorkoutArray(workout);
+    }
+  }, []);
+
   return (
     <>
       <StartWorkoutFormStyled
