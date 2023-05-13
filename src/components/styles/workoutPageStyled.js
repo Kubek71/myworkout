@@ -51,8 +51,12 @@ export const WorkoutBox = styled.div`
     content: "";
     height: 10%;
     width: 100%;
+    max-width: 600px;
     bottom: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     background: linear-gradient(
       0deg,
       rgba(242, 222, 215, 1) 50%,
@@ -115,5 +119,28 @@ export const WorkoutTable = styled.table`
   .first-row {
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     color: ${({ theme }) => theme.colors.primaryRed};
+  }
+`;
+export const NoteBox = styled.div`
+  svg {
+    font-size: 1rem;
+    color: ${({ theme }) => theme.colors.primaryRed};
+  }
+  span {
+    padding: 1rem 0;
+    justify-content: center;
+    display: flex;
+    gap: 0.25rem;
+    width: 100%;
+    color: ${({ theme }) => theme.colors.dark};
+    font-weight: ${({ theme }) => theme.fontWeight.xBold};
+  }
+  ${({ weight }) =>
+    weight &&
+    "span {justify-content: flex-start; font-size: 0.75rem; padding: 0;}; svg{font-size: 0.75rem}"}
+
+  p {
+    text-align: center;
+    font-size: clamp(10px, 2vw, 1rem);
   }
 `;
