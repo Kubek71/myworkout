@@ -7,6 +7,7 @@ import {
   NavbarStyled,
   WorkoutNavSection,
 } from "../styles/headerStyled";
+import Logo from "../../assets/Logo/Logo";
 import { Box } from "../styles/boxStyled.js.js";
 import styled from "styled-components";
 import {
@@ -40,7 +41,11 @@ export default function Header() {
   return (
     <HeaderStyled>
       {/* <RegisterHeading>Sign In</RegisterHeading> */}
-      <HeaderLogo className="reponsive-logo">asdas</HeaderLogo>
+      <HeaderLogo className="reponsive-logo">
+        <NavLink to="/">
+          <Logo />
+        </NavLink>
+      </HeaderLogo>
       <Box onClick={showNavbar}>
         <MenuIcon className="menu-button" />
       </Box>

@@ -4,6 +4,7 @@ import { useUserData } from "../../utils/userDataContext";
 import styled from "styled-components";
 import { Heading } from "../styles/newProgramPageStyled";
 import { date } from "../../utils/getDate";
+import { fromUnixTime, format } from "date-fns";
 import { Outlet } from "react-router-dom";
 import {
   WorkoutPageStyled,
@@ -13,8 +14,11 @@ import {
   StartWorkoutButton,
   WorkoutBox,
   StartWorkoutLink,
+  NoteBox,
   WorkoutTable,
 } from "../styles/workoutPageStyled";
+import { BiNote as NoteIcon } from "react-icons/bi";
+import { MdOutlineMonitorWeight as WeightIcon } from "react-icons/md";
 import { ProgramBox } from "../styles/programPageStyled";
 import { Box } from "../styles/boxStyled.js.js";
 import {
@@ -27,8 +31,11 @@ import {
 const ItemBox = styled(Box)`
   gap: 0.25rem;
   font-size: 0.75rem;
+  svg {
+    color: ${({ theme }) => theme.colors.dark};
+  }
   span {
-    color: ${({ theme }) => theme.colors.primaryRed};
+    color: ${({ theme }) => theme.colors.dark};
     font-weight: ${({ theme }) => theme.fontWeight.xBold};
   }
 `;
@@ -44,6 +51,7 @@ export default function WorkoutPage() {
   const [workouts, setWorkouts] = useState([]);
   const [currentWorkoutIndex, setCurrentWorkoutIndex] = useState(0);
   const [isWorkoutOpened, setIsWorkoutOpened] = useState(false);
+  const [renderNote, setRenderNote] = useState(false);
   const [currentWorkout, setCurrentWorkout] = useState();
   useEffect(() => {
     // getting 3 last workouts from firestore for current user on component's render
@@ -53,11 +61,19 @@ export default function WorkoutPage() {
         setWorkouts(userWorkouts);
         setCurrentWorkout(userWorkouts[0]);
         console.log(userWorkouts);
+        const date = Math.round(userWorkouts[0].timestamp / 1000);
+        console.log(fromUnixTime(date));
       })
       .catch((e) => {
         console.log(e);
       });
   }, []);
+
+  useEffect(() => {
+    currentWorkout && currentWorkout.workoutNote.length > 0
+      ? setRenderNote(true)
+      : setRenderNote(false);
+  }, [currentWorkout]);
   const changeCurrentWorkoutHandler = (previous) => {
     // choosing an index of workout in array to display on buttons click < , >
     previous
@@ -123,6 +139,26 @@ export default function WorkoutPage() {
                     </div>
                   );
                 })}
+                {renderNote && (
+                  <>
+                    {currentWorkout.userWeight && (
+                      <NoteBox weight>
+                        <span>
+                          <WeightIcon />
+                          Weight: {currentWorkout.userWeight} kg
+                        </span>
+                      </NoteBox>
+                    )}
+
+                    <NoteBox>
+                      <span>
+                        <NoteIcon />
+                        Note:
+                      </span>
+                      <p>{currentWorkout.workoutNote}</p>
+                    </NoteBox>
+                  </>
+                )}
               </WorkoutTable>
             ) : (
               <>

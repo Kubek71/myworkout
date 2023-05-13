@@ -7,6 +7,7 @@ export const StartWorkoutFormStyled = styled.form`
   flex-direction: column;
   gap: 1.5rem;
   align-items: center;
+  max-width: 600px;
 
   @media (min-width: 768px) {
     h2 {
@@ -47,7 +48,8 @@ export const WorkoutTable = styled.table`
   }
 
   input {
-    width: 2rem;
+    font-size: clamp(10px, 2vw, 1rem);
+    max-width: 3em;
     border: none;
     border-bottom: 1px solid ${({ theme }) => theme.colors.light};
     background: none;
