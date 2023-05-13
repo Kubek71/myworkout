@@ -13,6 +13,13 @@ export const HeaderStyled = styled.header`
   border-bottom: 1px solid ${({ theme }) => theme.colors.light};
   position: relative;
 
+  .reponsive-logo {
+    padding-inline: 2rem;
+    svg {
+      fill: ${({ theme }) => theme.colors.primaryRed};
+      max-width: 3rem;
+    }
+  }
   // hides logo, nav spans on mobile
   @media (max-width: 1024px) {
     .reponsive-logo,
@@ -94,5 +101,5 @@ export const NavbarStyled = styled.nav`
         display: none;
       }
     }
-  } ;
+  }
 `;

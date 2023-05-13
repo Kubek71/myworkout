@@ -14,6 +14,7 @@ export const LastWorkoutsSection = styled.section`
   flex-direction: column;
   gap: 0.5rem;
   align-items: center;
+  position: relative;
 `;
 export const WorkoutDate = styled.h3`
   font-size: 1.15rem;
@@ -33,6 +34,35 @@ export const WorkoutName = styled.span`
   display: block;
   padding-bottom: 0.5rem;
   width: 100%;
+`;
+export const WorkoutBox = styled.div`
+  cursor: pointer;
+  width: 100%;
+  padding: 1.5rem 0.5rem;
+  border-radius: 5px;
+  background: ${({ theme }) => theme.colors.light};
+  text-align: left;
+  max-width: 600px;
+  max-height: 45vh;
+  overflow-y: scroll;
+
+  &::after {
+    position: absolute;
+    content: "";
+    height: 10%;
+    width: 100%;
+    max-width: 600px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: linear-gradient(
+      0deg,
+      rgba(242, 222, 215, 1) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
 `;
 
 export const StartWorkoutLink = styled(Link)`
@@ -57,6 +87,7 @@ export const StartWorkoutLink = styled(Link)`
 export const WorkoutTable = styled.table`
   width: 100%;
   border-collapse: collapse;
+
   div {
     width: 100%;
     margin-bottom: 1.5rem;
@@ -88,5 +119,28 @@ export const WorkoutTable = styled.table`
   .first-row {
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     color: ${({ theme }) => theme.colors.primaryRed};
+  }
+`;
+export const NoteBox = styled.div`
+  svg {
+    font-size: 1rem;
+    color: ${({ theme }) => theme.colors.primaryRed};
+  }
+  span {
+    padding: 1rem 0;
+    justify-content: center;
+    display: flex;
+    gap: 0.25rem;
+    width: 100%;
+    color: ${({ theme }) => theme.colors.dark};
+    font-weight: ${({ theme }) => theme.fontWeight.xBold};
+  }
+  ${({ weight }) =>
+    weight &&
+    "span {justify-content: flex-start; font-size: 0.75rem; padding: 0;}; svg{font-size: 0.75rem}"}
+
+  p {
+    text-align: center;
+    font-size: clamp(10px, 2vw, 1rem);
   }
 `;
