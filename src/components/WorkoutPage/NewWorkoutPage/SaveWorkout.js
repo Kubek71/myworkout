@@ -20,7 +20,7 @@ export default function SaveWorkout() {
   const [isNoteRendered, setIsNoteRendered] = useState(false);
   const [note, setNote] = useState();
   const [weight, setWeight] = useState();
-  const { workoutArray, addWorkout } = useUserData();
+  const { workoutArray, addWorkout, setWorkoutArray } = useUserData();
   const { state } = useLocation();
   const navigate = useNavigate();
 
@@ -31,6 +31,9 @@ export default function SaveWorkout() {
     const programName = state.planName;
     addWorkout(Date.now(), note ? note : "", weight ? weight : "", programName)
       .then(() => {
+        window.localStorage.removeItem("workout");
+        window.localStorage.removeItem("choosedWorkoutPlan");
+        setWorkoutArray([]);
         navigate("/workouts");
       })
       .catch((e) => console.log(e));

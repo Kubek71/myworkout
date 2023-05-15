@@ -69,6 +69,7 @@ export const SaveWorkoutLink = styled(Link)`
   padding: 0.5rem;
   border-radius: 5px;
   width: 100%;
+  max-width: 600px;
   text-align: center;
 `;
 export const WorkoutSection = styled.section`
