@@ -34,7 +34,7 @@ export default function SaveWorkout() {
         window.localStorage.removeItem("workout");
         window.localStorage.removeItem("choosedWorkoutPlan");
         setWorkoutArray([]);
-        navigate("/workouts");
+        navigate("/");
       })
       .catch((e) => console.log(e));
   };

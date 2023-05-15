@@ -177,9 +177,7 @@ export default function WorkoutPage() {
           </WorkoutBox>
         </LastWorkoutsSection>
       )}
-      <StartWorkoutLink to="workouts/startworkout">
-        START A WORKOUT
-      </StartWorkoutLink>
+      <StartWorkoutLink to="startworkout">START A WORKOUT</StartWorkoutLink>
     </WorkoutPageStyled>
   );
 }
