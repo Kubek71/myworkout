@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import {
   BiPencil as EditIcon,
@@ -21,14 +21,10 @@ const ItemBox = styled(Box)`
   }
 `;
 
-export default function WorkoutProgram({
-  isOpenProgramBox,
-  duration,
-  name,
-  exercises,
-}) {
+export default function WorkoutProgram({ duration, name, exercises }) {
+  const [isOpenProgramBox, setIsOpenProgramBox] = useState(false);
   return (
-    <ProgramBox>
+    <ProgramBox onClick={() => setIsOpenProgramBox((current) => !current)}>
       {isOpenProgramBox === false ? (
         <>
           <ItemBox>

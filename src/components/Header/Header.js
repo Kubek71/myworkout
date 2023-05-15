@@ -57,7 +57,7 @@ export default function Header() {
           </Box>
         </NavLink>
 
-        <NavLink to="/workouts" onClick={closeNavbar}>
+        <NavLink to="/" onClick={closeNavbar}>
           <Box>
             <WorkoutsIcon />
             <span>WORKOUT</span>
