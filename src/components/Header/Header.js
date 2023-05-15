@@ -16,7 +16,7 @@ import {
   BiUser as AccountIcon,
   BiSpreadsheet as ProgramsIcon,
   BiStats as AnalitycsIcon,
-  BiInfoCircle as AboutIcon,
+  BiHistory as HistoryIcon,
   BiLogOut as LogoutIcon,
 } from "react-icons/bi";
 import { RegisterH1 } from "../RegisterPage/RegisterPageStyled";
@@ -64,14 +64,18 @@ export default function Header() {
           </Box>
         </NavLink>
 
+        <NavLink to="history" onClick={closeNavbar}>
+          <Box>
+            <HistoryIcon />
+            <span>HISTORY</span>
+          </Box>
+        </NavLink>
+
         <Box onClick={closeNavbar}>
           <AnalitycsIcon />
           <span>ANALITYCS</span>
         </Box>
-        <Box onClick={closeNavbar}>
-          <AboutIcon />
-          <span>ABOUT</span>
-        </Box>
+
         <Box
           onClick={() => {
             logoutUser();

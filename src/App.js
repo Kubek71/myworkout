@@ -11,6 +11,7 @@ import PrivateRoutes from "./utils/privateRoutes";
 import DeleteWorkoutPlan from "./components/WorkoutProgramsPage/NewProgramPage/DeleteWorkoutPlan";
 import NewWorkoutPage from "./components/WorkoutPage/NewWorkoutPage/NewWorkoutPage";
 import SaveWorkout from "./components/WorkoutPage/NewWorkoutPage/SaveWorkout";
+import HistoryPage from "./components/HistoryPage/HistoryPage";
 const Testroute = () => {
   return <h1>testowyroute</h1>;
 };
@@ -34,6 +35,7 @@ function App() {
                 <Route path="newprogram" element={<NewProgramPage />} />
                 <Route path="deleteProgram" element={<DeleteWorkoutPlan />} />
               </Route>
+              <Route path="history" element={<HistoryPage />} />
             </Route>
             <Route element={<UserIsNotLoggedInRoutes />}>
               <Route path="/login" element={<LoginPage />} />
