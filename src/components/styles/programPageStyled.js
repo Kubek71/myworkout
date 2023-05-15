@@ -21,6 +21,7 @@ export const ProgramSection = styled.section`
   padding: 0.75rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.5rem;
   width: 100%;
 `;
@@ -29,6 +30,7 @@ export const ProgramTitle = styled.h3`
   font-size: 0.75rem;
   color: ${({ theme }) => theme.colors.primaryRed};
   font-weight: ${({ theme }) => theme.fontWeight.Bold};
+  max-width: 600px;
   display: block;
   width: 100%;
 `;
@@ -45,6 +47,7 @@ export const ProgramBox = styled.div`
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
+  margin-bottom: 1rem;
 
   svg {
     font-size: 1.2rem;
