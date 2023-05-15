@@ -28,12 +28,7 @@ export default function ProgramPage() {
   const { currentUser } = useAuth();
   const { getWorkoutPlans } = useUserData();
   const navigateToNewProgramPage = useNavigate();
-  const [isOpenProgramBox, setIsOpenProgramBox] = useState(false);
   const [workoutPlan, setWorkoutPlan] = useState([]);
-  const openProgramHandler = () => {
-    setIsOpenProgramBox((current) => !current);
-    console.log(isOpenProgramBox);
-  };
 
   useEffect(() => {
     if (workoutPlan.length === 0) {
@@ -51,7 +46,7 @@ export default function ProgramPage() {
   return (
     <ProgramPageStyled>
       <Heading>YOUR WORKOUT PROGRAMS</Heading>
-      <ProgramSection onClick={openProgramHandler}>
+      <ProgramSection>
         {workoutPlan.length > 0 &&
           workoutPlan.map((plan) => {
             const { duration, name, exercises } = plan;
@@ -59,7 +54,6 @@ export default function ProgramPage() {
               <>
                 <ProgramTitle>{name}</ProgramTitle>
                 <WorkoutProgram
-                  isOpenProgramBox={isOpenProgramBox}
                   duration={duration}
                   name={name}
                   exercises={exercises}
