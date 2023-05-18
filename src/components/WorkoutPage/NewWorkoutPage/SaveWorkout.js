@@ -13,28 +13,36 @@ import {
 import { useState } from "react";
 import { SaveButton } from "./StartWorkoutForm";
 import { useUserData } from "../../../utils/userDataContext";
-import { getTodaysDate, getTimestamp } from "../../../utils/getDate";
 import { useNavigate, useLocation } from "react-router-dom";
+import { timeDistance } from "../../../utils/getDate";
+import useCancelWorkout from "../useCancelWorkout";
 
 export default function SaveWorkout() {
   const [isNoteRendered, setIsNoteRendered] = useState(false);
   const [note, setNote] = useState();
   const [weight, setWeight] = useState();
-  const { workoutArray, addWorkout, setWorkoutArray } = useUserData();
+  const { workoutArray, addWorkout } = useUserData();
   const { state } = useLocation();
   const navigate = useNavigate();
+  const cancelWorkout = useCancelWorkout();
 
   // saving workout to a database with imported firestore method from userDataContext.js
   const saveWorkoutToFirestore = (e) => {
     e.preventDefault();
-
+    const workoutDuration = timeDistance(
+      parseInt(window.localStorage.getItem("workoutStartTime"))
+    );
     const programName = state.planName;
-    addWorkout(Date.now(), note ? note : "", weight ? weight : "", programName)
+    addWorkout(
+      Date.now(),
+      note ? note : "",
+      weight ? weight : "",
+      programName,
+      workoutDuration
+    )
       .then(() => {
-        window.localStorage.removeItem("workout");
-        window.localStorage.removeItem("choosedWorkoutPlan");
-        setWorkoutArray([]);
-        navigate("/");
+        // removing all values form local storage, setting workout array empty and navigating to workout page
+        cancelWorkout();
       })
       .catch((e) => console.log(e));
   };

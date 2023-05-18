@@ -7,12 +7,14 @@ import {
   WorkoutTable,
 } from "../../styles/startWorkoutForm";
 import { Heading, NextStepButton } from "../../styles/newProgramPageStyled";
+import { BackButton } from "../../HistoryPage/OpenedWorkout";
 import { SaveWorkoutLink } from "../../styles/startWorkoutForm";
 import { Box } from "../../styles/boxStyled.js.js";
 import AddNewSet from "./AddNewSet";
 import { WorkoutSection } from "../../styles/startWorkoutForm";
 import { BiDumbbell as SetsIcon, BiTrash as RemoveIcon } from "react-icons/bi";
 import { useUserData } from "../../../utils/userDataContext";
+import useCancelWorkout from "../useCancelWorkout";
 
 const ExercisesContainer = styled(Box)`
   flex-wrap: wrap;
@@ -53,6 +55,7 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
     },
   });
   const control = useFormMethods.control;
+  const cancelWorkout = useCancelWorkout();
 
   // importing fields array, append, remove fn from useFieldArray ( reactHookform)
   const { fields, append, remove } = useFieldArray({
@@ -182,6 +185,11 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
             Save Workout
           </SaveWorkoutLink>
         </>
+      )}
+      {isAddNewSetComponentRendered === false && (
+        <BackButton fontSize="1rem" textAlign="center" onClick={cancelWorkout}>
+          <span>Cancel</span>
+        </BackButton>
       )}
     </>
   );
