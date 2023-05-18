@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { useAuth } from "./authContext";
 import { useState, useEffect } from "react";
+import { startAfter, startAt } from "firebase/database";
 const UserDataContext = React.createContext();
 export function useUserData() {
   return useContext(UserDataContext);
@@ -71,6 +72,17 @@ export default function UserDataProvider({ children }) {
 
     return getDocs(q);
   };
+  const getAllWorkouts = (lastWorkoutTimestamp, activeWorkoutPlan) => {
+    const q = query(
+      collection(database, `users/${currentUser.uid}/workouts`),
+      where("programName", "==", activeWorkoutPlan),
+      where("timestamp", "<", lastWorkoutTimestamp),
+      orderBy("timestamp", "desc"),
+      limit(10)
+    );
+
+    return getDocs(q);
+  };
 
   const getWorkoutProgram = (workoutPlanName) => {
     const WorkoutPlanRef = doc(
@@ -99,6 +111,7 @@ export default function UserDataProvider({ children }) {
     setWorkoutArray,
     addWorkout,
     getWorkouts,
+    getAllWorkouts,
   };
 
   return (
