@@ -35,7 +35,7 @@ export default function WorkoutPage() {
   const navigate = useNavigate();
   useEffect(() => {
     if (workoutArray.length > 0) {
-      navigate("/workouts/startworkout");
+      navigate("/startworkout");
     } else {
       // getting 3 last workouts from firestore for current user on component's render
       getWorkouts(true)
