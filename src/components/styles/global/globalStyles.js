@@ -10,7 +10,7 @@ export const GlobalStyles = createGlobalStyle`
 
 html, body, #root, .App {
     height: 100vh;
-    width: 100vw;
+    width: 100%;
 }
 
 body {
@@ -53,5 +53,22 @@ button {
 main { 
     margin: 0 auto;
     max-width: 1200px;
+}
+
+div {
+&::-webkit-scrollbar {
+  width: 0.5rem
+}
+
+/* Track */
+&::-webkit-scrollbar-track {
+  background: none;
+}
+
+/* Handle */
+&::-webkit-scrollbar-thumb {
+  background: ${({ theme }) => theme.colors.alphaRed};
+  border-radius: 5px;
+}
 }
 `;
