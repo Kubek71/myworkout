@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { GlobalStyles } from "./components/styles/global/globalStyles";
+import { useEffect, useRef, useState } from "react";
 import Header from "./components/Header/Header";
 import NewProgramPage from "./components/WorkoutProgramsPage/NewProgramPage/NewProgramPage";
 import ProgramPage from "./components/WorkoutProgramsPage/ProgramPage";
@@ -12,17 +13,20 @@ import DeleteWorkoutPlan from "./components/WorkoutProgramsPage/NewProgramPage/D
 import NewWorkoutPage from "./components/WorkoutPage/NewWorkoutPage/NewWorkoutPage";
 import SaveWorkout from "./components/WorkoutPage/NewWorkoutPage/SaveWorkout";
 import HistoryPage from "./components/HistoryPage/HistoryPage";
+import OpenedWorkout from "./components/HistoryPage/OpenedWorkout";
+
 const Testroute = () => {
   return <h1>testowyroute</h1>;
 };
 
 function App() {
+  const headerHeightRef = useRef();
   return (
     <>
       <GlobalStyles />
       <Router>
         <div className="App">
-          <Header />
+          <Header headerHeightRef={headerHeightRef} />
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/">
@@ -35,7 +39,13 @@ function App() {
                 <Route path="newprogram" element={<NewProgramPage />} />
                 <Route path="deleteProgram" element={<DeleteWorkoutPlan />} />
               </Route>
-              <Route path="history" element={<HistoryPage />} />
+              <Route path="history">
+                <Route
+                  index
+                  element={<HistoryPage headerHeightRef={headerHeightRef} />}
+                />
+                <Route path=":id" element={<OpenedWorkout />} />
+              </Route>
             </Route>
             <Route element={<UserIsNotLoggedInRoutes />}>
               <Route path="/login" element={<LoginPage />} />
