@@ -72,12 +72,13 @@ export default function UserDataProvider({ children }) {
 
     return getDocs(q);
   };
-  const getAllWorkouts = (lastWorkoutTimestamp) => {
+  const getAllWorkouts = (lastWorkoutTimestamp, activeWorkoutPlan) => {
     const q = query(
       collection(database, `users/${currentUser.uid}/workouts`),
+      where("programName", "==", activeWorkoutPlan),
       where("timestamp", "<", lastWorkoutTimestamp),
       orderBy("timestamp", "desc"),
-      limit(5)
+      limit(10)
     );
 
     return getDocs(q);

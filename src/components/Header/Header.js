@@ -28,7 +28,7 @@ const RegisterHeading = styled(RegisterH1)`
   color: ${({ theme }) => theme.colors.light};
 `;
 
-export default function Header() {
+export default function Header({ headerHeightRef }) {
   const { currentUser, logoutUser } = useAuth();
   const headerRef = useRef();
   const showNavbar = () => {
@@ -39,7 +39,7 @@ export default function Header() {
   };
 
   return (
-    <HeaderStyled>
+    <HeaderStyled ref={headerHeightRef}>
       {/* <RegisterHeading>Sign In</RegisterHeading> */}
       <HeaderLogo className="reponsive-logo">
         <NavLink to="/">
