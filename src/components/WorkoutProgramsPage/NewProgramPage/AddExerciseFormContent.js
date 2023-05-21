@@ -16,11 +16,11 @@ export default function AddExerciseFormContent() {
         <Input
           type="Text"
           {...register("exercise", {
-            maxLength: {
-              value: 20,
-              message: "maximum amount of characters is 20",
+            pattern: {
+              value: /^[a-zA-Z0-9\s]{2,20}$/,
+              message: "Exercise name must contain 2-20 letters/numbers",
             },
-            required: "name your exercise",
+            required: true,
           })}
         ></Input>
         <button type="submit" className="add-exercise-button">

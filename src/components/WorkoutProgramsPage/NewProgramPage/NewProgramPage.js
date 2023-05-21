@@ -39,6 +39,7 @@ export default function NewProgramPage() {
   const [exerciseStringIsEmptyError, setExerciseStringIsEmptyError] =
     useState();
   const { addWorkoutPlan } = useUserData();
+  const navigate = useNavigate();
 
   // pulling a route state (passing workoutplan to a route state when user clicks on workoutedit button in program page)
   const { state } = useLocation();
@@ -50,7 +51,6 @@ export default function NewProgramPage() {
       setWorkoutName(state.workoutToEditName);
       setWorkoutDuration(state.workoutToEditDuration);
       setExerciseTable(state.workoutToEditExercises);
-      console.log(state);
       setIsLoading(false);
     } else {
       setIsLoading(false);
@@ -63,7 +63,7 @@ export default function NewProgramPage() {
 
   const submitWorkoutName = (data) => {
     setIsFormSubmitted((current) => !current);
-    setWorkoutName(data.workoutName);
+    setWorkoutName(data.workoutName.toLowerCase());
     setWorkoutDuration(data.workoutDuration);
     useFormMethods.resetField("workoutName");
     useFormMethods.resetField("workoutDuration");
@@ -71,9 +71,11 @@ export default function NewProgramPage() {
 
   // adding exercise to exercise table in state on add exercise form submit
   const submitExercise = (data) => {
-    setExerciseTable((currentTable) => [...currentTable, data.exercise]);
+    setExerciseTable((currentTable) => [
+      ...currentTable,
+      data.exercise.toLowerCase(),
+    ]);
     useFormMethods.resetField("exercise");
-    console.log(exerciseTable);
   };
 
   // saving the workoutprogram in firestore if workout name, time is given, exercise table is not empty
@@ -82,7 +84,7 @@ export default function NewProgramPage() {
       if (!exerciseTable.includes("")) {
         addWorkoutPlan(workoutName, workoutDuration, exerciseTable)
           .then(() => {
-            console.log("udalo sie");
+            navigate(-1);
           })
           .catch((error) => console.log(error));
       } else setExerciseStringIsEmptyError("Every exercise has to have a name");
