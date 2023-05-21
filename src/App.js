@@ -14,6 +14,7 @@ import NewWorkoutPage from "./components/WorkoutPage/NewWorkoutPage/NewWorkoutPa
 import SaveWorkout from "./components/WorkoutPage/NewWorkoutPage/SaveWorkout";
 import HistoryPage from "./components/HistoryPage/HistoryPage";
 import OpenedWorkout from "./components/HistoryPage/OpenedWorkout";
+import UserProfile from "./components/UserProfile/UserProfile";
 
 const Testroute = () => {
   return <h1>testowyroute</h1>;
@@ -46,6 +47,7 @@ function App() {
                 />
                 <Route path=":id" element={<OpenedWorkout />} />
               </Route>
+              <Route path="profile" element={<UserProfile />} />
             </Route>
             <Route element={<UserIsNotLoggedInRoutes />}>
               <Route path="/login" element={<LoginPage />} />
