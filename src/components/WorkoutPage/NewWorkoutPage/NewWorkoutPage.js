@@ -38,6 +38,7 @@ export default function NewWorkoutPage() {
   const [choosedWorkoutTable, setChoosedWorkoutTable] = useState();
   const { getWorkoutPlans, setWorkoutArray } = useUserData();
   const [userWorkoutPlans, setUserWorkoutPlans] = useState([]);
+  const [timestamp, setTimestamp] = useState();
 
   useEffect(() => {
     const choosedPlanFromLocalStorage =
@@ -58,11 +59,12 @@ export default function NewWorkoutPage() {
   }, []);
 
   useEffect(() => {
-    if (choosedWorkoutTable) {
+    if ((choosedWorkoutTable, timestamp)) {
       window.localStorage.setItem(
         "choosedWorkoutPlan",
         JSON.stringify(choosedWorkoutTable)
       );
+      window.localStorage.setItem("workoutStartTime", timestamp);
     }
   }, [choosedWorkoutTable]);
 
@@ -75,6 +77,8 @@ export default function NewWorkoutPage() {
         (workoutPlan) => workoutPlan.name === workoutPlanName
       )
     );
+    // setting start workout time
+    setTimestamp(Date.now());
   };
   const navigate = useNavigate();
 

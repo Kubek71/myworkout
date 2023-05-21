@@ -9,7 +9,6 @@ import { Heading } from "../styles/newProgramPageStyled";
 import { date } from "../../utils/getDate";
 import { Box } from "../styles/boxStyled.js";
 import { useNavigate } from "react-router-dom";
-import { getTimestamp, timeDistance } from "../../utils/getDate";
 
 const Main = styled.main`
   padding: 2rem;
@@ -68,25 +67,31 @@ const NoteContainer = styled.div`
     color: ${({ theme }) => theme.colors.dark};
   }
 `;
-const BackButton = styled.button`
+export const BackButton = styled.button`
   color: ${({ theme }) => theme.colors.light};
   text-transform: uppercase;
-  font-size: 1.25rem;
+  font-size: ${({ fontSize }) => (fontSize ? fontSize : "1.25rem")};
   width: 100%;
   display: block;
-  text-align: left;
+  text-align: ${({ textAlign }) => (textAlign ? textAlign : "left")};
   padding: 0.25rem 1rem;
   font-weight: ${({ theme }) => theme.fontWeight.xBold};
-  position: relative;
-  &::after {
-    content: "";
-    width: 2rem;
-    left: 0;
-    bottom: 0;
-    height: 5px;
-    border-radius: 1px;
-    background: ${({ theme }) => theme.colors.primaryRed};
-    position: absolute;
+
+  span {
+    position: relative;
+    z-index: 100;
+    &::after {
+      content: "";
+      width: 2em;
+      right: 50%;
+      transform: translateX(calc(50% - 1rem));
+      bottom: -5px;
+      height: 5px;
+      border-radius: 1px;
+      background: ${({ theme }) => theme.colors.primaryRed};
+      position: absolute;
+      z-index: 0;
+    }
   }
 `;
 
@@ -102,7 +107,9 @@ export default function OpenedWorkout() {
   }, []);
   return workout ? (
     <Main>
-      <BackButton onClick={() => navigate(-1)}>Back</BackButton>
+      <BackButton onClick={() => navigate(-1)}>
+        <span>Back</span>
+      </BackButton>
 
       {renderNote && (
         <NoteContainer note>
