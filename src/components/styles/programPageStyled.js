@@ -24,6 +24,13 @@ export const ProgramSection = styled.section`
   align-items: center;
   gap: 0.5rem;
   width: 100%;
+
+  .outer-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const ProgramTitle = styled.h3`

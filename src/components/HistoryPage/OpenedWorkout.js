@@ -29,9 +29,12 @@ const WorkoutBox = styled.section`
 
 const InfoBox = styled(Box)`
   width: 100%;
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
   h2 {
     padding: 0.5rem;
-    font-size: 2rem;
+    font-size: clamp(1rem, 3vh, 2rem);
   }
   div {
     display: flex;
@@ -129,8 +132,8 @@ export default function OpenedWorkout() {
 
       <InfoBox>
         <Heading>{date(workout.timestamp)}</Heading>
-        <Box>
-          <TimeIcon /> <h2>3:58</h2>
+        <Box flexWrap>
+          <TimeIcon /> <h2>{workout.workoutDuration}</h2>
         </Box>
       </InfoBox>
 

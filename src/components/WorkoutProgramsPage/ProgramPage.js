@@ -48,17 +48,17 @@ export default function ProgramPage() {
       <Heading>YOUR WORKOUT PROGRAMS</Heading>
       <ProgramSection>
         {workoutPlan.length > 0 &&
-          workoutPlan.map((plan) => {
+          workoutPlan.map((plan, index) => {
             const { duration, name, exercises } = plan;
             return (
-              <>
+              <div className="outer-div" key={index}>
                 <ProgramTitle>{name}</ProgramTitle>
                 <WorkoutProgram
                   duration={duration}
                   name={name}
                   exercises={exercises}
                 />
-              </>
+              </div>
             );
           })}
       </ProgramSection>

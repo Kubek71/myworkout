@@ -98,7 +98,7 @@ export default function Workout({
           </ItemBox>
           <ItemBox>
             <TimeIcon />
-            <span>60 min</span>
+            <span>{currentWorkout.workoutDuration}</span>
           </ItemBox>
         </>
       )}
