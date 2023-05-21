@@ -113,7 +113,7 @@ export default function HistoryPage({ headerHeightRef }) {
                   </ItemBox>
                   <ItemBox>
                     <TimeIcon />
-                    <span>60 min</span>
+                    <span>{workout.workoutDuration}</span>
                   </ItemBox>
                 </WorkoutBox>
               </Link>
