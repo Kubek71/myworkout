@@ -41,7 +41,7 @@ export default function UserDataProvider({ children }) {
     });
   };
 
-  const addWorkout = (workoutTimestamp, note, weight, program) => {
+  const addWorkout = (workoutTimestamp, note, weight, program, duration) => {
     const WorkoutRef = collection(
       database,
       `users/${currentUser.uid}/workouts/`
@@ -52,6 +52,7 @@ export default function UserDataProvider({ children }) {
       workoutNote: note,
       programName: program,
       timestamp: workoutTimestamp,
+      workoutDuration: duration,
     });
   };
   const getWorkoutPlans = () => {
@@ -66,7 +67,7 @@ export default function UserDataProvider({ children }) {
       ? query(
           collection(database, `users/${currentUser.uid}/workouts`),
           orderBy("timestamp", "desc"),
-          limit(10)
+          limit(3)
         )
       : query(collection(database, `users/${currentUser.uid}/workouts`));
 
