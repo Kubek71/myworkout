@@ -24,8 +24,8 @@ export default function WorkoutNameAndTimeSection() {
             type="text"
             {...register("workoutName", {
               pattern: {
-                value: /^[a-zA-Z]{2,12}$/,
-                message: "Workout name must contain 2-12 characters",
+                value: /^[a-zA-Z0-9\s]{2,12}$/,
+                message: "Workout name must contain 2-12 letters/numbers",
               },
               required: true,
             })}
@@ -44,15 +44,19 @@ export default function WorkoutNameAndTimeSection() {
         </>
       ) : (
         <>
-          <Heading>DEFINE WORKOUT TIME</Heading>
+          <Heading>DEFINE WORKOUT TIME IN MINUTES</Heading>
           <Input
             type="number"
             {...register("workoutDuration", {
-              minLength: 2,
+              pattern: {
+                value: /^[0-9]{1,3}$/,
+                message: "Workout duration must be between 1-600 minutes",
+              },
               required: true,
             })}
             placeholder="60min"
           />
+          <ErrorMessage>{errors.workoutDuration?.message}</ErrorMessage>
           <NextStepButton type="submit">SAVE</NextStepButton>
         </>
       )}
