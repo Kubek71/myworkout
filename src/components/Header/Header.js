@@ -86,9 +86,11 @@ export default function Header({ headerHeightRef }) {
           <span>LOGOUT</span>
         </Box>
       </NavbarStyled>
-      <Box onClick={closeNavbar}>
-        <AccountIcon className="account-button" />
-      </Box>
+      <NavLink to="/profile" onClick={closeNavbar}>
+        <Box>
+          <AccountIcon className="account-button" />
+        </Box>
+      </NavLink>
     </HeaderStyled>
   );
 }

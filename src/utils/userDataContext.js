@@ -9,6 +9,7 @@ import {
   getDocs,
   limit,
   orderBy,
+  getCountFromServer,
 } from "firebase/firestore";
 import { useAuth } from "./authContext";
 import { useState, useEffect } from "react";
@@ -103,6 +104,14 @@ export default function UserDataProvider({ children }) {
     return deleteDoc(WorkoutPlanRef);
   };
 
+  const countWorkouts = () => {
+    const workoutsRef = collection(
+      database,
+      `users/${currentUser.uid}/workouts`
+    );
+    return getCountFromServer(workoutsRef);
+  };
+
   const value = {
     addWorkoutPlan,
     getWorkoutPlans,
@@ -113,6 +122,7 @@ export default function UserDataProvider({ children }) {
     addWorkout,
     getWorkouts,
     getAllWorkouts,
+    countWorkouts,
   };
 
   return (
