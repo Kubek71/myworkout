@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useForm, FormProvider } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { BackButton as NextStepButton } from "../HistoryPage/OpenedWorkout";
 import {
   RegisterPageStyled,
   RegisterH1,
@@ -15,6 +16,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { schema } from "./FormSchema";
 import { auth } from "../../utils/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import RegisterUserInfo from "./RegisterUserInfoPage";
+import { useUserData } from "../../utils/userDataContext";
 
 const RegisterH2 = styled(RegisterH1)`
   font-size: 0.85rem;
@@ -24,13 +27,32 @@ const RegisterH2 = styled(RegisterH1)`
 export default function RegisterPage() {
   const [registerError, setRegisterError] = useState("");
   const navigateToHomePage = useNavigate();
-  const useFormMethods = useForm({ resolver: zodResolver(schema) });
+  const [renderSecondForm, setRenderSecondForm] = useState(false);
+  const { addUserInfo } = useUserData();
+  const useFormMethods = useForm({
+    resolver: zodResolver(schema),
+  });
+  const control = useFormMethods.control;
 
   const registerNewUser = (inputData) => {
+    console.log("test");
+    console.log(inputData);
     createUserWithEmailAndPassword(auth, inputData.email, inputData.password)
-      .then(() => {
-        useFormMethods.reset();
-        navigateToHomePage("/");
+      .then((result) => {
+        addUserInfo(
+          result.user.uid,
+          inputData.firstName,
+          inputData.gender,
+          inputData.userWeight,
+          inputData.userHeight,
+          inputData.userAge
+        )
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -44,8 +66,40 @@ export default function RegisterPage() {
       <RegisterH2>Improve your workout now!</RegisterH2>
       <FormProvider {...useFormMethods}>
         <RegisterForm onSubmit={useFormMethods.handleSubmit(registerNewUser)}>
-          <RegisterFormContext registerError={registerError} />
-          <NextButton type="submit">Next</NextButton>
+          {renderSecondForm ? (
+            <RegisterUserInfo control={control} />
+          ) : (
+            <RegisterFormContext registerError={registerError} />
+          )}
+
+          {renderSecondForm ? (
+            <NextButton type="submit">Sign up</NextButton>
+          ) : (
+            <NextStepButton
+              textAlign="center"
+              onClick={async () => {
+                // checks if rep and kg input is registered
+                const isUserInfoRegistered = await useFormMethods.trigger([
+                  "firstName",
+                  "lastName",
+                  "email",
+                  "password",
+                  "confirm",
+                ]);
+                const isClear = () => {
+                  useFormMethods.clearErrors();
+                  setRenderSecondForm(true);
+                };
+
+                // if data from inputs is registered, appends new table row with input, otherwise setting focus on rep input in current table row
+                isUserInfoRegistered
+                  ? isClear()
+                  : useFormMethods.setFocus("firstName");
+              }}
+            >
+              <span>Next</span>
+            </NextStepButton>
+          )}
         </RegisterForm>
       </FormProvider>
       <Link to="/login">
