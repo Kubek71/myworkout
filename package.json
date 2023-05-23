@@ -16,6 +16,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
+    "react-select": "^5.7.3",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4",
     "zod": "^3.21.4"

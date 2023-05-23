@@ -16,7 +16,6 @@ const UserBox = styled(Box)`
 export default function UserProfile() {
   const [workoutsAmount, setWorkoutsAmount] = useState(0);
   const { countWorkouts } = useUserData();
-
   useEffect(() => {
     countWorkouts()
       .then((result) => setWorkoutsAmount(result.data().count))
