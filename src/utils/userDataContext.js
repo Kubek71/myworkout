@@ -29,6 +29,17 @@ export default function UserDataProvider({ children }) {
     }
   }, [workoutArray]);
 
+  const addUserInfo = (uid, name, gender, weight, height, age) => {
+    const userRef = doc(database, `users/${uid}`);
+    return setDoc(userRef, {
+      userName: name,
+      userGender: gender,
+      userWeight: weight,
+      userHeight: height,
+      userAge: age,
+    });
+  };
+
   const addWorkoutPlan = (workoutPlanName, workoutDuration, exercisesArray) => {
     const WorkoutPlanRef = doc(
       database,
@@ -123,6 +134,7 @@ export default function UserDataProvider({ children }) {
     getWorkouts,
     getAllWorkouts,
     countWorkouts,
+    addUserInfo,
   };
 
   return (
