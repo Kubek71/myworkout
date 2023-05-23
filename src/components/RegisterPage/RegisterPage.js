@@ -51,7 +51,8 @@ export default function RegisterPage() {
             console.log(result);
           })
           .catch((e) => {
-            console.log(e);
+            useFormMethods.reset();
+            navigateToHomePage("/");
           });
       })
       .catch((error) => {
