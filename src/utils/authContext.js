@@ -35,6 +35,7 @@ export function AuthProvider({ children }) {
         // An error happened.
       });
   };
+
   const value = {
     currentUser,
     isAuthLoading,
