@@ -9,6 +9,7 @@ import {
   ProgramTitle,
   AddNewProgramButton,
 } from "../styles/programPageStyled";
+import { StartWorkoutLinkStyled } from "../styles/workoutPageStyled";
 import WorkoutProgram from "./WorkoutProgram";
 import styled from "styled-components";
 import { Box } from "../styles/boxStyled.js.js";
@@ -69,6 +70,9 @@ export default function ProgramPage() {
           <NewProgramIcon />
         </NewProgramBox>
       </Link>
+      <StartWorkoutLinkStyled to="../startworkout">
+        Start a workout
+      </StartWorkoutLinkStyled>
     </ProgramPageStyled>
   );
 }

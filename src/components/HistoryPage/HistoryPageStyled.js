@@ -6,6 +6,7 @@ export const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   ${({ headerHeight }) =>
     headerHeight && `height: calc(100% - ${headerHeight}px)`};
 
