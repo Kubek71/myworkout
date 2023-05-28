@@ -65,7 +65,7 @@ export const WorkoutBox = styled.div`
   }
 `;
 
-export const StartWorkoutLink = styled(Link)`
+export const StartWorkoutLinkStyled = styled(Link)`
   background: ${({ theme }) => theme.colors.primaryRed};
   color: ${({ theme }) => theme.colors.light};
   font-weight: ${({ theme }) => theme.fontWeight.xBold};

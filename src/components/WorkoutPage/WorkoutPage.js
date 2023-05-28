@@ -9,7 +9,7 @@ import {
   WorkoutPageStyled,
   LastWorkoutsSection,
   WorkoutDate,
-  StartWorkoutLink,
+  StartWorkoutLinkStyled,
 } from "../styles/workoutPageStyled";
 
 import { Box } from "../styles/boxStyled.js.js";
@@ -95,7 +95,9 @@ export default function WorkoutPage() {
           />
         </LastWorkoutsSection>
       )}
-      <StartWorkoutLink to="startworkout">START A WORKOUT</StartWorkoutLink>
+      <StartWorkoutLinkStyled to="startworkout">
+        Start a workout
+      </StartWorkoutLinkStyled>
     </WorkoutPageStyled>
   );
 }

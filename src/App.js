@@ -40,6 +40,7 @@ function App() {
                 <Route path="newprogram" element={<NewProgramPage />} />
                 <Route path="deleteProgram" element={<DeleteWorkoutPlan />} />
               </Route>
+
               <Route path="history">
                 <Route
                   index

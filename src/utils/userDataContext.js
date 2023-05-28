@@ -39,6 +39,10 @@ export default function UserDataProvider({ children }) {
       userAge: age,
     });
   };
+  const getUserInfo = () => {
+    const userRef = doc(database, `users/${currentUser.uid}`);
+    return getDoc(userRef);
+  };
 
   const addWorkoutPlan = (workoutPlanName, workoutDuration, exercisesArray) => {
     const WorkoutPlanRef = doc(
@@ -115,12 +119,12 @@ export default function UserDataProvider({ children }) {
     return deleteDoc(WorkoutPlanRef);
   };
 
-  const countWorkouts = () => {
-    const workoutsRef = collection(
-      database,
-      `users/${currentUser.uid}/workouts`
+  const countWorkouts = (firstDayOfTheMonth) => {
+    const q = query(
+      collection(database, `users/${currentUser.uid}/workouts`),
+      where("timestamp", ">", firstDayOfTheMonth)
     );
-    return getCountFromServer(workoutsRef);
+    return getCountFromServer(q);
   };
 
   const value = {
@@ -135,6 +139,7 @@ export default function UserDataProvider({ children }) {
     getAllWorkouts,
     countWorkouts,
     addUserInfo,
+    getUserInfo,
   };
 
   return (
