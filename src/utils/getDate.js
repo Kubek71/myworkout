@@ -1,4 +1,10 @@
-import { format, fromUnixTime, formatDistanceToNowStrict } from "date-fns";
+import {
+  format,
+  fromUnixTime,
+  formatDistanceToNowStrict,
+  getTime,
+  startOfMonth,
+} from "date-fns";
 
 // const date = new Date();
 // export const getTodaysDate = format(date, "dd.MM.yyyy");
@@ -14,4 +20,9 @@ export const timeDistance = (startDate) => {
   return formatDistanceToNowStrict(startDate, {
     unit: "minute",
   });
+};
+
+export const getfirstDayOfTheMonth = () => {
+  const firstDayOfTheMonth = startOfMonth(Date.now());
+  return getTime(firstDayOfTheMonth);
 };
