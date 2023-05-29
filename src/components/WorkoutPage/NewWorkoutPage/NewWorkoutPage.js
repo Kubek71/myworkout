@@ -95,7 +95,9 @@ export default function NewWorkoutPage() {
                 </ProgramButton>
               );
             })}
-            <ProgramButton onClick={() => navigate("/newprogram")}>
+            <ProgramButton
+              onClick={() => navigate("../workoutprograms/newprogram")}
+            >
               <NewWorkoutIcon />
             </ProgramButton>
           </ProgramsContainer>

@@ -31,7 +31,6 @@ export default function UserProfile() {
   const [user, setUser] = useState();
   const { getUserInfo, countWorkouts } = useUserData();
   const { countCalories } = useCountCalories();
-  const navigate = useNavigate();
   useEffect(() => {
     const unsubscribe = () => {
       console.log(getfirstDayOfTheMonth());
@@ -89,7 +88,8 @@ export default function UserProfile() {
                     user.userWeight,
                     user.userHeight,
                     user.userGender === "male" ? true : false,
-                    user.userAge
+                    user.userAge,
+                    user.userActivity
                   )}
                 </ResultH3>
               </Box>
