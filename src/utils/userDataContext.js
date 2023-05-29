@@ -29,11 +29,12 @@ export default function UserDataProvider({ children }) {
     }
   }, [workoutArray]);
 
-  const addUserInfo = (uid, name, gender, weight, height, age) => {
+  const addUserInfo = (uid, name, gender, weight, height, age, activity) => {
     const userRef = doc(database, `users/${uid}`);
     return setDoc(userRef, {
       userName: name,
       userGender: gender,
+      userActivity: activity,
       userWeight: weight,
       userHeight: height,
       userAge: age,

@@ -37,6 +37,10 @@ export const schema = z
     gender: string({
       required_error: "Choose your gender",
     }),
+    activity: number({
+      required_error: "Choose your activity",
+      invalid_type_error: "Invalid value",
+    }),
     userWeight: number({
       required_error: "Weight is required",
       invalid_type_error: "Weight is required",
@@ -47,8 +51,8 @@ export const schema = z
       required_error: "Height is required",
       invalid_type_error: "Height is required",
     })
-      .min(30, "Your height has to be in range (30-250)")
-      .max(200, "Your height has to be in range (30-250)"),
+      .min(100, "Your height has to be in range (100-250)")
+      .max(200, "Your height has to be in range (100-250)"),
     userAge: number({
       required_error: "Age is required",
       invalid_type_error: "Age is required",

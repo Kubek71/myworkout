@@ -45,7 +45,8 @@ export default function RegisterPage() {
           inputData.gender,
           inputData.userWeight,
           inputData.userHeight,
-          inputData.userAge
+          inputData.userAge,
+          inputData.activity
         )
           .then((result) => {
             console.log(result);
@@ -68,9 +69,9 @@ export default function RegisterPage() {
       <FormProvider {...useFormMethods}>
         <RegisterForm onSubmit={useFormMethods.handleSubmit(registerNewUser)}>
           {renderSecondForm ? (
-            <RegisterUserInfo control={control} />
-          ) : (
             <RegisterFormContext registerError={registerError} />
+          ) : (
+            <RegisterUserInfo control={control} />
           )}
 
           {renderSecondForm ? (
@@ -81,11 +82,11 @@ export default function RegisterPage() {
               onClick={async () => {
                 // checks if rep and kg input is registered
                 const isUserInfoRegistered = await useFormMethods.trigger([
-                  "firstName",
-                  "lastName",
-                  "email",
-                  "password",
-                  "confirm",
+                  "gender",
+                  "activity",
+                  "userWeight",
+                  "userHeight",
+                  "userAge",
                 ]);
                 const isClear = () => {
                   useFormMethods.clearErrors();
