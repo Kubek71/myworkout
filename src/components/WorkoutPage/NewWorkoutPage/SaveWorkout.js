@@ -21,7 +21,7 @@ export default function SaveWorkout() {
   const [isNoteRendered, setIsNoteRendered] = useState(false);
   const [note, setNote] = useState();
   const [weight, setWeight] = useState();
-  const { workoutArray, addWorkout } = useUserData();
+  const { workoutArray, addWorkout, updateWeight } = useUserData();
   const { state } = useLocation();
   const navigate = useNavigate();
   const cancelWorkout = useCancelWorkout();
@@ -41,8 +41,12 @@ export default function SaveWorkout() {
       workoutDuration
     )
       .then(() => {
-        // removing all values form local storage, setting workout array empty and navigating to workout page
-        cancelWorkout();
+        weight > 0
+          ? updateWeight(weight).then(() => {
+              // removing all values form local storage, setting workout array empty and navigating to workout page
+              cancelWorkout();
+            })
+          : cancelWorkout();
       })
       .catch((e) => console.log(e));
   };
