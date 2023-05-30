@@ -1,7 +1,14 @@
 import React from "react";
 import { useContext } from "react";
 import { database } from "./firebaseConfig";
-import { doc, setDoc, getDoc, deleteDoc, addDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  deleteDoc,
+  addDoc,
+  updateDoc,
+} from "firebase/firestore";
 import {
   collection,
   query,
@@ -29,12 +36,11 @@ export default function UserDataProvider({ children }) {
     }
   }, [workoutArray]);
 
-  const addUserInfo = (uid, name, gender, weight, height, age, activity) => {
+  const addUserInfo = (uid, name, gender, weight, height, age) => {
     const userRef = doc(database, `users/${uid}`);
     return setDoc(userRef, {
       userName: name,
       userGender: gender,
-      userActivity: activity,
       userWeight: weight,
       userHeight: height,
       userAge: age,
@@ -71,6 +77,11 @@ export default function UserDataProvider({ children }) {
       timestamp: workoutTimestamp,
       workoutDuration: duration,
     });
+  };
+
+  const updateWeight = (weight) => {
+    const UserRef = doc(database, `users/${currentUser.uid}`);
+    return updateDoc(UserRef, { userWeight: weight });
   };
   const getWorkoutPlans = () => {
     const q = query(
@@ -141,6 +152,7 @@ export default function UserDataProvider({ children }) {
     countWorkouts,
     addUserInfo,
     getUserInfo,
+    updateWeight,
   };
 
   return (
