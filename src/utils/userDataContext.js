@@ -8,9 +8,6 @@ import {
   deleteDoc,
   addDoc,
   updateDoc,
-  arrayUnion,
-} from "firebase/firestore";
-import {
   collection,
   query,
   where,
@@ -21,7 +18,7 @@ import {
 } from "firebase/firestore";
 import { useAuth } from "./authContext";
 import { useState, useEffect } from "react";
-import { startAfter, startAt, update } from "firebase/database";
+
 const UserDataContext = React.createContext();
 export function useUserData() {
   return useContext(UserDataContext);

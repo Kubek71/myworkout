@@ -4,7 +4,7 @@ import {
   WorkoutTable,
   NoteBox,
   WorkoutName,
-} from "../styles/workoutPageStyled";
+} from "./workoutPageStyled";
 import styled from "styled-components";
 import { Box } from "../styles/boxStyled.js";
 import {
@@ -36,9 +36,9 @@ export default function Workout({
     <WorkoutBox onClick={() => setIsWorkoutOpened((current) => !current)}>
       {isWorkoutOpened ? (
         <WorkoutTable>
-          {currentWorkout.exercises.map((exercise) => {
+          {currentWorkout.exercises.map((exercise, index) => {
             return (
-              <div>
+              <>
                 <thead>
                   <tr>
                     <th>Exercise</th>
@@ -50,7 +50,7 @@ export default function Workout({
                 <tbody>
                   {exercise.sets.map((set, setIndex) => {
                     return (
-                      <tr>
+                      <tr key={setIndex}>
                         <td
                           className={
                             setIndex > 0 ? "sets-table-data" : "first-row"
@@ -65,7 +65,7 @@ export default function Workout({
                     );
                   })}
                 </tbody>
-              </div>
+              </>
             );
           })}
           {renderNote && (

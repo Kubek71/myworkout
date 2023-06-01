@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { ProgramPageStyled as DeleteWorkoutPlanContainer } from "../../styles/programPageStyled";
-import { Heading } from "../../styles/newProgramPageStyled";
+import { ProgramPageStyled as DeleteWorkoutPlanContainer } from "../programPageStyled";
+import { Heading } from "./newProgramPageStyled";
 import { Box } from "../../styles/boxStyled.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUserData } from "../../../utils/userDataContext";

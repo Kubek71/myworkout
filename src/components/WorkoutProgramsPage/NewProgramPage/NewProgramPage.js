@@ -10,14 +10,11 @@ import {
   NewProgramForm,
   Heading,
   SaveProgramButton,
-} from "../../styles/newProgramPageStyled";
-import { ProgramBox, ProgramList } from "../../styles/programPageStyled";
+} from "./newProgramPageStyled";
+import { ProgramBox, ProgramList } from "../programPageStyled";
 import { ErrorMessage } from "../../styles/global/errorMessage";
 import { Box } from "../../styles/boxStyled.js.js";
-import {
-  BiPlusMedical as NewProgramIcon,
-  BiTrash as RemoveIcon,
-} from "react-icons/bi";
+import { BiTrash as RemoveIcon } from "react-icons/bi";
 import { useUserData } from "../../../utils/userDataContext";
 
 const NameProgramForm = styled(NewProgramForm)`
@@ -56,10 +53,6 @@ export default function NewProgramPage() {
       setIsLoading(false);
     }
   }, []);
-
-  useEffect(() => {
-    console.log(isLoading);
-  }, [isLoading]);
 
   const submitWorkoutName = (data) => {
     setIsFormSubmitted((current) => !current);
@@ -143,11 +136,11 @@ export default function NewProgramPage() {
                 <ProgramList>
                   {exerciseTable.map((exercise, i) => {
                     return (
-                      <li>
+                      <li key={i}>
                         <Box>
                           <strong>{i + 1}.</strong>{" "}
                           <input
-                            requiered
+                            requiered="true"
                             onChange={(e) =>
                               changeExerciseNameInArray(
                                 e.currentTarget.value,

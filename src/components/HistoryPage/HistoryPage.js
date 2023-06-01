@@ -1,8 +1,8 @@
 import React from "react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useUserData } from "../../utils/userDataContext";
-import { WorkoutName } from "../styles/workoutPageStyled";
+import { WorkoutName } from "../WorkoutPage/workoutPageStyled";
 import { ItemBox } from "../WorkoutPage/Workout";
 import { date } from "../../utils/getDate";
 import { Box } from "../styles/boxStyled.js";
@@ -104,6 +104,7 @@ export default function HistoryPage({ headerHeightRef }) {
                 to={`${workout.timestamp}`}
                 state={workout}
                 style={{ width: "100%" }}
+                key={index}
               >
                 <WorkoutBox key={index}>
                   <WorkoutName>{date(workout.timestamp)}</WorkoutName>

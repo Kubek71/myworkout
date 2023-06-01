@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { Heading } from "../../styles/newProgramPageStyled";
+import React, { useEffect, useState } from "react";
+import { Heading } from "../../WorkoutProgramsPage/NewProgramPage/newProgramPageStyled";
 import { BiNote as NoteIcon } from "react-icons/bi";
-import { WorkoutPageStyled as Main } from "../../styles/workoutPageStyled";
+import { WorkoutPageStyled as Main } from "../workoutPageStyled";
 import { Box } from "../../styles/boxStyled.js";
 import {
   NoteForm,
@@ -9,8 +9,7 @@ import {
   Button,
   NoteSection,
   NoteSpan,
-} from "../../styles/saveWorkoutStyled";
-import { useState } from "react";
+} from "./saveWorkoutStyled";
 import { SaveButton } from "./StartWorkoutForm";
 import { useUserData } from "../../../utils/userDataContext";
 import { useNavigate, useLocation } from "react-router-dom";

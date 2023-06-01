@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useUserData } from "../../utils/userDataContext";
 import styled from "styled-components";
-import { Heading } from "../styles/newProgramPageStyled";
+import { Heading } from "../WorkoutProgramsPage/NewProgramPage/newProgramPageStyled";
 import { date } from "../../utils/getDate";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,7 +10,7 @@ import {
   LastWorkoutsSection,
   WorkoutDate,
   StartWorkoutLinkStyled,
-} from "../styles/workoutPageStyled";
+} from "./workoutPageStyled";
 
 import { Box } from "../styles/boxStyled.js.js";
 import Workout from "./Workout";
@@ -40,9 +40,8 @@ export default function WorkoutPage() {
       // getting 3 last workouts from firestore for current user on component's render
       getWorkouts(true)
         .then((result) => {
-          console.log("lol");
           const userWorkouts = result.docs.map((doc) => doc.data());
-          console.log(userWorkouts);
+
           setWorkouts(userWorkouts);
           setCurrentWorkout(userWorkouts[0]);
         })

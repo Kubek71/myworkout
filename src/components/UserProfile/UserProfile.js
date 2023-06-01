@@ -7,8 +7,8 @@ import { MdOutlineMonitorWeight as WeightIcon } from "react-icons/md";
 import { IoIosStats as StatsIcon } from "react-icons/io";
 import { GiForkKnifeSpoon as CaloriesIcon } from "react-icons/gi";
 import { RiErrorWarningFill as AlertIcon } from "react-icons/ri";
-import { useNavigate, Link } from "react-router-dom";
-import { StartWorkoutLinkStyled } from "../styles/workoutPageStyled";
+import { Link } from "react-router-dom";
+import { StartWorkoutLinkStyled } from "../WorkoutPage/workoutPageStyled";
 import { getfirstDayOfTheMonth } from "../../utils/getDate";
 
 import {
@@ -32,16 +32,14 @@ export default function UserProfile() {
   const { getUserInfo, countWorkouts } = useUserData();
   const { countCalories } = useCountCalories();
   useEffect(() => {
+    // pulling user info data from firestore on the first component render, counting amount of workouts in current month with firestore server count and date fns method
     const unsubscribe = () => {
-      console.log(getfirstDayOfTheMonth());
       getUserInfo().then((result) => {
         if (result.exists()) {
           const user = result.data();
-          console.log(user);
           const isMale = user.userGender === "male" ? true : false;
           setUser(user);
           countWorkouts(getfirstDayOfTheMonth()).then((result) => {
-            console.log(result.data().count);
             setWorkoutsAmount(result.data().count);
           });
         }
@@ -84,13 +82,16 @@ export default function UserProfile() {
               <Box>
                 <CaloriesIcon />
                 <ResultH3>
-                  {countCalories(
-                    user.userWeight,
-                    user.userHeight,
-                    user.userGender === "male" ? true : false,
-                    user.userAge,
-                    user.userActivity
-                  )}
+                  {
+                    // counting calories for user with countcalories custom hook
+                    countCalories(
+                      user.userWeight,
+                      user.userHeight,
+                      user.userGender === "male" ? true : false,
+                      user.userAge,
+                      user.userActivity
+                    )
+                  }
                 </ResultH3>
               </Box>
             </Box>
