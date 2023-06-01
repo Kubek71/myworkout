@@ -8,6 +8,7 @@ import {
   deleteDoc,
   addDoc,
   updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 import {
   collection,
@@ -20,7 +21,7 @@ import {
 } from "firebase/firestore";
 import { useAuth } from "./authContext";
 import { useState, useEffect } from "react";
-import { startAfter, startAt } from "firebase/database";
+import { startAfter, startAt, update } from "firebase/database";
 const UserDataContext = React.createContext();
 export function useUserData() {
   return useContext(UserDataContext);
@@ -90,14 +91,17 @@ export default function UserDataProvider({ children }) {
 
     return getDocs(q);
   };
-  const getWorkouts = (onlyLast) => {
+  const getWorkouts = (onlyLast, workoutProgram) => {
     const q = onlyLast
       ? query(
           collection(database, `users/${currentUser.uid}/workouts`),
           orderBy("timestamp", "desc"),
           limit(3)
         )
-      : query(collection(database, `users/${currentUser.uid}/workouts`));
+      : query(
+          collection(database, `users/${currentUser.uid}/workouts`),
+          where("programName", "==", workoutProgram)
+        );
 
     return getDocs(q);
   };
@@ -139,6 +143,31 @@ export default function UserDataProvider({ children }) {
     return getCountFromServer(q);
   };
 
+  const addExercise = (exercise) => {
+    const ExercisesRef = doc(
+      database,
+      `users/${currentUser.uid}/exercises/${exercise}`
+    );
+    return setDoc(ExercisesRef, { values: [] });
+  };
+  const updateExercisesArray = (exerciseName, setsArray) => {
+    const ExerciseRef = doc(
+      database,
+      `users/${currentUser.uid}/exercises/${exerciseName}`
+    );
+    const timestamp = Date.now();
+    return updateDoc(ExerciseRef, {
+      [`values.${timestamp}`]: setsArray,
+    });
+  };
+
+  const getExercises = (exercise) => {
+    const ExerciseRef = doc(
+      database,
+      `users/${currentUser.uid}/exercises/${exercise}`
+    );
+    return getDoc(ExerciseRef);
+  };
   const value = {
     addWorkoutPlan,
     getWorkoutPlans,
@@ -153,6 +182,9 @@ export default function UserDataProvider({ children }) {
     addUserInfo,
     getUserInfo,
     updateWeight,
+    addExercise,
+    updateExercisesArray,
+    getExercises,
   };
 
   return (

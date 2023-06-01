@@ -38,7 +38,7 @@ export default function NewProgramPage() {
   const [exerciseTable, setExerciseTable] = useState([]);
   const [exerciseStringIsEmptyError, setExerciseStringIsEmptyError] =
     useState();
-  const { addWorkoutPlan } = useUserData();
+  const { addWorkoutPlan, addExercise } = useUserData();
   const navigate = useNavigate();
 
   // pulling a route state (passing workoutplan to a route state when user clicks on workoutedit button in program page)
@@ -84,6 +84,9 @@ export default function NewProgramPage() {
       if (!exerciseTable.includes("")) {
         addWorkoutPlan(workoutName, workoutDuration, exerciseTable)
           .then(() => {
+            exerciseTable.forEach((exercise) => {
+              addExercise(exercise);
+            });
             navigate(-1);
           })
           .catch((error) => console.log(error));

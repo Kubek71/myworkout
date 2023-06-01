@@ -70,11 +70,12 @@ export default function Header({ headerHeightRef }) {
             <span>HISTORY</span>
           </Box>
         </NavLink>
-
-        <Box onClick={closeNavbar}>
-          <AnalitycsIcon />
-          <span>ANALITYCS</span>
-        </Box>
+        <NavLink to="analitycs" onClick={closeNavbar}>
+          <Box>
+            <AnalitycsIcon />
+            <span>ANALITYCS</span>
+          </Box>
+        </NavLink>
 
         <Box
           onClick={() => {
