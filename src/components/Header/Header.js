@@ -1,15 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useRef, useState } from "react";
-import {
-  HeaderStyled,
-  HeaderLogo,
-  NavbarStyled,
-  WorkoutNavSection,
-} from "../styles/headerStyled";
+import { useRef } from "react";
+import { HeaderStyled, HeaderLogo, NavbarStyled } from "./headerStyled";
 import Logo from "../../assets/Logo/Logo";
 import { Box } from "../styles/boxStyled.js.js";
-import styled from "styled-components";
 import {
   BiDumbbell as WorkoutsIcon,
   BiMenu as MenuIcon,
@@ -19,17 +13,10 @@ import {
   BiHistory as HistoryIcon,
   BiLogOut as LogoutIcon,
 } from "react-icons/bi";
-import { RegisterH1 } from "../RegisterPage/RegisterPageStyled";
 import { useAuth } from "../../utils/authContext";
-import { useEffect } from "react";
-
-const RegisterHeading = styled(RegisterH1)`
-  padding: 2rem;
-  color: ${({ theme }) => theme.colors.light};
-`;
 
 export default function Header({ headerHeightRef }) {
-  const { currentUser, logoutUser } = useAuth();
+  const { logoutUser } = useAuth();
   const headerRef = useRef();
   const showNavbar = () => {
     headerRef.current.classList.toggle("open");
@@ -40,7 +27,6 @@ export default function Header({ headerHeightRef }) {
 
   return (
     <HeaderStyled ref={headerHeightRef}>
-      {/* <RegisterHeading>Sign In</RegisterHeading> */}
       <HeaderLogo className="reponsive-logo">
         <NavLink to="/">
           <Logo />
@@ -76,16 +62,17 @@ export default function Header({ headerHeightRef }) {
             <span>ANALITYCS</span>
           </Box>
         </NavLink>
-
-        <Box
+        <button
           onClick={() => {
             logoutUser();
             closeNavbar();
           }}
         >
-          <LogoutIcon />
-          <span>LOGOUT</span>
-        </Box>
+          <Box>
+            <LogoutIcon />
+            <span>LOGOUT</span>
+          </Box>
+        </button>
       </NavbarStyled>
       <NavLink to="/profile" onClick={closeNavbar}>
         <Box>

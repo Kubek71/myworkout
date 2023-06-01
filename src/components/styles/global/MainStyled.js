@@ -7,4 +7,5 @@ export const Main = styled.main`
   align-items: ${({ column }) => (column ? "center" : "unset")};
   justify-content: ${({ column }) => (column ? "unset" : "center")};
   width: 100%;
+  max-width: 1200px;
 `;

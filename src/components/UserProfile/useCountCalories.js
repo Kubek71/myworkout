@@ -1,9 +1,8 @@
 import React from "react";
 
 export default function useCountCalories() {
+  // counting calories daily requirement for user based on his individual parametrs that he passed in via registration form
   const countCalories = (weight, height, isMale, age, activity) => {
-    console.log(`${weight}, ${height} , ${age}`);
-    console.log(isMale);
     const result = isMale
       ? // prettier-ignore
         Math.round(activity * ((10 * weight) + (6.25 * height) - (5 * age +5)))

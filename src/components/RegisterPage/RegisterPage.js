@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useForm, FormProvider } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { BackButton as NextStepButton } from "../HistoryPage/OpenedWorkout";
+import { BackButton as NextStepButton } from "../HistoryPage/OpenedWorkoutStyled";
 import {
   RegisterPageStyled,
   RegisterH1,

@@ -8,7 +8,7 @@ import {
   BiTimeFive as TimeIcon,
 } from "react-icons/bi";
 import { Box } from "../styles/boxStyled.js.js";
-import { ProgramBox, ProgramList } from "../styles/programPageStyled";
+import { ProgramBox, ProgramList } from "./programPageStyled";
 
 import { Link } from "react-router-dom";
 
@@ -40,7 +40,7 @@ export default function WorkoutProgram({ duration, name, exercises }) {
         <ProgramList justifyItemsLeft>
           {exercises.map((exercise, i) => {
             return (
-              <li>
+              <li key={i}>
                 <strong>{i + 1}.</strong>
                 {exercise}
               </li>

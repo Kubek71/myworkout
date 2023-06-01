@@ -5,13 +5,16 @@ import styled from "styled-components";
 import {
   StartWorkoutFormStyled,
   WorkoutTable,
-} from "../../styles/startWorkoutForm";
-import { Heading, NextStepButton } from "../../styles/newProgramPageStyled";
-import { BackButton } from "../../HistoryPage/OpenedWorkout";
-import { SaveWorkoutLink } from "../../styles/startWorkoutForm";
+  SaveWorkoutLink,
+  WorkoutSection,
+} from "./startWorkoutFormStyled";
+import {
+  Heading,
+  NextStepButton,
+} from "../../WorkoutProgramsPage/NewProgramPage/newProgramPageStyled";
+import { BackButton } from "../../HistoryPage/OpenedWorkoutStyled";
 import { Box } from "../../styles/boxStyled.js.js";
 import AddNewSet from "./AddNewSet";
-import { WorkoutSection } from "../../styles/startWorkoutForm";
 import { BiDumbbell as SetsIcon, BiTrash as RemoveIcon } from "react-icons/bi";
 import { useUserData } from "../../../utils/userDataContext";
 import useCancelWorkout from "../useCancelWorkout";
