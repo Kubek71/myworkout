@@ -15,6 +15,7 @@ import SaveWorkout from "./components/WorkoutPage/NewWorkoutPage/SaveWorkout";
 import HistoryPage from "./components/HistoryPage/HistoryPage";
 import OpenedWorkout from "./components/HistoryPage/OpenedWorkout";
 import UserProfile from "./components/UserProfile/UserProfile";
+import AnalitycsPage from "./components/AnalitycsPage/AnalitycsPage";
 
 const Testroute = () => {
   return <h1>testowyroute</h1>;
@@ -40,7 +41,7 @@ function App() {
                 <Route path="newprogram" element={<NewProgramPage />} />
                 <Route path="deleteProgram" element={<DeleteWorkoutPlan />} />
               </Route>
-
+              <Route path="analitycs" element={<AnalitycsPage />} />
               <Route path="history">
                 <Route
                   index
