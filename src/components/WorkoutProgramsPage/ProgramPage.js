@@ -7,9 +7,8 @@ import {
   Heading,
   ProgramSection,
   ProgramTitle,
-  AddNewProgramButton,
-} from "../styles/programPageStyled";
-import { StartWorkoutLinkStyled } from "../styles/workoutPageStyled";
+} from "./programPageStyled";
+import { StartWorkoutLinkStyled } from "../WorkoutPage/workoutPageStyled";
 import WorkoutProgram from "./WorkoutProgram";
 import styled from "styled-components";
 import { Box } from "../styles/boxStyled.js.js";
@@ -26,9 +25,7 @@ const NewProgramBox = styled(Box)`
 `;
 
 export default function ProgramPage() {
-  const { currentUser } = useAuth();
   const { getWorkoutPlans } = useUserData();
-  const navigateToNewProgramPage = useNavigate();
   const [workoutPlan, setWorkoutPlan] = useState([]);
 
   useEffect(() => {

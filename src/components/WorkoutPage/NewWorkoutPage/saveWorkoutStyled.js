@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Box } from "./boxStyled.js";
+import { Box } from "../../styles/boxStyled.js.js";
 export const NoteBox = styled(Box)`
   svg {
     color: ${({ theme }) => theme.colors.primaryRed};

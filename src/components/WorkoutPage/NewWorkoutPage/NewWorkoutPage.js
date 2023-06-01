@@ -1,10 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { WorkoutPageStyled as Main } from "../../styles/workoutPageStyled";
+import { WorkoutPageStyled as Main } from "../workoutPageStyled";
 import { Box } from "../../styles/boxStyled.js.js";
 import { BiPlusMedical as NewWorkoutIcon } from "react-icons/bi";
-import { Heading } from "../../styles/newProgramPageStyled";
+import { Heading } from "../../WorkoutProgramsPage/NewProgramPage/newProgramPageStyled";
 import { useUserData } from "../../../utils/userDataContext";
 import StartWorkoutForm from "./StartWorkoutForm";
 import { useNavigate } from "react-router-dom";

@@ -5,7 +5,7 @@ import { schema } from "./FormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/Logo/Logo.js";
-import { LoginPageStyled, LogoBox } from "../styles/loginPageStyled";
+import { LoginPageStyled, LogoBox } from "./loginPageStyled";
 import {
   RegisterForm as LoginForm,
   NextButton,
