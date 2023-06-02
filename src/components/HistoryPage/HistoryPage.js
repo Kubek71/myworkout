@@ -2,7 +2,10 @@ import React from "react";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useUserData } from "../../utils/userDataContext";
-import { WorkoutName } from "../WorkoutPage/workoutPageStyled";
+import {
+  StartWorkoutLinkStyled,
+  WorkoutName,
+} from "../WorkoutPage/workoutPageStyled";
 import { ItemBox } from "../WorkoutPage/Workout";
 import { date } from "../../utils/getDate";
 import { Box } from "../styles/boxStyled.js";
@@ -12,6 +15,7 @@ import {
   BiTimeFive as TimeIcon,
 } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import IsEmptyMessage from "../IsEmptyComponent/IsEmptyMessage";
 export default function HistoryPage({ headerHeightRef }) {
   // destructuring fetching methods from userDataContext
   const { getAllWorkouts, getWorkoutPlans } = useUserData();
@@ -20,6 +24,8 @@ export default function HistoryPage({ headerHeightRef }) {
   const [workoutPlans, setWorkoutPlans] = useState([]);
   const [activeWorkoutPlan, setActiveWorkoutPlan] = useState();
   const [hasMore, setHasMore] = useState(true);
+  const [error, setError] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   const [headerHeight, setHeaderHeight] = useState(0);
 
   const getWorkouts = (workoutPlanName) => {
@@ -33,13 +39,23 @@ export default function HistoryPage({ headerHeightRef }) {
     getAllWorkouts(timestamp(), workoutPlanName)
       .then((result) => {
         if (!result.empty) {
+          setIsLoading(false);
           const array = result.docs.map((doc) => doc.data());
           setWorkouts((current) => current.concat(array));
         } else {
           setHasMore(false);
+          if (workouts.length === 0) {
+            setIsLoading(false);
+            setError(
+              "Start working out and save all of your workouts right here!"
+            );
+          }
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        setIsLoading(false);
+        setError("We couldn't get your data from the server, try agian later");
+      });
   };
 
   useEffect(() => {
@@ -49,11 +65,23 @@ export default function HistoryPage({ headerHeightRef }) {
       if (workouts.length === 0) {
         getWorkoutPlans()
           .then((result) => {
-            const plans = result.docs.map((doc) => doc.data());
-            setWorkoutPlans(plans);
-            setActiveWorkoutPlan(plans[0].name);
+            if (!result.empty) {
+              const plans = result.docs.map((doc) => doc.data());
+              setWorkoutPlans(plans);
+              setActiveWorkoutPlan(plans[0].name);
+            } else {
+              setIsLoading(false);
+              setError(
+                "Start working out and save all of your workouts right here!"
+              );
+            }
           })
-          .catch((error) => console.log(error));
+          .catch((e) => {
+            setIsLoading(false);
+            setError(
+              "We couldn't get your data from the server, try agian later"
+            );
+          });
       } else return;
     };
     return unsubscribe;
@@ -73,55 +101,67 @@ export default function HistoryPage({ headerHeightRef }) {
     setWorkouts([]);
   };
   return (
-    <Main headerHeight={headerHeight}>
-      {workoutPlans && (
-        <Box>
-          {workoutPlans.map((workoutPlan, index) => {
-            return (
-              <WorkoutPlanButton
-                key={index}
-                onClick={getWorkoutPlanHandler}
-                active={workoutPlan.name === activeWorkoutPlan}
-                disabled={workoutPlan.name === activeWorkoutPlan}
-              >
-                {workoutPlan.name}
-              </WorkoutPlanButton>
-            );
-          })}
-        </Box>
-      )}
-      {headerHeight > 0 && (
-        <InfiniteScroll
-          dataLength={workouts.length} //This is important field to render the next data
-          next={() => getWorkouts(activeWorkoutPlan)}
-          hasMore={hasMore}
-          className="infiniteScroll-container"
-          loader={<h4 style={{ color: "white" }}>Loading...</h4>}
-        >
-          {workouts.map((workout, index) => {
-            return (
-              <Link
-                to={`${workout.timestamp}`}
-                state={workout}
-                style={{ width: "100%" }}
-                key={index}
-              >
-                <WorkoutBox key={index}>
-                  <WorkoutName>{date(workout.timestamp)}</WorkoutName>
-                  <ItemBox>
-                    <DumbellIcon />
-                    <span>{workout.exercises.length} exercises</span>
-                  </ItemBox>
-                  <ItemBox>
-                    <TimeIcon />
-                    <span>{workout.workoutDuration}</span>
-                  </ItemBox>
-                </WorkoutBox>
-              </Link>
-            );
-          })}
-        </InfiniteScroll>
-      )}
-    </Main>
+    headerHeight > 0 && (
+      <Main headerHeight={headerHeight}>
+        {!error && !isLoading ? (
+          <>
+            <Box>
+              {workoutPlans.map((workoutPlan, index) => {
+                return (
+                  <WorkoutPlanButton
+                    key={index}
+                    onClick={getWorkoutPlanHandler}
+                    active={workoutPlan.name === activeWorkoutPlan}
+                    disabled={workoutPlan.name === activeWorkoutPlan}
+                  >
+                    {workoutPlan.name}
+                  </WorkoutPlanButton>
+                );
+              })}
+            </Box>
+
+            <InfiniteScroll
+              dataLength={workouts.length} //This is important field to render the next data
+              next={() => getWorkouts(activeWorkoutPlan)}
+              hasMore={hasMore}
+              className="infiniteScroll-container"
+              loader={<h4 style={{ color: "white" }}>Loading...</h4>}
+            >
+              {workouts.map((workout, index) => {
+                return (
+                  <Link
+                    to={`${workout.timestamp}`}
+                    state={workout}
+                    style={{ width: "100%" }}
+                    key={index}
+                  >
+                    <WorkoutBox key={index}>
+                      <WorkoutName>{date(workout.timestamp)}</WorkoutName>
+                      <ItemBox>
+                        <DumbellIcon />
+                        <span>{workout.exercises.length} exercises</span>
+                      </ItemBox>
+                      <ItemBox>
+                        <TimeIcon />
+                        <span>{workout.workoutDuration}</span>
+                      </ItemBox>
+                    </WorkoutBox>
+                  </Link>
+                );
+              })}
+            </InfiniteScroll>
+          </>
+        ) : (
+          !isLoading && (
+            <>
+              <IsEmptyMessage message={error} />
+              <StartWorkoutLinkStyled to="../startworkout">
+                Start a workout
+              </StartWorkoutLinkStyled>
+            </>
+          )
+        )}
+      </Main>
+    )
   );
 }

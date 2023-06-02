@@ -18,6 +18,7 @@ import {
   BiCaretLeft as PreviousIcon,
   BiCaretRight as NextIcon,
 } from "react-icons/bi";
+import IsEmptyMessage from "../IsEmptyComponent/IsEmptyMessage";
 
 const LastWorkoutsHeading = styled(Heading)`
   font-size: 0.85rem;
@@ -32,6 +33,8 @@ export default function WorkoutPage() {
   const [isWorkoutOpened, setIsWorkoutOpened] = useState(false);
   const [renderNote, setRenderNote] = useState(false);
   const [currentWorkout, setCurrentWorkout] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
   const navigate = useNavigate();
   useEffect(() => {
     if (workoutArray.length > 0) {
@@ -40,13 +43,21 @@ export default function WorkoutPage() {
       // getting 3 last workouts from firestore for current user on component's render
       getWorkouts(true)
         .then((result) => {
-          const userWorkouts = result.docs.map((doc) => doc.data());
-
-          setWorkouts(userWorkouts);
-          setCurrentWorkout(userWorkouts[0]);
+          setIsLoading(false);
+          if (!result.empty) {
+            setError();
+            const userWorkouts = result.docs.map((doc) => doc.data());
+            setWorkouts(userWorkouts);
+            setCurrentWorkout(userWorkouts[0]);
+          } else {
+            setError("You dont have any workouts yet!");
+          }
         })
         .catch((e) => {
-          console.log(e);
+          setIsLoading(false);
+          setError(
+            "We couldn't get your data from the server, try agian later"
+          );
         });
     }
   }, []);
@@ -77,23 +88,31 @@ export default function WorkoutPage() {
 
   return (
     <WorkoutPageStyled>
-      <LastWorkoutsHeading>YOUR LAST WORKOUTS</LastWorkoutsHeading>
-      {currentWorkout && (
-        <LastWorkoutsSection>
-          <Box>
-            <PreviousIcon onClick={() => changeCurrentWorkoutHandler(true)} />
-            <WorkoutDate>{date(currentWorkout.timestamp)}</WorkoutDate>
-            <NextIcon onClick={() => changeCurrentWorkoutHandler(false)} />
-          </Box>
+      {!isLoading && (
+        <>
+          <LastWorkoutsHeading>YOUR LAST WORKOUTS</LastWorkoutsHeading>
+          {currentWorkout && (
+            <LastWorkoutsSection>
+              <Box>
+                <PreviousIcon
+                  onClick={() => changeCurrentWorkoutHandler(true)}
+                />
+                <WorkoutDate>{date(currentWorkout.timestamp)}</WorkoutDate>
+                <NextIcon onClick={() => changeCurrentWorkoutHandler(false)} />
+              </Box>
 
-          <Workout
-            currentWorkout={currentWorkout}
-            renderNote={renderNote}
-            isWorkoutOpened={isWorkoutOpened}
-            setIsWorkoutOpened={setIsWorkoutOpened}
-          />
-        </LastWorkoutsSection>
+              <Workout
+                currentWorkout={currentWorkout}
+                renderNote={renderNote}
+                isWorkoutOpened={isWorkoutOpened}
+                setIsWorkoutOpened={setIsWorkoutOpened}
+              />
+            </LastWorkoutsSection>
+          )}
+        </>
       )}
+
+      {error && <IsEmptyMessage message={error} />}
       <StartWorkoutLinkStyled to="startworkout">
         Start a workout
       </StartWorkoutLinkStyled>

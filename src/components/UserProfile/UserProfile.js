@@ -20,6 +20,7 @@ import {
 import { BiUserCircle as UserIcon } from "react-icons/bi";
 import useCountCalories from "./useCountCalories";
 import styled from "styled-components";
+import IsEmptyMessage from "../IsEmptyComponent/IsEmptyMessage";
 
 const UserBox = styled(Box)`
   svg {
@@ -30,6 +31,7 @@ export default function UserProfile() {
   const [workoutsAmount, setWorkoutsAmount] = useState();
   const [user, setUser] = useState();
   const { getUserInfo, countWorkouts } = useUserData();
+  const [error, setError] = useState();
   const { countCalories } = useCountCalories();
   useEffect(() => {
     // pulling user info data from firestore on the first component render, counting amount of workouts in current month with firestore server count and date fns method
@@ -37,10 +39,11 @@ export default function UserProfile() {
       getUserInfo().then((result) => {
         if (result.exists()) {
           const user = result.data();
-          const isMale = user.userGender === "male" ? true : false;
           setUser(user);
           countWorkouts(getfirstDayOfTheMonth()).then((result) => {
-            setWorkoutsAmount(result.data().count);
+            if (result.data().count > 0) {
+              setWorkoutsAmount(result.data().count);
+            } else setError("You dont have any workouts yet");
           });
         }
       });
@@ -57,7 +60,7 @@ export default function UserProfile() {
             <UserNameHeading>{user.userName}</UserNameHeading>
           </UserBox>
           <UserInfoSection>
-            {workoutsAmount && workoutsAmount > 0 ? (
+            {workoutsAmount ? (
               <Box alignItems="flex-start" gap="0.5rem" flexDirection="column">
                 <TextSpan>Training sessions in this month</TextSpan>
                 <Box>
@@ -67,13 +70,11 @@ export default function UserProfile() {
               </Box>
             ) : (
               <Link to="../startworkout">
-                <Box gap="0.25rem">
-                  <AlertIcon />
-                  <TextSpan fontSize="0.65rem">
-                    You dont have any workouts yet.{" "}
-                    <strong>Start a workout</strong>
-                  </TextSpan>
-                </Box>
+                <IsEmptyMessage
+                  message={error}
+                  secondColor
+                  additionalMessage={"start a workout!"}
+                />
               </Link>
             )}
 
