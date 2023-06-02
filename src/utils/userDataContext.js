@@ -27,6 +27,7 @@ export function useUserData() {
 export default function UserDataProvider({ children }) {
   const { currentUser } = useAuth();
   const [workoutArray, setWorkoutArray] = useState([]);
+  const [error, setError] = useState();
 
   useEffect(() => {
     if (workoutArray.length > 0) {
@@ -34,7 +35,7 @@ export default function UserDataProvider({ children }) {
     }
   }, [workoutArray]);
 
-  const addUserInfo = (uid, name, gender, weight, height, age) => {
+  const addUserInfo = (uid, name, gender, weight, height, age, activity) => {
     const userRef = doc(database, `users/${uid}`);
     return setDoc(userRef, {
       userName: name,
@@ -42,6 +43,7 @@ export default function UserDataProvider({ children }) {
       userWeight: weight,
       userHeight: height,
       userAge: age,
+      userActivity: activity,
     });
   };
   const getUserInfo = () => {
@@ -182,6 +184,8 @@ export default function UserDataProvider({ children }) {
     addExercise,
     updateExercisesArray,
     getExercises,
+    error,
+    setError,
   };
 
   return (

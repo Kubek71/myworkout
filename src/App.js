@@ -17,10 +17,6 @@ import OpenedWorkout from "./components/HistoryPage/OpenedWorkout";
 import UserProfile from "./components/UserProfile/UserProfile";
 import AnalitycsPage from "./components/AnalitycsPage/AnalitycsPage";
 
-const Testroute = () => {
-  return <h1>testowyroute</h1>;
-};
-
 function App() {
   const headerHeightRef = useRef();
   return (

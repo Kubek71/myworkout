@@ -77,9 +77,19 @@ export default function NewProgramPage() {
       if (!exerciseTable.includes("")) {
         addWorkoutPlan(workoutName, workoutDuration, exerciseTable)
           .then(() => {
-            exerciseTable.forEach((exercise) => {
-              addExercise(exercise);
-            });
+            // if state is set (user wants to edit existing program) filtering exercisetable to drop already existed exercises to pretend from overwritting exercises in firestore
+            if (state) {
+              const newExerciseArray = exerciseTable.filter(
+                (value) => !state.workoutToEditExercises.includes(value)
+              );
+              newExerciseArray.forEach((exercise) => {
+                addExercise(exercise);
+              });
+            } else {
+              exerciseTable.forEach((exercise) => {
+                addExercise(exercise);
+              });
+            }
             navigate(-1);
           })
           .catch((error) => console.log(error));
