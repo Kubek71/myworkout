@@ -36,17 +36,19 @@ export default function UserProfile() {
   useEffect(() => {
     // pulling user info data from firestore on the first component render, counting amount of workouts in current month with firestore server count and date fns method
     const unsubscribe = () => {
-      getUserInfo().then((result) => {
-        if (result.exists()) {
-          const user = result.data();
-          setUser(user);
-          countWorkouts(getfirstDayOfTheMonth()).then((result) => {
-            if (result.data().count > 0) {
-              setWorkoutsAmount(result.data().count);
-            } else setError("You dont have any workouts yet");
-          });
-        }
-      });
+      getUserInfo()
+        .then((result) => {
+          if (result.exists()) {
+            const user = result.data();
+            setUser(user);
+            countWorkouts(getfirstDayOfTheMonth()).then((result) => {
+              if (result.data().count > 0) {
+                setWorkoutsAmount(result.data().count);
+              } else setError("You dont have any workouts yet");
+            });
+          }
+        })
+        .catch((e) => console.log(e));
     };
     return unsubscribe;
   }, []);

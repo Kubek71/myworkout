@@ -54,6 +54,7 @@ export default function WorkoutPage() {
           }
         })
         .catch((e) => {
+          console.log(e);
           setIsLoading(false);
           setError(
             "We couldn't get your data from the server, try agian later"
