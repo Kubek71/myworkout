@@ -42,7 +42,6 @@ export default function SaveWorkout() {
       workoutDuration
     )
       .then(async () => {
-        console.log(workoutArray);
         await workoutArray.forEach((exercise) => {
           updateExercisesArray(exercise.name.toLowerCase(), exercise.sets);
         });

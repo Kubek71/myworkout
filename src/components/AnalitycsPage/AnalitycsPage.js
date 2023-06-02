@@ -11,6 +11,8 @@ import {
 import { WorkoutPlanButton } from "../HistoryPage/HistoryPageStyled";
 import styled from "styled-components";
 import { useUserData } from "../../utils/userDataContext";
+import IsEmptyMessage from "../IsEmptyComponent/IsEmptyMessage";
+import { StartWorkoutLinkStyled } from "../WorkoutPage/workoutPageStyled";
 
 const ProgramBox = styled(Box)`
   width: 100%;
@@ -46,7 +48,8 @@ export default function AnalitycsPage() {
   const [activeWorkoutPlan, setActiveWorkoutPlan] = useState();
   const [activeStatMethod, setActiveStatMethod] = useState(0);
   const [error, setError] = useState();
-  const { getWorkoutPlans, getWorkouts, getExercises } = useUserData();
+  const [isLoading, setIsLoading] = useState(true);
+  const { getWorkoutPlans, getExercises } = useUserData();
 
   const changeWorkoutPlanHandler = (e) => {
     const workoutPlanName = e.target.innerText;
@@ -57,19 +60,25 @@ export default function AnalitycsPage() {
 
   useEffect(() => {
     const unsubscribe = () => {
-      window.sessionStorage.clear();
       getWorkoutPlans()
         .then((result) => {
-          if (result.empty) {
-            setError("You dont have any workouts yet.");
-            console.log("lol");
-          } else {
+          if (!result.empty) {
             const plans = result.docs.map((doc) => doc.data());
             setWorkoutPlans(plans);
             setActiveWorkoutPlan(plans[0]);
+          } else {
+            setIsLoading(false);
+            setError(
+              "Start working out and track your workout stats right here!"
+            );
           }
         })
-        .catch((error) => console.log(error));
+        .catch((e) => {
+          setIsLoading(false);
+          setError(
+            "We couldn't get your data from the server, try agian later"
+          );
+        });
     };
 
     return unsubscribe;
@@ -80,15 +89,21 @@ export default function AnalitycsPage() {
     if (activeWorkoutPlan) {
       activeWorkoutPlan.exercises.forEach((exercise) => {
         setWorkouts([]);
-        getExercises(exercise).then((result) => {
-          if (!result.empty) {
+        getExercises(exercise)
+          .then((result) => {
+            setIsLoading(false);
             const resultObject = result.data();
             setWorkouts((current) => [
               ...current,
               { [exercise]: resultObject.values },
             ]);
-          }
-        });
+          })
+          .catch((e) => {
+            setIsLoading(false);
+            setError(
+              "We couldn't get your data from the server, try agian later"
+            );
+          });
       });
     } else return;
   }, [activeWorkoutPlan]);
@@ -134,10 +149,10 @@ export default function AnalitycsPage() {
 
   return (
     <Main column>
-      {activeWorkoutPlan && (
+      <Heading>Your personal stats</Heading>
+      {!isLoading && !error ? (
         <>
           <ProgramSection>
-            <Heading>Your personal stats</Heading>
             <ProgramBox>
               {workoutPlans.map((workoutPlan, index) => {
                 return (
@@ -237,7 +252,12 @@ export default function AnalitycsPage() {
             <Box></Box>
           </StatsSection>
         </>
+      ) : (
+        <IsEmptyMessage message={error} />
       )}
+      <StartWorkoutLinkStyled to="../startworkout">
+        Start a workout
+      </StartWorkoutLinkStyled>
     </Main>
   );
 }
