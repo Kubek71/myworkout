@@ -13,6 +13,7 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [isAuthLoading, setIsAuthLoading] = useState(true);
   useEffect(() => {
+    console.log("test");
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setIsAuthLoading(false);
@@ -27,7 +28,6 @@ export function AuthProvider({ children }) {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        console.log("user logged out");
         setCurrentUser(undefined);
         <Navigate to="/login" />;
       })

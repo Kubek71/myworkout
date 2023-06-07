@@ -6,9 +6,6 @@ import {
   startOfMonth,
 } from "date-fns";
 
-// const date = new Date();
-// export const getTodaysDate = format(date, "dd.MM.yyyy");
-
 export const getTimestamp = Date.now();
 
 export const date = (workoutDate) => {

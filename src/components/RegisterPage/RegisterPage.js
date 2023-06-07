@@ -26,7 +26,7 @@ const RegisterH2 = styled(RegisterH1)`
 `;
 export default function RegisterPage() {
   const [registerError, setRegisterError] = useState("");
-  const navigateToHomePage = useNavigate();
+  const navigate = useNavigate();
   const [renderSecondForm, setRenderSecondForm] = useState(false);
   const { addUserInfo } = useUserData();
   const useFormMethods = useForm({
@@ -35,8 +35,6 @@ export default function RegisterPage() {
   const control = useFormMethods.control;
 
   const registerNewUser = (inputData) => {
-    console.log("test");
-    console.log(inputData);
     createUserWithEmailAndPassword(auth, inputData.email, inputData.password)
       .then((result) => {
         addUserInfo(
@@ -49,12 +47,11 @@ export default function RegisterPage() {
           inputData.activity
         )
           .then((result) => {
-            console.log(result);
+            navigate("/profile");
           })
           .catch((e) => {
-            console.log(e);
             useFormMethods.reset();
-            navigateToHomePage("/");
+            navigate("/");
           });
       })
       .catch((error) => {

@@ -59,29 +59,23 @@ export default function AnalitycsPage() {
   };
 
   useEffect(() => {
-    const unsubscribe = () => {
-      getWorkoutPlans()
-        .then((result) => {
-          if (!result.empty) {
-            const plans = result.docs.map((doc) => doc.data());
-            setWorkoutPlans(plans);
-            setActiveWorkoutPlan(plans[0]);
-          } else {
-            setIsLoading(false);
-            setError(
-              "Start working out and track your workout stats right here!"
-            );
-          }
-        })
-        .catch((e) => {
+    getWorkoutPlans()
+      .then((result) => {
+        if (!result.empty) {
+          const plans = result.docs.map((doc) => doc.data());
+          setWorkoutPlans(plans);
+          setActiveWorkoutPlan(plans[0]);
+        } else {
           setIsLoading(false);
           setError(
-            "We couldn't get your data from the server, try agian later"
+            "Start working out and track your workout stats right here!"
           );
-        });
-    };
-
-    return unsubscribe;
+        }
+      })
+      .catch((e) => {
+        setIsLoading(false);
+        setError("We couldn't get your data from the server, try agian later");
+      });
   }, []);
 
   useEffect(() => {

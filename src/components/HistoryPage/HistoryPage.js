@@ -61,30 +61,28 @@ export default function HistoryPage({ headerHeightRef }) {
   useEffect(() => {
     // setting headerHeight state to header ref offsetHeight
     setHeaderHeight(headerHeightRef.current.offsetHeight);
-    const unsubscribe = () => {
-      if (workouts.length === 0) {
-        getWorkoutPlans()
-          .then((result) => {
-            if (!result.empty) {
-              const plans = result.docs.map((doc) => doc.data());
-              setWorkoutPlans(plans);
-              setActiveWorkoutPlan(plans[0].name);
-            } else {
-              setIsLoading(false);
-              setError(
-                "Start working out and save all of your workouts right here!"
-              );
-            }
-          })
-          .catch((e) => {
+
+    if (workouts.length === 0) {
+      getWorkoutPlans()
+        .then((result) => {
+          if (!result.empty) {
+            const plans = result.docs.map((doc) => doc.data());
+            setWorkoutPlans(plans);
+            setActiveWorkoutPlan(plans[0].name);
+          } else {
             setIsLoading(false);
             setError(
-              "We couldn't get your data from the server, try agian later"
+              "Start working out and save all of your workouts right here!"
             );
-          });
-      } else return;
-    };
-    return unsubscribe;
+          }
+        })
+        .catch((e) => {
+          setIsLoading(false);
+          setError(
+            "We couldn't get your data from the server, try agian later"
+          );
+        });
+    } else return;
   }, []);
   useEffect(() => {
     setHasMore(true);

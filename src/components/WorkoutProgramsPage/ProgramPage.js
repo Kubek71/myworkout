@@ -30,28 +30,24 @@ export default function ProgramPage() {
   const [error, setError] = useState();
 
   useEffect(() => {
-    const unsubscribe = () => {
-      if (workoutPlan.length === 0) {
-        // getting all docs from the workoutplans collections for current user
-        getWorkoutPlans()
-          .then((result) => {
-            setIsLoading(false);
-            if (!result.empty) {
-              setError();
-              const plans = result.docs.map((doc) => doc.data());
-              setWorkoutPlan(plans);
-            } else setError("You dont have any workout programs yet");
-          })
-          .catch((e) => {
-            setIsLoading(false);
-            setError(
-              "We couldn't get your data from the server, try agian later"
-            );
-          });
-      }
-      return;
-    };
-    return unsubscribe;
+    if (workoutPlan.length === 0) {
+      // getting all docs from the workoutplans collections for current user
+      getWorkoutPlans()
+        .then((result) => {
+          setIsLoading(false);
+          if (!result.empty) {
+            setError();
+            const plans = result.docs.map((doc) => doc.data());
+            setWorkoutPlan(plans);
+          } else setError("You dont have any workout programs yet");
+        })
+        .catch((e) => {
+          setIsLoading(false);
+          setError(
+            "We couldn't get your data from the server, try agian later"
+          );
+        });
+    } else return;
   }, []);
 
   return (
