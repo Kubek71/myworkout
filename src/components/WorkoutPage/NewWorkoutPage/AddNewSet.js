@@ -17,9 +17,8 @@ export default function AddNewSet({
 
   useEffect(() => {
     // setting a state for conditional rendering workout section in WorkoutPage.js
-    const unsubscribe = () =>
-      setIsAddNewSetComponentRendered((current) => !current);
-    return unsubscribe;
+    setIsAddNewSetComponentRendered(true);
+    return () => setIsAddNewSetComponentRendered(false);
   }, []);
   return (
     <>

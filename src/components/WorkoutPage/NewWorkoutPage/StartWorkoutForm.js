@@ -95,6 +95,7 @@ export default function StartWorkoutForm({ choosedWorkoutTable }) {
     if (workout) {
       setWorkoutArray(workout);
     }
+    return () => setIsAddNewSetComponentRendered(false);
   }, []);
 
   return (
