@@ -2,7 +2,8 @@ This is react.js workout application for tracking your workout progress.
 You can save your workout programs and use them to save your training sessions.
 The app provides users with an overview of their personal records in the exercises they perform.
 
-This project is currently in build.
+Try it out there - https://myworkoutapp.netlify.app
+
 
 Tech stack used in this app:
 React.js, React router v6, React hook form with zod, Firebase auth, Firebase firestore, StyledComponents.
